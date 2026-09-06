@@ -1019,7 +1019,7 @@ export const CalculusMasteryHub: React.FC = () => {
                     <li><strong>Diagram & Variables:</strong> Draw picture, label constants and time-varying variables ($x, y, h, V$).</li>
                     <li><MathText text="<strong>Given & Required Rates:</strong> Write given rates and target unknown rate as time derivatives (e.g. given $\frac{dx}{dt}$, find $\frac{dy}{dt}$)." /></li>
                     <li><MathText text="<strong>Relating Equation:</strong> Connect variables using geometric formulas ($x^2 + y^2 = L^2$, $V = \frac{1}{3}\pi r^2 h$)." /></li>
-                    <li><strong>Differentiate W.R.T. Time $t$:</strong> Take $\frac{d}{dt}$ across the equation using Chain Rule.</li>
+                    <li><MathText text="<strong>Differentiate W.R.T. Time $t$:</strong> Take $\frac{d}{dt}$ across the equation using Chain Rule." /></li>
                     <li><strong>Substitute & Solve:</strong> Substitute instantaneous snapshot values and solve for target rate.</li>
                   </ol>
                 </div>
