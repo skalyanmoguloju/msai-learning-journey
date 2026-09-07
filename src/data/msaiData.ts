@@ -56,7 +56,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
             title: 'Machine Learning or AI Basics Continued',
             description: 'Deep dive into hypothesis spaces, loss functions, optimization, and probabilistic foundations.',
             topics: ['Probability & Linear Algebra for AI', 'Model Evaluation', 'Overfitting & Generalization'],
-            status: 'completed',
+            status: 'in-progress',
             reading: 'Mitchell Ch. 2'
           },
           {
@@ -255,7 +255,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
             {
               step: 4,
               title: 'In-Class Paper Presentation',
-              description: 'Delivering group paper review and architectural critique during scheduled course sessions.',
+              description: 'Delivering group paper review and architectural critique during scheduled course weeks.',
               tool: 'Group Slide Presentation'
             },
             {
@@ -362,7 +362,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
         modules: [
           {
             id: 'm257-1',
-            week: 'Session 01',
+            week: 'Week 01',
             title: 'Introduction to Machine Learning',
             description: 'Fundamental principles, algorithms, applications, mathematical modeling, and learning feasibility.',
             topics: ['Supervised vs Unsupervised Learning', 'Feasibility of Learning', 'Generalization Principles', 'Linear Algebra & Calculus Foundations'],
@@ -371,16 +371,16 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-2',
-            week: 'Session 02',
+            week: 'Week 02',
             title: 'Supervised Learning',
             description: 'Linear models for regression and classification, loss functions, empirical risk minimization, and optimization.',
             topics: ['Linear Regression', 'Logistic Regression', 'Cost Functions (MSE, Binary Cross-Entropy)', 'Gradient Descent'],
-            status: 'completed',
+            status: 'in-progress',
             reading: 'CS229 Notes Chapter 1'
           },
           {
             id: 'm257-3',
-            week: 'Session 03',
+            week: 'Week 03',
             title: 'Advanced Supervised Learning',
             description: 'Generalization theory, bias and variance tradeoff, cross-validation, and nonlinear transformations.',
             topics: ['Theory of Generalization', 'Bias and Variance Decomposition', 'Cross-Validation & Hyperparameter Tuning', 'Generative vs Discriminative Models'],
@@ -389,7 +389,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-4',
-            week: 'Session 04',
+            week: 'Week 04',
             title: 'Unsupervised Learning, PCA',
             description: 'Dimensionality reduction, clustering, and feature extraction. Homework 1 due.',
             topics: ['Principal Component Analysis (PCA)', 'Eigenvalue Decomposition & SVD', 'K-Means Clustering', 'HW1 Due: Supervised Learning'],
@@ -398,7 +398,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-5',
-            week: 'Session 05',
+            week: 'Week 05',
             title: 'SVM, Trees, Feature Engineering',
             description: 'Kernel methods, maximum margin hyperplanes, radial basis functions, decision trees, and feature representation.',
             topics: ['Support Vector Machines (Hard/Soft Margin)', 'Kernel Trick & RBF', 'Decision Trees (CART)', 'Feature Engineering & Selection'],
@@ -407,7 +407,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-6',
-            week: 'Session 06',
+            week: 'Week 06',
             title: 'Regularization Techniques, Midterm Exam Review',
             description: 'Controlling model complexity, L1/L2 penalties, sparsity, and preparation for the midterm examination.',
             topics: ['L1 (Lasso) vs L2 (Ridge) Regularization', 'ElasticNet Formulation', 'Overfitting Mitigation', 'Midterm Examination Review'],
@@ -416,16 +416,16 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-7',
-            week: 'Session 07',
+            week: 'Week 07',
             title: 'Mid Term Exam',
-            description: 'In-class midterm assessment covering Sessions 1-6. Homework 2 due.',
+            description: 'In-class midterm assessment covering Weeks 1-6. Homework 2 due.',
             topics: ['Midterm Examination', 'HW2 Due: Unsupervised Learning'],
             status: 'upcoming',
-            reading: 'Review Sessions 1-6 Notes'
+            reading: 'Review Weeks 1-6 Notes'
           },
           {
             id: 'm257-8',
-            week: 'Session 08',
+            week: 'Week 08',
             title: 'Introduction to Neural Networks',
             description: 'Biological inspiration, perceptrons, multilayer perceptron architectures, and activation functions.',
             topics: ['Perceptron Learning Rule', 'Multilayer Perceptrons (MLPs)', 'Activation Functions (ReLU, Sigmoid, Softmax)', 'Forward Propagation'],
@@ -434,7 +434,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-9',
-            week: 'Session 09',
+            week: 'Week 09',
             title: 'Back Propagation Algorithm - Part I',
             description: 'Mathematical derivation of backpropagation using the multivariate chain rule and computational graphs.',
             topics: ['Computational Graphs', 'Gradient Derivation via Chain Rule', 'Error Vector Propagation', 'Matrix Calculus for NN Updates'],
@@ -443,7 +443,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-10',
-            week: 'Session 10',
+            week: 'Week 10',
             title: 'Back Propagation Algorithm - Part II',
             description: 'Advanced optimization algorithms, gradient challenges, and training dynamics. Homework 3 due.',
             topics: ['SGD, Adam, and RMSprop Optimizers', 'Exploding & Vanishing Gradients', 'HW3 Due: Back-propagation Algorithm'],
@@ -452,7 +452,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-11',
-            week: 'Session 11',
+            week: 'Week 11',
             title: 'Speech Recognition and Recommendation Systems',
             description: 'Applied machine learning architectures for sequential speech inputs and collaborative filtering systems.',
             topics: ['Acoustic & Speech Modeling Principles', 'Collaborative Filtering & Matrix Factorization', 'Content-Based Recommendation Engines'],
@@ -461,7 +461,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-12',
-            week: 'Session 12',
+            week: 'Week 12',
             title: 'Introduction to Deep Learning - Part 1',
             description: 'Deep neural network architectures, spatial features, and convolutional representation learning.',
             topics: ['Convolutional Neural Networks (CNNs)', 'Pooling & Feature Maps', 'Batch Normalization', 'Transfer Learning'],
@@ -470,7 +470,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-13',
-            week: 'Session 13',
+            week: 'Week 13',
             title: 'Introduction to Deep Learning - Part 2',
             description: 'Recurrent structures, sequence modeling, attention, and deep regularization. Homework 4 due.',
             topics: ['Recurrent Structures & Transformers', 'Regularization in Deep Networks (Dropout)', 'HW4 Due: Neural Networks'],
@@ -479,7 +479,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-14',
-            week: 'Session 14',
+            week: 'Week 14',
             title: 'Project Presentation',
             description: 'Student research group presentations showcasing hands-on final machine learning projects.',
             topics: ['Applied ML Final Presentations', 'System Demos', 'Model Evaluation Reviews'],
@@ -488,7 +488,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           },
           {
             id: 'm257-15',
-            week: 'Session 15',
+            week: 'Week 15',
             title: 'Final Exam Prep',
             description: 'Comprehensive course review, theoretical synthesis, and final examination preparation.',
             topics: ['Comprehensive Algorithm Review', 'Mathematical Proof Synthesis', 'Final Exam Sample Problems'],
@@ -537,7 +537,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
           {
             id: 'n257-1',
             title: 'Supervised Learning & Generalized Linear Models',
-            week: 'Session 02',
+            week: 'Week 02',
             date: '2026-08-28',
             summary: 'Formulating regression and classification tasks, empirical risk minimization, loss functions, and optimization.',
             keyPoints: [
@@ -588,8 +588,8 @@ export const INITIAL_SEMESTERS: Semester[] = [
             {
               step: 4,
               title: 'In-Class Project Presentation',
-              description: 'Presenting technical methodologies, complexity trade-offs, and experimental findings in Session 14.',
-              tool: 'Session 14 Presentation'
+              description: 'Presenting technical methodologies, complexity trade-offs, and experimental findings in Week 14.',
+              tool: 'Week 14 Presentation'
             },
             {
               step: 5,
@@ -600,8 +600,8 @@ export const INITIAL_SEMESTERS: Semester[] = [
           ],
           techStack: ['Python', 'Scikit-Learn', 'PyTorch', 'TensorFlow / Keras', 'Pandas', 'NumPy', 'Matplotlib'],
           metrics: [
-            { label: 'Midterm Exam', value: '25% Weight', baseline: 'Session 07 (10/02)', change: 'In-Class' },
-            { label: 'Homeworks (4 HWs)', value: '25% Weight', baseline: 'Sessions 04, 07, 10, 13', change: 'Mandatory' },
+            { label: 'Midterm Exam', value: '25% Weight', baseline: 'Week 07 (10/02)', change: 'In-Class' },
+            { label: 'Homeworks (4 HWs)', value: '25% Weight', baseline: 'Weeks 04, 07, 10, 13', change: 'Mandatory' },
             { label: 'Final Exam', value: '25% Weight', baseline: '12/09 (8:30-10:30 AM)', change: 'In-Class' },
             { label: 'Final Project', value: '25% Weight', baseline: 'Report Due 12/14', change: 'Mandatory' }
           ],
@@ -614,7 +614,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
             { id: 'd3', title: 'In-Class Midterm Examination', completed: false, dueDate: '2026-10-02' },
             { id: 'd4', title: 'Homework 3: Back-propagation Algorithm Due', completed: false, dueDate: '2026-10-23' },
             { id: 'd5', title: 'Homework 4: Neural Networks Due', completed: false, dueDate: '2026-11-13' },
-            { id: 'd6', title: 'In-Class Project Presentation (Session 14)', completed: false, dueDate: '2026-11-20' },
+            { id: 'd6', title: 'In-Class Project Presentation (Week 14)', completed: false, dueDate: '2026-11-20' },
             { id: 'd7', title: 'In-Class Final Examination (8:30 AM - 10:30 AM)', completed: false, dueDate: '2026-12-09' },
             { id: 'd8', title: 'Final Project Written Report Due', completed: false, dueDate: '2026-12-14' }
           ]

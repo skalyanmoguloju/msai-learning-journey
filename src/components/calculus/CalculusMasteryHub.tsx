@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   CheckCircle,
   XCircle,
+  X,
   RotateCcw,
   ArrowLeft,
   ArrowRight,
@@ -21,26 +22,67 @@ import {
   Shuffle
 } from 'lucide-react';
 import { CS229_FLASHCARDS } from './calculusFlashcardsData';
+import { UniversalFlashcardsModal } from '../common/UniversalFlashcardsModal';
+import { ModuleTemplate } from '../common/ModuleTemplate';
 
-// Math rendering helper component
+// Dedicated Flashcard KaTeX Formula Renderer (Display Mode)
+export const FlashcardFormula: React.FC<{ tex: string; className?: string }> = ({ tex, className = '' }) => {
+  const html = useMemo(() => {
+    if (!tex) return '';
+    const cleanTex = tex.trim().replace(/^\$\$([\s\S]*)\$\$$/, '$1').replace(/^\$([\s\S]*)\$$/, '$1');
+    try {
+      return katex.renderToString(cleanTex, {
+        displayMode: true,
+        throwOnError: false
+      });
+    } catch (err) {
+      console.error('KaTeX rendering error:', err);
+      return `<span class="text-rose-400 font-mono text-sm">${tex}</span>`;
+    }
+  }, [tex]);
+
+  return (
+    <div
+      className={`katex-display overflow-x-auto py-1 text-center select-text ${className}`}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+};
+
+// Math rendering helper component (handles mixed text with $...$/$$...$$, and raw TeX)
 export const MathText: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
   const html = useMemo(() => {
-    let res = text.replace(/\$\$([\s\S]+?)\$\$/g, (_, latex) => {
+    if (!text) return '';
+
+    // If text contains $ delimiters, parse $$...$$ and $...$
+    if (text.includes('$')) {
+      let res = text.replace(/\$\$([\s\S]+?)\$\$/g, (_, latex) => {
+        try {
+          return katex.renderToString(latex.trim(), { displayMode: true, throwOnError: false });
+        } catch {
+          return latex;
+        }
+      });
+      res = res.replace(/\$([^\$\n]+?)\$/g, (_, latex) => {
+        try {
+          return katex.renderToString(latex.trim(), { displayMode: false, throwOnError: false });
+        } catch {
+          return latex;
+        }
+      });
+      return res;
+    }
+
+    // If text has no $ but contains LaTeX commands, render with KaTeX
+    if (text.includes('\\') || /^[a-zA-Z0-9_^{}()[\]\s=+\-*/|<>]+$/.test(text)) {
       try {
-        return katex.renderToString(latex, { displayMode: true, throwOnError: false });
+        return katex.renderToString(text.trim(), { displayMode: false, throwOnError: false });
       } catch {
-        return latex;
+        return text;
       }
-    });
-    res = res.replace(/\$([^\$\n]+?)\$/g, (_, latex) => {
-      try {
-        return katex.renderToString(latex, { displayMode: false, throwOnError: false });
-      } catch {
-        return latex;
-      }
-    });
-    res = res.replace(/\\\\/g, '<br/>');
-    return res;
+    }
+
+    return text;
   }, [text]);
 
   return <span className={className} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -359,6 +401,7 @@ const CALCULUS_EXTRAS = [
 export const CalculusMasteryHub: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'study' | 'quiz' | 'ladder' | 'cone' | 'cheatsheet' | 'flashcards'>('study');
   const [activeStudyModule, setActiveStudyModule] = useState<'m1' | 'm2' | 'm3' | 'm4' | 'm5'>('m1');
+  const [showFlashcardsModal, setShowFlashcardsModal] = useState<boolean>(false);
 
   // Flashcards State (CS229 VIP Formula Flashcards)
   const [cardCategory, setCardCategory] = useState<string>('All');
@@ -391,10 +434,12 @@ export const CalculusMasteryHub: React.FC = () => {
   const activeCard = filteredCards[currentCardIdx] || filteredCards[0];
 
   useEffect(() => {
-    if (activeTab !== 'flashcards') return;
+    if (activeTab !== 'flashcards' && !showFlashcardsModal) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      if (e.key === 'ArrowRight') {
+      if (e.key === 'Escape' && showFlashcardsModal) {
+        setShowFlashcardsModal(false);
+      } else if (e.key === 'ArrowRight') {
         e.preventDefault();
         setCurrentCardIdx((prev) => (prev + 1) % filteredCards.length);
         setIsCardFlipped(false);
@@ -409,7 +454,7 @@ export const CalculusMasteryHub: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeTab, filteredCards.length]);
+  }, [activeTab, showFlashcardsModal, filteredCards.length]);
 
   // Completion State & Progress
   const [completedModules, setCompletedModules] = useState<string[]>(() => {
@@ -711,11 +756,17 @@ export const CalculusMasteryHub: React.FC = () => {
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
             {CALCULUS_EXTRAS.map((extra) => {
               const Icon = extra.icon;
-              const isActive = activeTab === extra.id;
+              const isActive = extra.id === 'flashcards' ? showFlashcardsModal : activeTab === extra.id;
               return (
                 <button
                   key={extra.id}
-                  onClick={() => setActiveTab(extra.id)}
+                  onClick={() => {
+                    if (extra.id === 'flashcards') {
+                      setShowFlashcardsModal(true);
+                    } else {
+                      setActiveTab(extra.id);
+                    }
+                  }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition text-xs font-medium shrink-0 border active:scale-95 ${
                     isActive
                       ? 'bg-indigo-600/30 border-indigo-500 text-indigo-200'
@@ -784,11 +835,17 @@ export const CalculusMasteryHub: React.FC = () => {
             <nav className="space-y-1">
               {CALCULUS_EXTRAS.map((extra) => {
                 const Icon = extra.icon;
-                const isActive = activeTab === extra.id;
+                const isActive = extra.id === 'flashcards' ? showFlashcardsModal : activeTab === extra.id;
                 return (
                   <button
                     key={extra.id}
-                    onClick={() => setActiveTab(extra.id)}
+                    onClick={() => {
+                      if (extra.id === 'flashcards') {
+                        setShowFlashcardsModal(true);
+                      } else {
+                        setActiveTab(extra.id);
+                      }
+                    }}
                     className={`w-full flex items-center justify-between p-2 rounded-xl text-xs font-medium transition-all text-left ${
                       isActive
                         ? 'bg-indigo-600/30 border border-indigo-500/50 text-indigo-100 font-semibold shadow-sm'
@@ -834,73 +891,40 @@ export const CalculusMasteryHub: React.FC = () => {
 
 
       {/* ==================== SECTION 0: DETAILED STUDY NOTES ==================== */}
-      {activeTab === 'study' && (
-        <div className="space-y-6">
-          {/* Active Module Header Banner */}
-          {(() => {
-            const currentMod = CALCULUS_MODULES.find((m) => m.id === activeStudyModule) || CALCULUS_MODULES[0];
-            const currentIdx = CALCULUS_MODULES.findIndex((m) => m.id === activeStudyModule);
-            return (
-              <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                      Module {currentMod.num}
-                    </span>
-                    <span className="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                      Calculus Foundation
-                    </span>
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mt-2">
-                    {currentMod.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
-                    {currentMod.subtitle}
-                  </p>
-                </div>
+      {activeTab === 'study' && (() => {
+        const currentMod = CALCULUS_MODULES.find((m) => m.id === activeStudyModule) || CALCULUS_MODULES[0];
+        const currentIdx = CALCULUS_MODULES.findIndex((m) => m.id === activeStudyModule);
+        const isDone = completedModules.includes(currentMod.id);
 
-                <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
-                  <button
-                    onClick={() => toggleModuleComplete(currentMod.id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition active:scale-95 ${
-                      completedModules.includes(currentMod.id)
-                        ? 'bg-emerald-600/20 border-emerald-500/40 text-emerald-300'
-                        : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-                    }`}
-                  >
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>{completedModules.includes(currentMod.id) ? 'Done ✅' : 'Mark Done'}</span>
-                  </button>
-                  <button
-                    disabled={currentIdx <= 0}
-                    onClick={() => {
-                      if (currentIdx > 0) setActiveStudyModule(CALCULUS_MODULES[currentIdx - 1].id);
-                    }}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${
-                      currentIdx > 0
-                        ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 active:scale-95'
-                        : 'bg-slate-900/50 text-slate-600 border-slate-800/50 cursor-not-allowed'
-                    }`}
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" /> Prev
-                  </button>
-                  <button
-                    disabled={currentIdx >= CALCULUS_MODULES.length - 1}
-                    onClick={() => {
-                      if (currentIdx < CALCULUS_MODULES.length - 1) setActiveStudyModule(CALCULUS_MODULES[currentIdx + 1].id);
-                    }}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${
-                      currentIdx < CALCULUS_MODULES.length - 1
-                        ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 active:scale-95'
-                        : 'bg-slate-900/50 text-slate-600 border-slate-800/50 cursor-not-allowed'
-                    }`}
-                  >
-                    Next <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            );
-          })()}
+        return (
+          <ModuleTemplate
+            moduleId={currentMod.num}
+            moduleIndex={currentIdx + 1}
+            totalModules={CALCULUS_MODULES.length}
+            badge="Calculus Foundation"
+            title={currentMod.title}
+            subtitle={currentMod.subtitle}
+            isCompleted={isDone}
+            onToggleComplete={() => toggleModuleComplete(currentMod.id)}
+            hasPrev={currentIdx > 0}
+            hasNext={currentIdx < CALCULUS_MODULES.length - 1}
+            onPrevModule={() => {
+              if (currentIdx > 0) setActiveStudyModule(CALCULUS_MODULES[currentIdx - 1].id);
+            }}
+            onNextModule={() => {
+              if (currentIdx < CALCULUS_MODULES.length - 1) setActiveStudyModule(CALCULUS_MODULES[currentIdx + 1].id);
+            }}
+            extraActions={
+              <button
+                onClick={() => setShowFlashcardsModal(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition active:scale-95"
+                title="Open Formula Flashcards Popup"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Formula Cards</span>
+              </button>
+            }
+          >
 
           {/* Module 1 Material */}
           {activeStudyModule === 'm1' && (
@@ -1319,8 +1343,9 @@ export const CalculusMasteryHub: React.FC = () => {
               </div>
             </div>
           )}
-        </div>
-      )}
+        </ModuleTemplate>
+      );
+      })()}
 
       {/* ==================== SECTION 1: PRACTICE QUIZZES ==================== */}
       {activeTab === 'quiz' && (
@@ -1709,7 +1734,7 @@ export const CalculusMasteryHub: React.FC = () => {
         </div>
       )}
 
-      {/* ==================== SECTION 5: CS229 VIP FORMULA FLASHCARDS ==================== */}
+      {/* ==================== SECTION 5: CS229 VIP FORMULA FLASHCARDS (FULL TAB) ==================== */}
       {activeTab === 'flashcards' && (
         <div className="space-y-6 animate-fade-in">
           {/* Header Card */}
@@ -1764,6 +1789,7 @@ export const CalculusMasteryHub: React.FC = () => {
             </div>
           </div>
 
+          {/* Flashcards Body */}
           {/* Category Filter Pills */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {[
@@ -1803,10 +1829,9 @@ export const CalculusMasteryHub: React.FC = () => {
             })}
           </div>
 
-          {/* DECK VIEW: Interactive Flippable Card */}
+          {/* DECK VIEW */}
           {flashcardViewMode === 'deck' && (
             <div className="space-y-4">
-              {/* Progress and Card Counter */}
               <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
                 <span>
                   Card <strong className="text-white">{currentCardIdx + 1}</strong> of {filteredCards.length}
@@ -1820,12 +1845,10 @@ export const CalculusMasteryHub: React.FC = () => {
                 />
               </div>
 
-              {/* The Interactive Flipping Card Container */}
               <div
                 onClick={() => setIsCardFlipped(!isCardFlipped)}
                 className="cursor-pointer min-h-[340px] sm:min-h-[380px] bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-6 sm:p-8 shadow-xl transition-all relative flex flex-col justify-between group select-none"
               >
-                {/* Top card header */}
                 <div className="flex items-center justify-between">
                   <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
                     {activeCard.category}
@@ -1846,16 +1869,14 @@ export const CalculusMasteryHub: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Card Content (Front vs Back) */}
                 <div className="my-6 space-y-4 text-center">
                   {!isCardFlipped ? (
-                    /* FRONT: Question / Prompt */
                     <div className="space-y-4 animate-fade-in">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
                         Question / Concept Prompt
                       </span>
                       <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                        {activeCard.title}
+                        <MathText text={activeCard.title} />
                       </h4>
                       <div className="text-base sm:text-lg text-slate-200 font-medium max-w-xl mx-auto leading-relaxed">
                         <MathText text={activeCard.frontPrompt} />
@@ -1865,16 +1886,15 @@ export const CalculusMasteryHub: React.FC = () => {
                       </p>
                     </div>
                   ) : (
-                    /* BACK: Formula & Derivation */
                     <div className="space-y-4 animate-fade-in">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block">
                         Formula &amp; Mathematical Derivation
                       </span>
                       <h4 className="text-lg font-bold text-indigo-300">
-                        {activeCard.title}
+                        <MathText text={activeCard.title} />
                       </h4>
                       <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-slate-100 text-base sm:text-lg overflow-x-auto shadow-inner max-w-2xl mx-auto">
-                        <MathText text={activeCard.backFormula} />
+                        <FlashcardFormula tex={activeCard.backFormula} />
                       </div>
                       <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
                         <MathText text={activeCard.backExplanation} />
@@ -1893,14 +1913,12 @@ export const CalculusMasteryHub: React.FC = () => {
                   )}
                 </div>
 
-                {/* Bottom hint bar */}
                 <div className="flex items-center justify-between text-[11px] text-slate-500 pt-3 border-t border-slate-800/80">
                   <span>Press Space / Enter to Flip</span>
                   <span>Use ← → Arrow Keys to Navigate</span>
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center justify-between gap-3 pt-2">
                 <button
                   onClick={() => {
@@ -1946,7 +1964,7 @@ export const CalculusMasteryHub: React.FC = () => {
             </div>
           )}
 
-          {/* GRID VIEW: Browse All Flashcards */}
+          {/* GRID VIEW */}
           {flashcardViewMode === 'grid' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredCards.map((card) => {
@@ -1971,7 +1989,7 @@ export const CalculusMasteryHub: React.FC = () => {
                         </button>
                       </div>
                       <h4 className="font-bold text-white text-sm">
-                        {card.title}
+                        <MathText text={card.title} />
                       </h4>
                       <p className="text-xs text-slate-300 leading-relaxed">
                         <MathText text={card.frontPrompt} />
@@ -1979,8 +1997,8 @@ export const CalculusMasteryHub: React.FC = () => {
                     </div>
 
                     <div className="space-y-2 pt-2 border-t border-slate-800/80">
-                      <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center text-xs overflow-x-auto text-indigo-200 font-mono">
-                        <MathText text={card.backFormula} />
+                      <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center text-xs overflow-x-auto text-indigo-200">
+                        <FlashcardFormula tex={card.backFormula} />
                       </div>
                       <p className="text-xs text-slate-400 leading-relaxed">
                         <MathText text={card.backExplanation} />
@@ -2001,6 +2019,16 @@ export const CalculusMasteryHub: React.FC = () => {
 
         </div>
       </div>
+
+      {/* Universal VIP Flashcards Modal */}
+      <UniversalFlashcardsModal
+        isOpen={showFlashcardsModal}
+        onClose={() => setShowFlashcardsModal(false)}
+        title="Calculus & Linear Algebra Flashcards"
+        subtitle="Stanford CS229 VIP Formula Refresher — 28 Essential Formulas"
+        cards={CS229_FLASHCARDS}
+        storageKey="calculus_flashcards_mastered"
+      />
 
     </div>
   );

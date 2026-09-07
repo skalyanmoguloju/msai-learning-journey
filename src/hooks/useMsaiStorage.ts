@@ -4,7 +4,8 @@ import { INITIAL_SEMESTERS } from '../data/msaiData';
 import { INITIAL_FUNDAMENTALS } from '../data/fundamentalsData';
 
 const STORAGE_KEYS = {
-  SEMESTERS: 'msai_journey_semesters_v1',
+  SEMESTERS: 'msai_journey_semesters_v2',
+  SEMESTERS_LEGACY: 'msai_journey_semesters_v1',
   FUNDAMENTALS: 'msai_journey_fundamentals_v1',
   ACTIVE_SEMESTER: 'msai_journey_active_sem_v1',
   ACTIVE_COURSE: 'msai_journey_active_course_v1',
@@ -13,15 +14,53 @@ const STORAGE_KEYS = {
   CUSTOM_NOTES: 'msai_journey_custom_notes_v1',
 };
 
+function normalizeSemesters(sems: Semester[]): Semester[] {
+  return sems.map(sem => ({
+    ...sem,
+    courses: sem.courses.map(course => ({
+      ...course,
+      modules: course.modules.map(mod => ({
+        ...mod,
+        week: mod.week ? mod.week.replace(/^Session\s*/i, 'Week ') : mod.week,
+        description: mod.description ? mod.description.replace(/Session\s*/gi, 'Week ') : mod.description,
+        reading: mod.reading ? mod.reading.replace(/Session\s*/gi, 'Week ') : mod.reading
+      })),
+      notes: course.notes ? course.notes.map(note => ({
+        ...note,
+        week: note.week ? note.week.replace(/^Session\s*/i, 'Week ') : note.week
+      })) : course.notes,
+      project: course.project ? {
+        ...course.project,
+        pipelineSteps: course.project.pipelineSteps.map(step => ({
+          ...step,
+          description: step.description ? step.description.replace(/Session\s*/gi, 'Week ') : step.description,
+          tool: step.tool ? step.tool.replace(/Session\s*/gi, 'Week ') : step.tool
+        })),
+        metrics: course.project.metrics.map(metric => ({
+          ...metric,
+          baseline: metric.baseline ? metric.baseline.replace(/Session\s*/gi, 'Week ') : metric.baseline
+        })),
+        deliverables: course.project.deliverables.map(del => ({
+          ...del,
+          title: del.title ? del.title.replace(/Session\s*/gi, 'Week ') : del.title
+        }))
+      } : course.project
+    }))
+  }));
+}
+
 export function useMsaiStorage() {
   const [semesters, setSemesters] = useState<Semester[]>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.SEMESTERS);
-      if (saved) return JSON.parse(saved);
+      const saved = localStorage.getItem(STORAGE_KEYS.SEMESTERS) || localStorage.getItem(STORAGE_KEYS.SEMESTERS_LEGACY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return normalizeSemesters(parsed);
+      }
     } catch (e) {
       console.warn('Failed to load semesters from storage:', e);
     }
-    return INITIAL_SEMESTERS;
+    return normalizeSemesters(INITIAL_SEMESTERS);
   });
 
   const [fundamentals, setFundamentals] = useState<FundamentalTopic[]>(() => {

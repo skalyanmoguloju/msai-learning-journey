@@ -13,6 +13,8 @@ import {
   CalendarDays
 } from 'lucide-react';
 import { Course } from '../../types/course';
+import { isWeekAvailable } from '../../curriculum/registry';
+import { Construction } from 'lucide-react';
 
 interface ClassTabProps {
   course: Course;
@@ -181,14 +183,20 @@ export const ClassTab: React.FC<ClassTabProps> = ({ course }) => {
 
         <div className="space-y-3">
           {course.modules.map((mod) => {
-            const isCompleted = mod.status === 'completed';
-            const isInProgress = mod.status === 'in-progress';
+            const available = isWeekAvailable(course, mod);
+            // Only surface completion / in-progress status if the week is fully implemented.
+            // Stub (under-construction) weeks always appear as "not started".
+            const isCompleted = available && mod.status === 'completed';
+            const isInProgress = available && mod.status === 'in-progress';
+            const isStub = !available;
 
             return (
               <div
                 key={mod.id}
                 className={`rounded-xl p-4 border transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 ${
-                  isInProgress
+                  isStub
+                    ? 'bg-slate-950/20 border-slate-700/30 opacity-70'
+                    : isInProgress
                     ? 'bg-gradient-to-r from-blue-950/40 to-slate-900 border-blue-500/50 shadow-md shadow-blue-950/30'
                     : isCompleted
                     ? 'bg-slate-950/40 border-slate-800/80 text-slate-300'
@@ -198,7 +206,7 @@ export const ClassTab: React.FC<ClassTabProps> = ({ course }) => {
                 <div className="space-y-1.5 max-w-2xl">
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-mono font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
-                      {mod.week}
+                      {mod.week.replace(/^Session\s*/i, 'Week ')}
                     </span>
                     <h5 className="text-xs md:text-sm font-bold text-white">
                       {mod.title}
@@ -218,16 +226,21 @@ export const ClassTab: React.FC<ClassTabProps> = ({ course }) => {
 
                 <div className="flex flex-col md:items-end gap-1.5 shrink-0">
                   <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
-                    isCompleted
+                    isStub
+                      ? 'bg-slate-800/60 text-slate-500 border border-slate-700/50'
+                      : isCompleted
                       ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
                       : isInProgress
                       ? 'bg-blue-950 text-blue-300 border border-blue-800 animate-pulse'
                       : 'bg-slate-800 text-slate-400'
                   }`}>
-                    {isCompleted && <CheckCircle2 className="w-3 h-3 text-emerald-400" />}
-                    {isInProgress && <Clock3 className="w-3 h-3 text-blue-400" />}
-                    {!isCompleted && !isInProgress && <AlertCircle className="w-3 h-3 text-slate-500" />}
-                    <span className="capitalize">{mod.status.replace('-', ' ')}</span>
+                    {isStub && <Construction className="w-3 h-3 text-slate-500" />}
+                    {!isStub && isCompleted && <CheckCircle2 className="w-3 h-3 text-emerald-400" />}
+                    {!isStub && isInProgress && <Clock3 className="w-3 h-3 text-blue-400" />}
+                    {!isStub && !isCompleted && !isInProgress && <AlertCircle className="w-3 h-3 text-slate-500" />}
+                    <span className="capitalize">
+                      {isStub ? 'Under Construction' : mod.status.replace('-', ' ')}
+                    </span>
                   </span>
 
                   {mod.reading && (

@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   CheckCircle,
   XCircle,
+  X,
   AlertTriangle,
   ArrowRight,
   ArrowLeft,
@@ -21,30 +22,72 @@ import {
   Award,
   TrendingUp,
   Percent,
-  HelpCircle
+  HelpCircle,
+  Shuffle
 } from 'lucide-react';
 import katex from 'katex';
 import { STAT_QUIZ_MODULES } from './statisticsQuizData';
+import { CS229_STATS_FLASHCARDS, StatsFlashcard } from './statisticsFlashcardsData';
 
-// KaTeX Math Rendering Helper (Calculus & AI Experience)
+// Dedicated Flashcard KaTeX Formula Renderer (Display Mode)
+const FlashcardFormula: React.FC<{ tex: string; className?: string }> = ({ tex, className = '' }) => {
+  const html = useMemo(() => {
+    if (!tex) return '';
+    // Strip accidental surrounding $$ or $ if present
+    const cleanTex = tex.trim().replace(/^\$\$([\s\S]*)\$\$$/, '$1').replace(/^\$([\s\S]*)\$$/, '$1');
+    try {
+      return katex.renderToString(cleanTex, {
+        displayMode: true,
+        throwOnError: false
+      });
+    } catch (err) {
+      console.error('KaTeX rendering error:', err);
+      return `<span class="text-rose-400 font-mono text-sm">${tex}</span>`;
+    }
+  }, [tex]);
+
+  return (
+    <div
+      className={`katex-display overflow-x-auto py-1 text-center select-text ${className}`}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+};
+
+// KaTeX Math Rendering Helper (Handles text with embedded $...$ / $$...$$, and raw TeX formulas)
 const MathText: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
   const html = useMemo(() => {
-    let res = text.replace(/\$\$([\s\S]+?)\$\$/g, (_, latex) => {
+    if (!text) return '';
+
+    // If text contains $ delimiters, parse $$...$$ and $...$
+    if (text.includes('$')) {
+      let res = text.replace(/\$\$([\s\S]+?)\$\$/g, (_, latex) => {
+        try {
+          return katex.renderToString(latex.trim(), { displayMode: true, throwOnError: false });
+        } catch {
+          return latex;
+        }
+      });
+      res = res.replace(/\$([^\$\n]+?)\$/g, (_, latex) => {
+        try {
+          return katex.renderToString(latex.trim(), { displayMode: false, throwOnError: false });
+        } catch {
+          return latex;
+        }
+      });
+      return res;
+    }
+
+    // If text has no $ but contains LaTeX commands (e.g. \frac, \sum, \int, \begin), render with KaTeX
+    if (text.includes('\\') || /^[a-zA-Z0-9_^{}()[\]\s=+\-*/|<>]+$/.test(text)) {
       try {
-        return katex.renderToString(latex, { displayMode: true, throwOnError: false });
+        return katex.renderToString(text.trim(), { displayMode: false, throwOnError: false });
       } catch {
-        return latex;
+        return text;
       }
-    });
-    res = res.replace(/\$([^\$\n]+?)\$/g, (_, latex) => {
-      try {
-        return katex.renderToString(latex, { displayMode: false, throwOnError: false });
-      } catch {
-        return latex;
-      }
-    });
-    res = res.replace(/\\\\/g, '<br/>');
-    return res;
+    }
+
+    return text;
   }, [text]);
 
   return <span className={className} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -356,6 +399,8 @@ export const StatisticsMasteryHub: React.FC = () => {
     localStorage.removeItem('statistics_completed_modules');
     setQuizUserAnswers({});
     localStorage.removeItem('statistics_quiz_answers');
+    setMasteredCards([]);
+    localStorage.removeItem('statistics_flashcards_mastered');
   };
 
   const pct = Math.round((completedModules.length / MODULES_DATA.length) * 100);
@@ -364,11 +409,68 @@ export const StatisticsMasteryHub: React.FC = () => {
     return MODULES_DATA.find((m) => m.id === activeModuleId) || MODULES_DATA[0];
   }, [activeModuleId]);
 
-  // Quiz Assessment State (Calculus Experience)
-  const [activeTab, setActiveTab] = useState<'study' | 'quiz'>('study');
+  // Tab State: Study Guide, Practice Quizzes, or VIP Formula Flashcards
+  const [activeTab, setActiveTab] = useState<'study' | 'quiz' | 'flashcards'>('study');
   const [quizModuleKey, setQuizModuleKey] = useState<string>('m1');
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState<number>(0);
   const [showSolutionsGuide, setShowSolutionsGuide] = useState<boolean>(false);
+  const [showFlashcardsModal, setShowFlashcardsModal] = useState<boolean>(false);
+
+  // VIP Formula Flashcards State (CS229 Refresher)
+  const [cardCategory, setCardCategory] = useState<string>('All');
+  const [currentCardIdx, setCurrentCardIdx] = useState<number>(0);
+  const [isCardFlipped, setIsCardFlipped] = useState<boolean>(false);
+  const [flashcardViewMode, setFlashcardViewMode] = useState<'deck' | 'grid'>('deck');
+  const [masteredCards, setMasteredCards] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('statistics_flashcards_mastered') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  const toggleCardMastered = (id: string) => {
+    setMasteredCards((prev) => {
+      const next = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
+      try {
+        localStorage.setItem('statistics_flashcards_mastered', JSON.stringify(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
+
+  const filteredFlashcards = useMemo(() => {
+    if (cardCategory === 'All') return CS229_STATS_FLASHCARDS;
+    return CS229_STATS_FLASHCARDS.filter((c) => c.category === cardCategory);
+  }, [cardCategory]);
+
+  const activeCard = filteredFlashcards[currentCardIdx] || filteredFlashcards[0] || CS229_STATS_FLASHCARDS[0];
+
+  // Keyboard navigation for VIP Flashcards
+  useEffect(() => {
+    if (activeTab !== 'flashcards' && !showFlashcardsModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'Escape' && showFlashcardsModal) {
+        setShowFlashcardsModal(false);
+      } else if (e.code === 'Space' || e.key === 'Enter') {
+        e.preventDefault();
+        setIsCardFlipped((prev) => !prev);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setCurrentCardIdx((prev) => (prev + 1) % filteredFlashcards.length);
+        setIsCardFlipped(false);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setCurrentCardIdx((prev) => (prev - 1 + filteredFlashcards.length) % filteredFlashcards.length);
+        setIsCardFlipped(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeTab, showFlashcardsModal, filteredFlashcards.length]);
   const [quizUserAnswers, setQuizUserAnswers] = useState<Record<string, number>>(() => {
     try {
       return JSON.parse(localStorage.getItem('statistics_quiz_answers') || '{}');
@@ -1218,14 +1320,14 @@ export const StatisticsMasteryHub: React.FC = () => {
 
         {/* Mobile Module Selector (strictly lg:hidden) */}
         <div className="lg:hidden w-full space-y-2">
-          {/* Practice Quizzes & Solutions Guide mobile switchers */}
-          <div className="flex items-center gap-2">
+          {/* Practice Quizzes, Flashcards & Solutions Guide mobile switchers */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button
               onClick={() => {
                 setActiveTab('study');
                 setShowSolutionsGuide(false);
               }}
-              className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                 activeTab === 'study'
                   ? 'bg-blue-600 text-white shadow-md'
                   : 'bg-slate-900 text-slate-400 border border-slate-800'
@@ -1236,19 +1338,32 @@ export const StatisticsMasteryHub: React.FC = () => {
             </button>
             <button
               onClick={() => {
+                setShowFlashcardsModal(true);
+              }}
+              className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                showFlashcardsModal || activeTab === 'flashcards'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                  : 'bg-slate-900 text-slate-400 border border-slate-800'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              <span>VIP Cards</span>
+            </button>
+            <button
+              onClick={() => {
                 setActiveTab('quiz');
                 setShowSolutionsGuide(false);
                 const validKey = (activeModuleId >= 1 && activeModuleId <= 7) ? `m${activeModuleId}` : 'm1';
                 setQuizModuleKey(validKey);
               }}
-              className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                 activeTab === 'quiz' && !showSolutionsGuide
                   ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md'
                   : 'bg-slate-900 text-slate-400 border border-slate-800'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5" />
-              <span>Practice Quizzes</span>
+              <span>Quizzes</span>
             </button>
             <button
               onClick={() => {
@@ -1355,11 +1470,29 @@ export const StatisticsMasteryHub: React.FC = () => {
             </nav>
           </div>
 
-          {/* Interactive Practice Quizzes & Tools Card */}
+          {/* Interactive Flashcards, Practice Quizzes & Tools Card */}
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-sm space-y-2">
             <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">
-              Assessments & Guides
+              Assessments &amp; Flashcards
             </p>
+            <button
+              onClick={() => {
+                setShowFlashcardsModal(true);
+              }}
+              className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-semibold transition-all text-left ${
+                showFlashcardsModal || activeTab === 'flashcards'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-400" />
+                <span>VIP Formula Cards</span>
+              </div>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono">
+                34 Cards
+              </span>
+            </button>
             <button
               onClick={() => {
                 setActiveTab('quiz');
@@ -1442,17 +1575,27 @@ export const StatisticsMasteryHub: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => toggleModuleComplete(activeModule.id)}
-          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition shrink-0 self-end sm:self-auto active:scale-95 ${
-            completedModules.includes(activeModule.id)
-              ? 'bg-emerald-600/20 border-emerald-500/40 text-emerald-300'
-              : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-          }`}
-        >
-          <CheckCircle2 className="w-3.5 h-3.5" />
-          <span>{completedModules.includes(activeModule.id) ? 'Module Done ✅' : 'Mark Complete'}</span>
-        </button>
+        <div className="flex items-center gap-2 self-end sm:self-auto shrink-0 flex-wrap">
+          <button
+            onClick={() => setShowFlashcardsModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition active:scale-95"
+            title="Open Formula Flashcards Popup"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Formula Cards</span>
+          </button>
+          <button
+            onClick={() => toggleModuleComplete(activeModule.id)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition active:scale-95 ${
+              completedModules.includes(activeModule.id)
+                ? 'bg-emerald-600/20 border-emerald-500/40 text-emerald-300'
+                : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
+            }`}
+          >
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            <span>{completedModules.includes(activeModule.id) ? 'Module Done ✅' : 'Mark Complete'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Concept Breakdown Grid */}
@@ -2526,8 +2669,602 @@ export const StatisticsMasteryHub: React.FC = () => {
             </div>
           )}
 
+          {/* ==================== SECTION: CS229 VIP PROBABILITY & STATISTICS FLASHCARDS ==================== */}
+          {activeTab === 'flashcards' && (
+            <div className="space-y-6 animate-fade-in">
+              {/* Header Card */}
+              <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wider">
+                      Stanford CS229 VIP Refresher
+                    </span>
+                    <span className="text-xs text-slate-400">34 Essential Formulas</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mt-1">
+                    Probability &amp; Statistics Formula Flashcards
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Master probability axioms, Bayes’ rule, CDF/PDFs, moments, characteristic functions, variable transformations, joint distributions, 5 core distributions, and CLT parameter estimation.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 shrink-0 flex-wrap">
+                  {/* Mastery Counter */}
+                  <div className="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-xl border border-slate-800 text-xs">
+                    <span className="text-slate-400">Mastered:</span>
+                    <span className="font-bold text-emerald-400 font-mono">
+                      {masteredCards.length}/{CS229_STATS_FLASHCARDS.length}
+                    </span>
+                  </div>
+
+                  {/* View Mode Switcher (Deck vs Grid) */}
+                  <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                    <button
+                      onClick={() => setFlashcardViewMode('deck')}
+                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
+                        flashcardViewMode === 'deck'
+                          ? 'bg-indigo-600 text-white shadow-sm'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      Deck View
+                    </button>
+                    <button
+                      onClick={() => setFlashcardViewMode('grid')}
+                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
+                        flashcardViewMode === 'grid'
+                          ? 'bg-indigo-600 text-white shadow-sm'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      Grid View
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                {[
+                  'All',
+                  'Probability & Combinatorics',
+                  'Random Variables & Properties',
+                  'Moments & Transformations',
+                  'Joint Distributions & Correlation',
+                  'Key Distributions',
+                  'Estimation & CLT'
+                ].map((cat) => {
+                  const isSelected = cardCategory === cat;
+                  const count =
+                    cat === 'All'
+                      ? CS229_STATS_FLASHCARDS.length
+                      : CS229_STATS_FLASHCARDS.filter((c) => c.category === cat).length;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setCardCategory(cat);
+                        setCurrentCardIdx(0);
+                        setIsCardFlipped(false);
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shrink-0 transition border flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20'
+                          : 'bg-slate-900/80 text-slate-400 hover:text-white border-slate-800'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-800 text-slate-300 font-mono">
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* DECK VIEW: Interactive Flippable Card */}
+              {flashcardViewMode === 'deck' && (
+                <div className="space-y-4">
+                  {/* Progress and Card Counter */}
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+                    <span>
+                      Card <strong className="text-white">{currentCardIdx + 1}</strong> of {filteredFlashcards.length}
+                    </span>
+                    <span className="text-indigo-400 font-semibold">{activeCard.category}</span>
+                  </div>
+                  <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-indigo-500 to-cyan-400 h-1.5 rounded-full transition-all duration-300"
+                      style={{ width: `${((currentCardIdx + 1) / filteredFlashcards.length) * 100}%` }}
+                    />
+                  </div>
+
+                  {/* The Interactive Flipping Card Container */}
+                  <div
+                    onClick={() => setIsCardFlipped(!isCardFlipped)}
+                    className="cursor-pointer min-h-[340px] sm:min-h-[380px] bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-6 sm:p-8 shadow-xl transition-all relative flex flex-col justify-between group select-none"
+                  >
+                    {/* Top card header */}
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        {activeCard.category}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleCardMastered(activeCard.id);
+                        }}
+                        className={`px-3 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition ${
+                          masteredCards.includes(activeCard.id)
+                            ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40'
+                            : 'bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60'
+                        }`}
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>{masteredCards.includes(activeCard.id) ? 'Mastered' : 'Mark Mastered'}</span>
+                      </button>
+                    </div>
+
+                    {/* Card Content (Front vs Back) */}
+                    <div className="my-6 space-y-4 text-center">
+                      {!isCardFlipped ? (
+                        /* FRONT: Question / Concept Prompt */
+                        <div className="space-y-4 animate-fade-in">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+                            Question / Concept Prompt
+                          </span>
+                          <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                            <MathText text={activeCard.title} />
+                          </h4>
+                          <div className="text-base sm:text-lg text-slate-200 font-medium max-w-xl mx-auto leading-relaxed">
+                            <MathText text={activeCard.frontPrompt} />
+                          </div>
+                          <p className="text-xs text-indigo-400/80 italic pt-2">
+                            (Click card or press Space to reveal formula &amp; derivation)
+                          </p>
+                        </div>
+                      ) : (
+                        /* BACK: Formula & Derivation */
+                        <div className="space-y-4 animate-fade-in">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block">
+                            Formula &amp; Mathematical Derivation
+                          </span>
+                          <h4 className="text-lg font-bold text-indigo-300">
+                            <MathText text={activeCard.title} />
+                          </h4>
+                          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-slate-100 text-base sm:text-lg overflow-x-auto shadow-inner max-w-2xl mx-auto">
+                            <FlashcardFormula tex={activeCard.backFormula} />
+                          </div>
+                          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+                            <MathText text={activeCard.backExplanation} />
+                          </p>
+                          {activeCard.useCase && (
+                            <div className="inline-block bg-blue-950/40 text-blue-300 border border-blue-800/60 px-3 py-1 rounded-lg text-xs font-semibold">
+                              💡 <strong>ML Use Case:</strong> {activeCard.useCase}
+                            </div>
+                          )}
+                          {activeCard.remark && (
+                            <p className="text-[11px] text-slate-400 italic max-w-lg mx-auto">
+                              Remark: <MathText text={activeCard.remark} />
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bottom hint bar */}
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 pt-3 border-t border-slate-800/80">
+                      <span>Press Space / Enter to Flip</span>
+                      <span>Use ← → Arrow Keys to Navigate</span>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center justify-between gap-3 pt-2">
+                    <button
+                      onClick={() => {
+                        setCurrentCardIdx((prev) => (prev - 1 + filteredFlashcards.length) % filteredFlashcards.length);
+                        setIsCardFlipped(false);
+                      }}
+                      className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-xs font-semibold flex items-center gap-2 border border-slate-700/60 shadow-sm"
+                    >
+                      <ArrowLeft className="w-4 h-4" /> Previous
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setIsCardFlipped(!isCardFlipped)}
+                        className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-600/30"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span>{isCardFlipped ? 'Show Front' : 'Flip to Formula'}</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          const rand = Math.floor(Math.random() * filteredFlashcards.length);
+                          setCurrentCardIdx(rand);
+                          setIsCardFlipped(false);
+                        }}
+                        className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition border border-slate-700/60"
+                        title="Shuffle Cards"
+                      >
+                        <Shuffle className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        setCurrentCardIdx((prev) => (prev + 1) % filteredFlashcards.length);
+                        setIsCardFlipped(false);
+                      }}
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white transition text-xs font-semibold flex items-center gap-2 shadow-md shadow-blue-600/30"
+                    >
+                      Next <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* GRID VIEW: Browse All Flashcards */}
+              {flashcardViewMode === 'grid' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {filteredFlashcards.map((card) => {
+                    const isMastered = masteredCards.includes(card.id);
+                    return (
+                      <div
+                        key={card.id}
+                        className="bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-5 shadow-sm space-y-3.5 flex flex-col justify-between transition-all"
+                      >
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                              {card.category}
+                            </span>
+                            <button
+                              onClick={() => toggleCardMastered(card.id)}
+                              className={`p-1.5 rounded-lg text-xs transition ${
+                                isMastered ? 'text-emerald-400' : 'text-slate-500 hover:text-slate-300'
+                              }`}
+                              title={isMastered ? 'Marked Mastered' : 'Mark as Mastered'}
+                            >
+                              <CheckCircle2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                          <h4 className="font-bold text-white text-sm">
+                            <MathText text={card.title} />
+                          </h4>
+                          <p className="text-xs text-slate-300 leading-relaxed">
+                            <MathText text={card.frontPrompt} />
+                          </p>
+                        </div>
+
+                        <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                          <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center text-xs overflow-x-auto text-indigo-200 font-mono">
+                            <FlashcardFormula tex={card.backFormula} />
+                          </div>
+                          <p className="text-xs text-slate-400 leading-relaxed">
+                            <MathText text={card.backExplanation} />
+                          </p>
+                          {card.useCase && (
+                            <p className="text-[11px] text-blue-300 font-medium">
+                              💡 {card.useCase}
+                            </p>
+                          )}
+                          {card.remark && (
+                            <p className="text-[10px] text-slate-500 italic">
+                              Remark: <MathText text={card.remark} />
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
         </div>
       </div>
+
+      {/* ==================== POPUP MODAL: CS229 STATS VIP FLASHCARDS ==================== */}
+      {showFlashcardsModal && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-fade-in">
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-4 bg-slate-900/90 shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">
+                  <Sparkles className="w-4 h-4 text-indigo-400" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wider">
+                      Stanford CS229 VIP Refresher
+                    </span>
+                    <span className="text-[11px] text-slate-400 font-mono">34 Essential Formulas</span>
+                  </div>
+                  <h3 className="text-sm sm:text-base font-bold text-white mt-0.5">
+                    Probability &amp; Statistics Flashcards
+                  </h3>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                {/* Mastery Counter */}
+                <div className="hidden sm:flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
+                  <span className="text-slate-400">Mastered:</span>
+                  <span className="font-bold text-emerald-400 font-mono">
+                    {masteredCards.length}/{CS229_STATS_FLASHCARDS.length}
+                  </span>
+                </div>
+
+                {/* View Mode Switcher */}
+                <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                  <button
+                    onClick={() => setFlashcardViewMode('deck')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition ${
+                      flashcardViewMode === 'deck'
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Deck
+                  </button>
+                  <button
+                    onClick={() => setFlashcardViewMode('grid')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition ${
+                      flashcardViewMode === 'grid'
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    Grid
+                  </button>
+                </div>
+
+                {/* Close Modal Button */}
+                <button
+                  onClick={() => setShowFlashcardsModal(false)}
+                  className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                  title="Close (Esc)"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                {[
+                  'All',
+                  'Probability & Combinatorics',
+                  'Random Variables & Properties',
+                  'Moments & Transformations',
+                  'Joint Distributions & Correlation',
+                  'Key Distributions',
+                  'Estimation & CLT'
+                ].map((cat) => {
+                  const isSelected = cardCategory === cat;
+                  const count =
+                    cat === 'All'
+                      ? CS229_STATS_FLASHCARDS.length
+                      : CS229_STATS_FLASHCARDS.filter((c) => c.category === cat).length;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setCardCategory(cat);
+                        setCurrentCardIdx(0);
+                        setIsCardFlipped(false);
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shrink-0 transition border flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20'
+                          : 'bg-slate-900/80 text-slate-400 hover:text-white border-slate-800'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-800 text-slate-300 font-mono">
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* DECK VIEW */}
+              {flashcardViewMode === 'deck' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+                    <span>
+                      Card <strong className="text-white">{currentCardIdx + 1}</strong> of {filteredFlashcards.length}
+                    </span>
+                    <span className="text-indigo-400 font-semibold">{activeCard.category}</span>
+                  </div>
+                  <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-indigo-500 h-1.5 rounded-full transition-all duration-300"
+                      style={{ width: `${((currentCardIdx + 1) / filteredFlashcards.length) * 100}%` }}
+                    />
+                  </div>
+
+                  <div
+                    onClick={() => setIsCardFlipped(!isCardFlipped)}
+                    className="cursor-pointer min-h-[300px] sm:min-h-[340px] bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-6 sm:p-8 shadow-xl transition-all relative flex flex-col justify-between group select-none"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        {activeCard.category}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleCardMastered(activeCard.id);
+                        }}
+                        className={`px-3 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition ${
+                          masteredCards.includes(activeCard.id)
+                            ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40'
+                            : 'bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60'
+                        }`}
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>{masteredCards.includes(activeCard.id) ? 'Mastered' : 'Mark Mastered'}</span>
+                      </button>
+                    </div>
+
+                    <div className="my-5 space-y-3 text-center">
+                      {!isCardFlipped ? (
+                        <div className="space-y-3 animate-fade-in">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+                            Question / Statistical Prompt
+                          </span>
+                          <h4 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                            <MathText text={activeCard.title} />
+                          </h4>
+                          <div className="text-sm sm:text-base text-slate-200 font-medium max-w-xl mx-auto leading-relaxed">
+                            <MathText text={activeCard.frontPrompt} />
+                          </div>
+                          <p className="text-xs text-indigo-400/80 italic pt-1">
+                            (Click card or press Space to reveal formula &amp; derivation)
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3 animate-fade-in">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block">
+                            Formula &amp; Mathematical Definition
+                          </span>
+                          <h4 className="text-base font-bold text-indigo-300">
+                            <MathText text={activeCard.title} />
+                          </h4>
+                          <div className="bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 text-slate-100 text-sm sm:text-base overflow-x-auto shadow-inner max-w-2xl mx-auto">
+                            <FlashcardFormula tex={activeCard.backFormula} />
+                          </div>
+                          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+                            <MathText text={activeCard.backExplanation} />
+                          </p>
+                          {activeCard.useCase && (
+                            <div className="inline-block bg-blue-950/40 text-blue-300 border border-blue-800/60 px-2.5 py-0.5 rounded-lg text-[11px] font-semibold">
+                              💡 <strong>ML Use Case:</strong> {activeCard.useCase}
+                            </div>
+                          )}
+                          {activeCard.remark && (
+                            <p className="text-[11px] text-slate-400 italic max-w-lg mx-auto">
+                              Remark: <MathText text={activeCard.remark} />
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 pt-3 border-t border-slate-800/80">
+                      <span>Press Space / Enter to Flip</span>
+                      <span>Use ← → Arrow Keys to Navigate</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 pt-2">
+                    <button
+                      onClick={() => {
+                        setCurrentCardIdx((prev) => (prev - 1 + filteredFlashcards.length) % filteredFlashcards.length);
+                        setIsCardFlipped(false);
+                      }}
+                      className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-xs font-semibold flex items-center gap-1.5 border border-slate-700/60 shadow-sm"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" /> Prev
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setIsCardFlipped(!isCardFlipped)}
+                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition text-xs font-bold flex items-center gap-1.5 shadow-md shadow-indigo-600/30"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span>{isCardFlipped ? 'Show Front' : 'Flip to Formula'}</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          const rand = Math.floor(Math.random() * filteredFlashcards.length);
+                          setCurrentCardIdx(rand);
+                          setIsCardFlipped(false);
+                        }}
+                        className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition border border-slate-700/60"
+                        title="Shuffle Cards"
+                      >
+                        <Shuffle className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        setCurrentCardIdx((prev) => (prev + 1) % filteredFlashcards.length);
+                        setIsCardFlipped(false);
+                      }}
+                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white transition text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-blue-600/30"
+                    >
+                      Next <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* GRID VIEW */}
+              {flashcardViewMode === 'grid' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  {filteredFlashcards.map((card) => {
+                    const isMastered = masteredCards.includes(card.id);
+                    return (
+                      <div
+                        key={card.id}
+                        className="bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-4 shadow-sm space-y-3 flex flex-col justify-between transition-all"
+                      >
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                              {card.category}
+                            </span>
+                            <button
+                              onClick={() => toggleCardMastered(card.id)}
+                              className={`p-1 rounded-lg text-xs transition ${
+                                isMastered ? 'text-emerald-400' : 'text-slate-500 hover:text-slate-300'
+                              }`}
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                          <h4 className="font-bold text-white text-xs">
+                            <MathText text={card.title} />
+                          </h4>
+                          <p className="text-[11px] text-slate-300 leading-relaxed">
+                            <MathText text={card.frontPrompt} />
+                          </p>
+                        </div>
+
+                        <div className="space-y-1.5 pt-2 border-t border-slate-800/80">
+                          <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-center text-xs overflow-x-auto text-indigo-200 font-mono">
+                            <FlashcardFormula tex={card.backFormula} />
+                          </div>
+                          <p className="text-[11px] text-slate-400 leading-relaxed">
+                            <MathText text={card.backExplanation} />
+                          </p>
+                          {card.useCase && (
+                            <p className="text-[10px] text-blue-300 font-medium">
+                              💡 {card.useCase}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

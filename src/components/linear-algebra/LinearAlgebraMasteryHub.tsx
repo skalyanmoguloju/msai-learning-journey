@@ -28,6 +28,7 @@ import {
   LA_QUIZ_MODULES,
   StudyModule
 } from './linearAlgebraData';
+import { ModuleTemplate } from '../common/ModuleTemplate';
 
 // KaTeX Math Rendering Helper Component
 const MathText: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
@@ -649,39 +650,27 @@ export const LinearAlgebraMasteryHub: React.FC = () => {
           {/* ==================== STUDY GUIDE VIEW ==================== */}
           {activeTab === 'study' && (
             <div className="space-y-6">
-              {/* Active Module Overview Banner */}
-              <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                      Module {activeModule.id}
+              <ModuleTemplate
+                moduleId={activeModule.id}
+                moduleIndex={activeModuleId}
+                totalModules={6}
+                badge={activeModule.badge}
+                title={activeModule.title}
+                subtitle={activeModule.summary}
+                isCompleted={completedModules.includes(activeModuleId)}
+                onToggleComplete={() => toggleModuleComplete(activeModuleId)}
+                hasPrev={activeModuleId > 1}
+                hasNext={activeModuleId < 6}
+                onPrevModule={() => setActiveModuleId((prev) => Math.max(1, prev - 1))}
+                onNextModule={() => setActiveModuleId((prev) => Math.min(6, prev + 1))}
+                extraActions={
+                  activeModule.hasVisualizer ? (
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
+                      <Compass className="w-3.5 h-3.5" /> 2D Visualizer
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                      {activeModule.badge}
-                    </span>
-                    {activeModule.hasVisualizer && (
-                      <span className="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
-                        <Compass className="w-3 h-3" /> 2D Visualizer
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mt-2">{activeModule.title}</h3>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
-                    {activeModule.summary}
-                  </p>
-                </div>
-                <button
-                  onClick={() => toggleModuleComplete(activeModule.id)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 self-start sm:self-center shrink-0 border ${
-                    completedModules.includes(activeModule.id)
-                      ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40'
-                      : 'bg-blue-600 hover:bg-blue-500 text-white border-blue-500 shadow-md shadow-blue-600/30'
-                  }`}
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>{completedModules.includes(activeModule.id) ? 'Module Done ✅' : 'Mark Complete'}</span>
-                </button>
-              </div>
+                  ) : undefined
+                }
+              >
 
               {/* Concept Breakdown Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -908,37 +897,7 @@ export const LinearAlgebraMasteryHub: React.FC = () => {
                 </div>
               )}
 
-              {/* Study Module Navigation Footer & Quiz Callout */}
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 bg-slate-900/80 border border-slate-800 rounded-2xl">
-                  <button
-                    onClick={() => setActiveModuleId((prev) => Math.max(1, prev - 1))}
-                    disabled={activeModuleId === 1}
-                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition text-xs font-semibold flex items-center justify-center gap-2"
-                  >
-                    <ArrowLeft className="w-4 h-4" /> Previous Module
-                  </button>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggleModuleComplete(activeModuleId)}
-                      className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 ${
-                        completedModules.includes(activeModuleId)
-                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40'
-                          : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
-                      }`}
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span>{completedModules.includes(activeModuleId) ? 'Module Completed' : 'Mark Complete'}</span>
-                    </button>
-                  </div>
-                  <button
-                    onClick={() => setActiveModuleId((prev) => Math.min(6, prev + 1))}
-                    disabled={activeModuleId === 6}
-                    className="w-full sm:w-auto px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white disabled:opacity-40 disabled:cursor-not-allowed transition text-xs font-semibold flex items-center justify-center gap-2 shadow-md"
-                  >
-                    Next Module <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
+              </ModuleTemplate>
 
                 {/* Callout Banner to Practice Quiz */}
                 <div className="bg-gradient-to-r from-indigo-950/60 via-slate-900 to-blue-950/60 border border-indigo-800/40 rounded-2xl p-5 sm:p-6 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -971,7 +930,6 @@ export const LinearAlgebraMasteryHub: React.FC = () => {
                   </button>
                 </div>
               </div>
-            </div>
           )}
 
           {/* ==================== PRACTICE QUIZZES & SOLUTIONS SECTION ==================== */}
