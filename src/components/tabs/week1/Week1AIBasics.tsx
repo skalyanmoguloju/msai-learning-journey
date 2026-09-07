@@ -989,26 +989,14 @@ export const Week1AIBasics: React.FC = () => {
             </div>
           )}
 
-          {/* Step content card — gradient banner header matches ClassTab/MyLearningTab */}
+          {/* Step content card */}
           <div className="rounded-2xl border border-slate-800 shadow-md overflow-hidden">
             {/* Card header with gradient */}
-            <div className="px-5 pt-5 pb-4 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/30 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <StepBadge step={activeStep} color={STEP_COLORS[activeStep]} />
-                <h2 className="text-xl font-bold text-white tracking-tight">
-                  {STEPS.find(s => s.id === activeStep)?.title.replace(/^Step \d+: /, '')}
-                </h2>
-              </div>
-              <button
-                onClick={() => toggleComplete(activeStep)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all transform active:scale-95 ${
-                  completedSteps.includes(activeStep)
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-700/50 hover:bg-emerald-500/30'
-                    : 'bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-indigo-700 hover:text-white hover:border-indigo-600 hover:shadow-md hover:shadow-indigo-600/20'
-                }`}>
-                <CheckCircle className="w-4 h-4" />
-                {completedSteps.includes(activeStep) ? 'Completed ✓' : 'Mark Complete'}
-              </button>
+            <div className="px-5 pt-5 pb-4 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/30 border-b border-slate-800 flex items-center gap-3">
+              <StepBadge step={activeStep} color={STEP_COLORS[activeStep]} />
+              <h2 className="text-xl font-bold text-white tracking-tight">
+                {STEPS.find(s => s.id === activeStep)?.title.replace(/^Step \d+: /, '')}
+              </h2>
             </div>
             {/* Step body */}
             <div className="p-5 bg-slate-950/30">
