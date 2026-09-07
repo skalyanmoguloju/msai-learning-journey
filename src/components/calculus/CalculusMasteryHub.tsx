@@ -528,7 +528,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
     <div className="space-y-6">
       
       {/* Top Navigation & Stats Bar */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-5 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4">
         <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold text-lg ring-1 ring-indigo-400/30 shrink-0">
             ∫
@@ -540,7 +540,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
               </span>
               <span className="text-xs text-slate-400">Single-Variable &amp; Computational Calculus</span>
             </div>
-            <h3 className="font-extrabold text-xl text-slate-100 tracking-tight flex items-center gap-2 mt-0.5">
+            <h3 className="font-extrabold text-lg sm:text-xl text-slate-100 tracking-tight flex items-center gap-2 mt-0.5">
               Calculus Mastery Hub
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">
                 Interactive Lab
@@ -551,7 +551,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
         </div>
 
         {/* Action Controls & Mastery score badge */}
-        <div className="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-end">
+        <div className="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-end shrink-0">
           <div className="flex items-center gap-2 bg-slate-800/80 px-3.5 py-1.5 rounded-xl border border-slate-700/80 shrink-0 shadow-inner">
             <Trophy className="w-4 h-4 text-amber-400" />
             <span className="text-xs font-semibold text-slate-300">
@@ -574,10 +574,10 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
       </div>
 
       {/* Subtab Navigation Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 no-scrollbar">
         <button
           onClick={() => setActiveTab('study')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === 'study'
               ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
               : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
@@ -587,7 +587,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
         </button>
         <button
           onClick={() => setActiveTab('quiz')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === 'quiz'
               ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
               : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
@@ -597,7 +597,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
         </button>
         <button
           onClick={() => setActiveTab('ladder')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === 'ladder'
               ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
               : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
@@ -607,7 +607,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
         </button>
         <button
           onClick={() => setActiveTab('cone')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === 'cone'
               ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
               : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
@@ -617,7 +617,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
         </button>
         <button
           onClick={() => setActiveTab('cheatsheet')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
             activeTab === 'cheatsheet'
               ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
               : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
@@ -628,7 +628,7 @@ export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNaviga
       </div>
 
       {/* AI Course Connection Bridge */}
-      <div className="rounded-2xl p-5 bg-gradient-to-br from-indigo-950/40 via-slate-900 to-slate-900 border border-indigo-500/20 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="rounded-2xl p-4 sm:p-5 bg-gradient-to-br from-indigo-950/40 via-slate-900 to-slate-900 border border-indigo-500/20 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">

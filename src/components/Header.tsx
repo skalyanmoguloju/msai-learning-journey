@@ -4,9 +4,10 @@ import {
   Brain, 
   BookOpen, 
   RotateCcw, 
-  Award,
-  Sparkles,
-  Search
+  Award, 
+  Sparkles, 
+  Search,
+  Menu
 } from 'lucide-react';
 import { ActiveView } from '../types/course';
 
@@ -20,6 +21,7 @@ interface HeaderProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   onReset: () => void;
+  onToggleMobileSidebar?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -32,37 +34,48 @@ export const Header: React.FC<HeaderProps> = ({
   searchQuery,
   setSearchQuery,
   onReset,
+  onToggleMobileSidebar,
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-slate-100 px-4 lg:px-8 py-3.5">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-slate-100 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3.5">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
         
         {/* Brand and Degree Title */}
-        <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold ring-2 ring-indigo-400/30">
-              <GraduationCap className="w-5 h-5" />
+        <div className="flex items-center gap-2.5 sm:gap-3 w-full md:w-auto justify-between md:justify-start">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {onToggleMobileSidebar && (
+              <button
+                onClick={onToggleMobileSidebar}
+                className="lg:hidden p-2 rounded-xl bg-slate-800/90 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700/60 active:scale-95 transition-all flex items-center justify-center shrink-0"
+                aria-label="Open course navigation"
+                title="Courses & Semesters Navigation"
+              >
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
+              </button>
+            )}
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold ring-2 ring-indigo-400/30 shrink-0">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <h1 className="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
                   MSAI Learning Hub
                 </h1>
-                <span className="text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  SJSU Graduate
+                <span className="text-[10px] sm:text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  SJSU
                 </span>
               </div>
-              <p className="text-xs text-slate-400">Master of Science in Artificial Intelligence</p>
+              <p className="hidden sm:block text-xs text-slate-400">Master of Science in Artificial Intelligence</p>
             </div>
           </div>
 
           {/* Mobile view switcher indicator */}
-          <div className="flex md:hidden items-center gap-1.5 bg-slate-800/80 p-1 rounded-lg border border-slate-700/50">
+          <div className="flex md:hidden items-center gap-1 bg-slate-800/80 p-1 rounded-lg border border-slate-700/50 shrink-0">
             <button
               onClick={() => setActiveView('fundamentals')}
               className={`p-1.5 rounded-md text-xs font-medium transition-all ${
                 activeView === 'fundamentals'
-                  ? 'bg-indigo-600 text-white'
+                  ? 'bg-indigo-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
               title="Root Fundamentals"
@@ -73,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setActiveView('course')}
               className={`p-1.5 rounded-md text-xs font-medium transition-all ${
                 activeView === 'course'
-                  ? 'bg-indigo-600 text-white'
+                  ? 'bg-indigo-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
               title="Semesters & Courses"

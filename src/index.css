@@ -31,3 +31,21 @@
     background: #475569;
   }
 }
+
+/* Mobile swipe utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mobile KaTeX overflow handling */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}

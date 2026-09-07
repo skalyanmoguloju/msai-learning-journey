@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Layers } from 'lucide-react';
 import { useMsaiStorage } from './hooks/useMsaiStorage';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -34,6 +35,7 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddCourseOpen, setIsAddCourseOpen] = useState(false);
   const [isAddSemesterOpen, setIsAddSemesterOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Statistics calculation
   const fundamentalsMasteredCount = fundamentals.filter(f => f.mastered).length;
@@ -61,12 +63,32 @@ export function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         onReset={resetToDefaults}
+        onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
       />
 
+      {/* Mobile Context & Quick Switcher (strictly lg:hidden) */}
+      <div className="lg:hidden flex items-center justify-between px-3.5 py-1.5 bg-slate-900/90 border-b border-slate-800/80 text-xs shrink-0">
+        <div className="flex items-center gap-2 truncate min-w-0">
+          <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold text-[10px] shrink-0 border border-indigo-500/30">
+            {activeView === 'fundamentals' ? 'FOUNDATION' : currentCourse?.code || 'COURSE'}
+          </span>
+          <span className="text-slate-200 text-xs font-medium truncate">
+            {activeView === 'fundamentals' ? 'Calculus Mastery Hub' : currentCourse?.name || 'Course Workspace'}
+          </span>
+        </div>
+        <button
+          onClick={() => setIsMobileSidebarOpen(true)}
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-semibold shrink-0 border border-slate-700/60 active:scale-95 transition-all ml-2"
+        >
+          <Layers className="w-3.5 h-3.5 text-indigo-400" />
+          <span>Courses</span>
+        </button>
+      </div>
+
       {/* Main Workspace Layout with Sidebar + View */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
         
-        {/* Navigation Sidebar for Semesters & Courses */}
+        {/* Navigation Sidebar for Semesters & Courses (Drawer on mobile, pinned on desktop) */}
         <Sidebar
           semesters={semesters}
           activeSemesterId={activeSemesterId}
@@ -77,10 +99,12 @@ export function App() {
           setActiveView={setActiveView}
           onOpenAddCourse={() => setIsAddCourseOpen(true)}
           onOpenAddSemester={() => setIsAddSemesterOpen(true)}
+          isMobileOpen={isMobileSidebarOpen}
+          onMobileClose={() => setIsMobileSidebarOpen(false)}
         />
 
         {/* Dynamic Content View Area */}
-        <main className="flex-1 flex flex-col bg-slate-950 overflow-y-auto">
+        <main className="flex-1 flex flex-col bg-slate-950 overflow-y-auto w-full">
           {activeView === 'fundamentals' ? (
             <RootLearningView
               fundamentals={fundamentals}

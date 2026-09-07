@@ -44,11 +44,11 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 lg:p-8 flex flex-col gap-6 max-w-6xl mx-auto w-full">
+    <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 lg:p-8 flex flex-col gap-4 sm:gap-6 max-w-6xl mx-auto w-full">
       
       {/* Course Header Banner */}
-      <div className="rounded-2xl p-6 lg:p-7 bg-slate-900 border border-slate-800 shadow-xl space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="rounded-2xl p-4 sm:p-6 lg:p-7 bg-slate-900 border border-slate-800 shadow-xl space-y-3 sm:space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-blue-600 text-white shadow-sm">
@@ -62,19 +62,19 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
               </span>
             </div>
             
-            <h2 className="text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
               {course.name}
             </h2>
           </div>
 
           {/* Quick Action Links: SJSU Canvas */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 shrink-0">
             {course.canvasUrl && (
               <a
                 href={course.canvasUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/20 transition-all transform active:scale-95 shrink-0"
+                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/20 transition-all transform active:scale-95 shrink-0"
               >
                 <span>SJSU Canvas Course</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -84,7 +84,7 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
         </div>
 
         {/* Course Quick Metadata */}
-        <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-slate-300 pt-2 border-t border-slate-800/80">
+        <div className="flex flex-wrap items-center gap-y-2 gap-x-4 sm:gap-x-6 text-xs text-slate-300 pt-2 border-t border-slate-800/80">
           <div className="flex items-center gap-1.5">
             <User className="w-3.5 h-3.5 text-indigo-400" />
             <span>Instructor: <strong className="text-white">{course.instructor.name}</strong></span>
@@ -101,7 +101,7 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
       </div>
 
       {/* Course Subtabs Navigation */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-1 overflow-x-auto">
+      <div className="flex items-center gap-1.5 sm:gap-2 border-b border-slate-800 pb-1 overflow-x-auto no-scrollbar">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -109,7 +109,7 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap relative ${
+              className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap relative shrink-0 ${
                 isActive
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
