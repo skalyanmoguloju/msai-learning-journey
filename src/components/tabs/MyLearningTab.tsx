@@ -12,10 +12,12 @@ import {
   Calendar,
   Layers,
   Tag,
-  BookOpen
+  BookOpen,
+  FlaskConical
 } from 'lucide-react';
 import { Course, CustomUserNote } from '../../types/course';
 import { MathFormula } from '../ui/MathFormula';
+import { Week1AIBasics } from './week1/Week1AIBasics';
 
 interface MyLearningTabProps {
   course: Course;
@@ -24,6 +26,8 @@ interface MyLearningTabProps {
   addCustomNote: (note: Omit<CustomUserNote, 'id' | 'createdAt'>) => void;
 }
 
+type MyLearningSubTab = 'knowledge' | 'week1';
+
 export const MyLearningTab: React.FC<MyLearningTabProps> = ({
   course,
   toggleConceptMastery,
@@ -31,6 +35,10 @@ export const MyLearningTab: React.FC<MyLearningTabProps> = ({
   addCustomNote,
 }) => {
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
+  const [mlSubTab, setMlSubTab] = useState<MyLearningSubTab>('knowledge');
+
+  // Week subtabs only available for CMPE-252 (AI & Data Engineering)
+  const hasWeekLabs = course.id === 'cmpe-252-sec-01';
 
   // New Note Form State
   const [showNoteForm, setShowNoteForm] = useState(false);
@@ -68,6 +76,38 @@ export const MyLearningTab: React.FC<MyLearningTabProps> = ({
 
   return (
     <div className="space-y-6">
+
+      {/* Sub-tab navigation (Week Labs vs Knowledge Base) */}
+      {hasWeekLabs && (
+        <div className="flex items-center gap-2 border-b border-slate-800 pb-1">
+          <button
+            onClick={() => setMlSubTab('knowledge')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              mlSubTab === 'knowledge'
+                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+            }`}>
+            <Brain className="w-3.5 h-3.5" />
+            <span>Knowledge Base</span>
+          </button>
+          <button
+            onClick={() => setMlSubTab('week1')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              mlSubTab === 'week1'
+                ? 'bg-sky-600 text-white shadow-md shadow-sky-600/30'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+            }`}>
+            <FlaskConical className="w-3.5 h-3.5" />
+            <span>Week 1 — AI Basics</span>
+          </button>
+        </div>
+      )}
+
+      {/* Week 1 Lab */}
+      {hasWeekLabs && mlSubTab === 'week1' && <Week1AIBasics />}
+
+      {/* Knowledge Base content (hidden when Week 1 lab is active) */}
+      <div className={(!hasWeekLabs || mlSubTab === 'knowledge') ? '' : 'hidden'}>
       
       {/* Top Banner: Concept Mastery Tracker */}
       <div className="rounded-2xl p-5 lg:p-6 bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -370,6 +410,8 @@ export const MyLearningTab: React.FC<MyLearningTabProps> = ({
 
           </div>
         ))}
+      </div>
+
       </div>
 
     </div>
