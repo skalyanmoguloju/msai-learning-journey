@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import {
   Calculator,
-  BarChart3
+  BarChart3,
+  Grid3X3
 } from 'lucide-react';
 import { CalculusMasteryHub } from './calculus/CalculusMasteryHub';
 import { StatisticsMasteryHub } from './statistics/StatisticsMasteryHub';
+import { LinearAlgebraMasteryHub } from './linear-algebra/LinearAlgebraMasteryHub';
 
 export const RootLearningView: React.FC = () => {
   const [activeSubtab, setActiveSubtab] = useState<string>('calculus-mastery');
   const [subtabs] = useState([
     { id: 'calculus-mastery', label: 'Calculus Mastery Hub', icon: Calculator },
     { id: 'statistics-mastery', label: 'Statistics & Probability Hub', icon: BarChart3 },
+    { id: 'linear-algebra-mastery', label: 'Linear Algebra Hub', icon: Grid3X3 },
   ]);
 
   return (
@@ -22,15 +25,15 @@ export const RootLearningView: React.FC = () => {
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-[11px] font-semibold border border-indigo-500/30 uppercase tracking-wider">
-                Degree Foundation
+                Degree Foundation · Long-Term Learning
               </span>
               <span className="text-xs text-slate-400">Root Knowledge Base</span>
             </div>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-              My Learning
+              My Learning (Foundation)
             </h2>
             <p className="text-slate-400 text-xs max-w-xl">
-              Foundational degree learning hubs, mathematical mastery, and core computational theory powering Machine Learning.
+              Foundational degree learning hubs, mathematical mastery, and core computational theory across Calculus, Statistics, and CS229 Linear Algebra.
             </p>
           </div>
         </div>
@@ -64,6 +67,7 @@ export const RootLearningView: React.FC = () => {
       <div className="flex-1 w-full">
         {activeSubtab === 'calculus-mastery' && <CalculusMasteryHub />}
         {activeSubtab === 'statistics-mastery' && <StatisticsMasteryHub />}
+        {activeSubtab === 'linear-algebra-mastery' && <LinearAlgebraMasteryHub />}
       </div>
 
     </div>
