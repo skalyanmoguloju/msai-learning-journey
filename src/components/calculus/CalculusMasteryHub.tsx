@@ -17,7 +17,8 @@ import {
   Calculator,
   ChevronRight,
   TrendingUp,
-  Sparkles
+  Sparkles,
+  Brain
 } from 'lucide-react';
 
 // Math rendering helper component
@@ -313,7 +314,11 @@ export const QUIZ_MODULES: Record<string, ModuleData> = {
   }
 };
 
-export const CalculusMasteryHub: React.FC = () => {
+export interface CalculusMasteryHubProps {
+  onNavigateToWeek1?: () => void;
+}
+
+export const CalculusMasteryHub: React.FC<CalculusMasteryHubProps> = ({ onNavigateToWeek1 }) => {
   const [activeTab, setActiveTab] = useState<'study' | 'quiz' | 'ladder' | 'cone' | 'cheatsheet'>('study');
   const [activeStudyModule, setActiveStudyModule] = useState<'m1' | 'm2' | 'm3' | 'm4' | 'm5'>('m1');
 
@@ -523,93 +528,142 @@ export const CalculusMasteryHub: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Navigation & Stats Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-5 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3 w-full md:w-auto">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-bold text-lg">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold text-lg ring-1 ring-indigo-400/30 shrink-0">
             ∫
           </div>
           <div>
-            <h3 className="font-bold text-base text-slate-100 leading-tight flex items-center gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                Degree Foundation
+              </span>
+              <span className="text-xs text-slate-400">Single-Variable &amp; Computational Calculus</span>
+            </div>
+            <h3 className="font-extrabold text-xl text-slate-100 tracking-tight flex items-center gap-2 mt-0.5">
               Calculus Mastery Hub
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">
                 Interactive Lab
               </span>
             </h3>
-            <p className="text-xs text-slate-400">Modules 1–5 Comprehensive Reference & Simulation Engine</p>
+            <p className="text-xs text-slate-400 mt-0.5">Modules 1–5 Comprehensive Reference, Quizzes &amp; Simulation Engine</p>
           </div>
         </div>
 
-        {/* Subtab Navigation Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-          <button
-            onClick={() => setActiveTab('study')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
-              activeTab === 'study'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-            }`}
-          >
-            <BookOpen className="w-3.5 h-3.5" /> Detailed Study Notes
-          </button>
-          <button
-            onClick={() => setActiveTab('quiz')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
-              activeTab === 'quiz'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-            }`}
-          >
-            <GraduationCap className="w-3.5 h-3.5" /> Practice Quizzes
-          </button>
-          <button
-            onClick={() => setActiveTab('ladder')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
-              activeTab === 'ladder'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-            }`}
-          >
-            <Ruler className="w-3.5 h-3.5" /> Ladder Simulation
-          </button>
-          <button
-            onClick={() => setActiveTab('cone')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
-              activeTab === 'cone'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-            }`}
-          >
-            <Filter className="w-3.5 h-3.5" /> Conical Tank Lab
-          </button>
-          <button
-            onClick={() => setActiveTab('cheatsheet')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
-              activeTab === 'cheatsheet'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-            }`}
-          >
-            <ListChecks className="w-3.5 h-3.5" /> Solution Guide
-          </button>
-        </div>
+        {/* Action Controls & Mastery score badge */}
+        <div className="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-end">
+          <div className="flex items-center gap-2 bg-slate-800/80 px-3.5 py-1.5 rounded-xl border border-slate-700/80 shrink-0 shadow-inner">
+            <Trophy className="w-4 h-4 text-amber-400" />
+            <span className="text-xs font-semibold text-slate-300">
+              Mastery: <strong className="text-emerald-400">{masteryScore}%</strong>
+            </span>
+          </div>
 
-        {/* Mastery score badge */}
-        <div className="flex items-center gap-2 bg-slate-800/90 px-3.5 py-1.5 rounded-xl border border-slate-700/80 shrink-0">
-          <Trophy className="w-4 h-4 text-amber-400" />
-          <span className="text-xs font-semibold text-slate-300">
-            Mastery: <strong className="text-emerald-400">{masteryScore}%</strong>
-          </span>
+          {onNavigateToWeek1 && (
+            <button
+              onClick={onNavigateToWeek1}
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/25 transition-all group shrink-0"
+              title="Navigate to Week 1 of AI Course (CMPE-252)"
+            >
+              <Brain className="w-3.5 h-3.5 text-indigo-200 group-hover:scale-110 transition-transform" />
+              <span>Week 1 AI Course</span>
+              <ArrowRight className="w-3 h-3 text-indigo-200 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          )}
         </div>
+      </div>
+
+      {/* Subtab Navigation Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        <button
+          onClick={() => setActiveTab('study')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'study'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
+              : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
+          }`}
+        >
+          <BookOpen className="w-3.5 h-3.5" /> Detailed Study Notes
+        </button>
+        <button
+          onClick={() => setActiveTab('quiz')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'quiz'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
+              : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
+          }`}
+        >
+          <GraduationCap className="w-3.5 h-3.5" /> Practice Quizzes
+        </button>
+        <button
+          onClick={() => setActiveTab('ladder')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'ladder'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
+              : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
+          }`}
+        >
+          <Ruler className="w-3.5 h-3.5" /> Ladder Simulation
+        </button>
+        <button
+          onClick={() => setActiveTab('cone')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'cone'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
+              : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
+          }`}
+        >
+          <Filter className="w-3.5 h-3.5" /> Conical Tank Lab
+        </button>
+        <button
+          onClick={() => setActiveTab('cheatsheet')}
+          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'cheatsheet'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25'
+              : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 border border-slate-800'
+          }`}
+        >
+          <ListChecks className="w-3.5 h-3.5" /> Solution Guide
+        </button>
+      </div>
+
+      {/* AI Course Connection Bridge */}
+      <div className="rounded-2xl p-5 bg-gradient-to-br from-indigo-950/40 via-slate-900 to-slate-900 border border-indigo-500/20 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              AI Course Connection
+            </span>
+            <span className="text-xs text-slate-400">CMPE-252 • Artificial Intelligence &amp; Data Engineering</span>
+          </div>
+          <h4 className="text-sm font-bold text-slate-100 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-indigo-400" />
+            Applying Calculus to Machine Learning
+          </h4>
+          <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+            The derivatives, rate-of-change, and tangent slope concepts mastered here directly form the mathematical foundation for <strong>Gradient Descent</strong>, <strong>Cost Function Optimization</strong>, and <strong>Backpropagation</strong> explored in Week 1 of your AI course.
+          </p>
+        </div>
+        {onNavigateToWeek1 && (
+          <button
+            onClick={onNavigateToWeek1}
+            className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-indigo-600/25 shrink-0 group"
+          >
+            <Brain className="w-4 h-4 text-indigo-200 group-hover:scale-110 transition-transform" />
+            <span>Open Week 1 AI Basics</span>
+            <ArrowRight className="w-3.5 h-3.5 text-indigo-200 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        )}
       </div>
 
       {/* ==================== SECTION 0: DETAILED STUDY NOTES ==================== */}
       {activeTab === 'study' && (
         <div className="space-y-6">
           {/* Module Study Selector */}
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+          <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-900/90 p-4 rounded-2xl border border-slate-800 shadow-sm">
             <div>
               <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-blue-400" /> Calculus Comprehensive Reference Guide
+                <BookOpen className="w-4 h-4 text-indigo-400" /> Calculus Comprehensive Reference Guide
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
                 Deep-dive formal definitions, conceptual explanations, geometric interpretations, and step-by-step strategy blueprints.
@@ -622,8 +676,8 @@ export const CalculusMasteryHub: React.FC = () => {
                   onClick={() => setActiveStudyModule(m)}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     activeStudyModule === m
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                      : 'bg-slate-800 text-slate-300 hover:text-white'
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                      : 'bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-800'
                   }`}
                 >
                   Module {m.replace('m', '')}
@@ -1072,13 +1126,13 @@ export const CalculusMasteryHub: React.FC = () => {
                     setCurrentModuleKey(m.id);
                     setCurrentQuestionIdx(0);
                   }}
-                  className={`border-2 p-3.5 rounded-xl text-left transition relative overflow-hidden group shadow-lg ${
+                  className={`border-2 p-3.5 rounded-xl text-left transition relative overflow-hidden group shadow-md ${
                     isSelected
-                      ? 'border-blue-500 bg-slate-900/90 shadow-blue-500/10'
+                      ? 'border-indigo-500 bg-slate-900/90 shadow-indigo-500/10 ring-1 ring-indigo-500/30'
                       : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
                   }`}
                 >
-                  <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider block mb-1">
+                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider block mb-1">
                     {m.label}
                   </span>
                   <h4 className="font-semibold text-slate-100 text-sm">{m.title}</h4>
@@ -1089,16 +1143,16 @@ export const CalculusMasteryHub: React.FC = () => {
           </div>
 
           {/* Quiz Card Area */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative space-y-6">
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-md relative space-y-6">
             {/* Progress Bar & Header */}
             <div>
               <div className="flex items-center justify-between text-xs text-slate-400 mb-2 font-mono">
                 <span>Question <strong className="text-white">{currentQuestionIdx + 1}</strong> of {currentMod.questions.length}</span>
-                <span className="text-blue-400 font-semibold">{currentMod.title}</span>
+                <span className="text-indigo-400 font-semibold">{currentMod.title}</span>
               </div>
               <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-indigo-500 to-blue-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${((currentQuestionIdx + 1) / currentMod.questions.length) * 100}%` }}
                 ></div>
               </div>
@@ -1184,21 +1238,21 @@ export const CalculusMasteryHub: React.FC = () => {
               <button
                 onClick={handlePrevQuestion}
                 disabled={currentQuestionIdx === 0}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-4 py-2 rounded-xl bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white transition text-xs font-medium disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 border border-slate-700/60"
               >
                 <ArrowLeft className="w-4 h-4" /> Previous
               </button>
               <div className="flex gap-3">
                 <button
                   onClick={handleResetCurrentQuiz}
-                  className="px-4 py-2 rounded-lg bg-slate-800 text-slate-400 hover:text-slate-200 transition text-sm font-medium flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition text-xs font-medium flex items-center gap-1.5 border border-slate-700/60"
                 >
                   <RotateCcw className="w-3.5 h-3.5" /> Reset Quiz
                 </button>
                 <button
                   onClick={handleNextQuestion}
                   disabled={currentQuestionIdx === currentMod.questions.length - 1}
-                  className="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition text-sm font-semibold flex items-center gap-2 shadow-lg shadow-blue-600/30 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white transition text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-indigo-600/30 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Next <ArrowRight className="w-4 h-4" />
                 </button>
@@ -1210,16 +1264,16 @@ export const CalculusMasteryHub: React.FC = () => {
 
       {/* ==================== SECTION 2: LADDER SIMULATION ==================== */}
       {activeTab === 'ladder' && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-md space-y-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
               <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-                <Ruler className="w-5 h-5 text-blue-400" /> Sliding Ladder Related Rates Lab
+                <Ruler className="w-5 h-5 text-indigo-400" /> Sliding Ladder Related Rates Lab
               </h3>
               <p className="text-xs text-slate-400 mt-1">Simulates Module 5, Problem 3: A 13 ft ladder sliding away at 0.5 ft/s.</p>
             </div>
-            <div className="bg-blue-950/60 border border-blue-800/80 px-4 py-2 rounded-xl text-right">
-              <span className="text-xs text-blue-300 font-bold block uppercase tracking-wider">
+            <div className="bg-indigo-950/40 border border-indigo-800/60 px-4 py-2 rounded-xl text-right">
+              <span className="text-xs text-indigo-300 font-bold block uppercase tracking-wider">
                 <MathText text="Top Sliding Rate ($\frac{dy}{dt}$)" />
               </span>
               <span className="text-xl font-mono font-bold text-emerald-400">
@@ -1230,13 +1284,13 @@ export const CalculusMasteryHub: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Controls Panel */}
-            <div className="space-y-5 bg-slate-950 p-5 rounded-xl border border-slate-800">
+            <div className="space-y-5 bg-slate-950/80 p-5 rounded-xl border border-slate-800/80">
               <h4 className="font-semibold text-slate-200 text-sm border-b border-slate-800 pb-2">Interactive Parameters</h4>
               
               <div>
                 <label className="flex justify-between text-xs font-semibold text-slate-400 mb-1">
                   <span><MathText text="Bottom Distance ($x$):" /></span>
-                  <span className="text-blue-400 font-mono font-bold">{ladderX.toFixed(1)} ft</span>
+                  <span className="text-indigo-400 font-mono font-bold">{ladderX.toFixed(1)} ft</span>
                 </label>
                 <input
                   type="range"
@@ -1245,7 +1299,7 @@ export const CalculusMasteryHub: React.FC = () => {
                   step="0.1"
                   value={ladderX}
                   onChange={(e) => setLadderX(parseFloat(e.target.value))}
-                  className="w-full accent-blue-500 cursor-pointer"
+                  className="w-full accent-indigo-500 cursor-pointer"
                 />
               </div>
 
@@ -1307,7 +1361,7 @@ export const CalculusMasteryHub: React.FC = () => {
 
       {/* ==================== SECTION 3: CONICAL TANK LAB ==================== */}
       {activeTab === 'cone' && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-md space-y-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
             <div>
               <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
@@ -1327,7 +1381,7 @@ export const CalculusMasteryHub: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Controls Panel */}
-            <div className="space-y-5 bg-slate-950 p-5 rounded-xl border border-slate-800">
+            <div className="space-y-5 bg-slate-950/80 p-5 rounded-xl border border-slate-800/80">
               <h4 className="font-semibold text-slate-200 text-sm border-b border-slate-800 pb-2">Simulation Parameters</h4>
               
               <div>
@@ -1349,7 +1403,7 @@ export const CalculusMasteryHub: React.FC = () => {
               <div>
                 <label className="flex justify-between text-xs font-semibold text-slate-400 mb-1">
                   <span><MathText text="Inflow Rate ($\frac{dV}{dt}$):" /></span>
-                  <span className="text-blue-400 font-mono font-bold">{coneDvdt.toFixed(1)} m³/min</span>
+                  <span className="text-indigo-400 font-mono font-bold">{coneDvdt.toFixed(1)} m³/min</span>
                 </label>
                 <input
                   type="range"
@@ -1358,7 +1412,7 @@ export const CalculusMasteryHub: React.FC = () => {
                   step="0.5"
                   value={coneDvdt}
                   onChange={(e) => setConeDvdt(parseFloat(e.target.value))}
-                  className="w-full accent-blue-500 cursor-pointer"
+                  className="w-full accent-indigo-500 cursor-pointer"
                 />
               </div>
 
@@ -1397,10 +1451,10 @@ export const CalculusMasteryHub: React.FC = () => {
 
       {/* ==================== SECTION 4: CHEATSHEET & SOLUTIONS ==================== */}
       {activeTab === 'cheatsheet' && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-md space-y-6">
           <div>
             <h3 className="text-xl font-bold text-slate-100 mb-1 flex items-center gap-2">
-              <ListChecks className="w-5 h-5 text-amber-400" /> Comprehensive Solution Guide & Derivations
+              <ListChecks className="w-5 h-5 text-amber-400" /> Comprehensive Solution Guide &amp; Derivations
             </h3>
             <p className="text-xs text-slate-400">
               Complete step-by-step mathematical solutions for all questions across Modules 1 through 5.
@@ -1411,15 +1465,15 @@ export const CalculusMasteryHub: React.FC = () => {
             {Object.keys(QUIZ_MODULES).map((mKey) => {
               const mod = QUIZ_MODULES[mKey];
               return (
-                <div key={mKey} className="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
-                  <h4 className="text-sm font-bold text-blue-400 border-b border-slate-800 pb-2 flex items-center gap-2">
-                    <ChevronRight className="w-4 h-4 text-blue-500" /> {mod.title}
+                <div key={mKey} className="bg-slate-950/80 border border-slate-800/80 rounded-xl p-5 space-y-4">
+                  <h4 className="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+                    <ChevronRight className="w-4 h-4 text-indigo-500" /> {mod.title}
                   </h4>
                   <div className="space-y-3">
                     {mod.questions.map((q, idx) => (
                       <div key={q.id} className="space-y-2 text-xs border-b border-slate-900 pb-3 last:border-0">
                         <div className="font-semibold text-slate-200">
-                          <span className="text-blue-400 mr-1.5 font-bold">Q{idx + 1}:</span>
+                          <span className="text-indigo-400 mr-1.5 font-bold">Q{idx + 1}:</span>
                           <MathText text={q.question} />
                         </div>
                         <div className="text-emerald-400 font-mono flex items-center gap-1.5">

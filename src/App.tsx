@@ -39,6 +39,14 @@ export function App() {
   const fundamentalsMasteredCount = fundamentals.filter(f => f.mastered).length;
   const totalCoursesCount = semesters.reduce((acc, sem) => acc + sem.courses.length, 0);
 
+  // Direct navigation to Week 1 of AI course (CMPE-252)
+  const navigateToWeek1AI = () => {
+    setActiveSemesterId('sem-1-fall-26');
+    setActiveCourseId('cmpe-252-sec-01');
+    setActiveTab('mylearning');
+    setActiveView('course');
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
       
@@ -80,6 +88,7 @@ export function App() {
               customNotes={customNotes}
               addCustomNote={addCustomNote}
               searchQuery={searchQuery}
+              onNavigateToWeek1={navigateToWeek1AI}
             />
           ) : currentCourse ? (
             <CourseWorkspace

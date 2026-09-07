@@ -894,29 +894,14 @@ export const Week1AIBasics: React.FC = () => {
       {showFlashcards && <FlashcardModal onClose={() => setShowFlashcards(false)} />}
       {showQuiz       && <QuizModal      onClose={() => setShowQuiz(false)} />}
 
-      {/* Top banner — same gradient pattern as ClassTab/MyLearningTab */}
-      <div className="rounded-2xl p-5 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Week 01</span>
-            <span className="text-xs text-slate-400">Machine Learning & AI Basics</span>
-          </div>
-          <h3 className="text-xl font-extrabold text-white tracking-tight">Interactive Self-Study Hub</h3>
-          <p className="text-xs text-slate-400">6-step curriculum with live calculators, visualizations &amp; assessments</p>
+      {/* Top banner */}
+      <div className="rounded-2xl p-5 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 shadow-md">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Week 01</span>
+          <span className="text-xs text-slate-400">Machine Learning &amp; AI Basics</span>
         </div>
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <div className="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700/60">
-            <span className="text-xs text-slate-400 font-medium">Progress:</span>
-            <div className="w-24 bg-slate-700 h-2 rounded-full overflow-hidden">
-              <div className="bg-gradient-to-r from-indigo-600 to-blue-500 h-full rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
-            </div>
-            <span className="text-xs font-bold text-indigo-400">{pct}%</span>
-          </div>
-          <button onClick={resetProgress} title="Reset all step progress"
-            className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-colors">
-            <RotateCcw className="w-4 h-4" />
-          </button>
-        </div>
+        <h3 className="text-xl font-extrabold text-white tracking-tight">Interactive Self-Study Hub</h3>
+        <p className="text-xs text-slate-400 mt-0.5">6-step curriculum with live calculators, visualizations &amp; assessments</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-5">
