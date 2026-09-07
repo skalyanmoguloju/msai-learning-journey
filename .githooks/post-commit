@@ -1,0 +1,24 @@
+#!/bin/sh
+# Ensure standard node/npm binaries on macOS/Linux are in PATH
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  . "$HOME/.nvm/nvm.sh"
+fi
+
+# Exit silently if currently in a rebase or cherry-pick
+GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
+if [ -d "$GIT_DIR/rebase-merge" ] || [ -d "$GIT_DIR/rebase-apply" ]; then
+  exit 0
+fi
+
+# Get current branch
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+# Auto-deploy when committing to the main HEAD branch
+if [ "$BRANCH" = "main" ]; then
+  echo ""
+  echo "🚀 [Git Hook] Auto-deploying commit on HEAD ($BRANCH) to GitHub Pages..."
+  npm run deploy
+  echo "✅ [Git Hook] Auto-deploy finished successfully!"
+  echo ""
+fi
