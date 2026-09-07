@@ -1,25 +1,16 @@
 import React, { useState } from 'react';
 import {
   Calculator,
-  Brain,
-  ArrowRight
+  BarChart3
 } from 'lucide-react';
-import { FundamentalTopic, CustomUserNote } from '../types/course';
 import { CalculusMasteryHub } from './calculus/CalculusMasteryHub';
+import { StatisticsMasteryHub } from './statistics/StatisticsMasteryHub';
 
-interface RootLearningViewProps {
-  fundamentals?: FundamentalTopic[];
-  toggleFundamentalMastery?: (id: string) => void;
-  customNotes?: CustomUserNote[];
-  addCustomNote?: (note: Omit<CustomUserNote, 'id' | 'createdAt'>) => void;
-  searchQuery?: string;
-  onNavigateToWeek1?: () => void;
-}
-
-export const RootLearningView: React.FC<RootLearningViewProps> = ({ onNavigateToWeek1 }) => {
+export const RootLearningView: React.FC = () => {
   const [activeSubtab, setActiveSubtab] = useState<string>('calculus-mastery');
   const [subtabs] = useState([
     { id: 'calculus-mastery', label: 'Calculus Mastery Hub', icon: Calculator },
+    { id: 'statistics-mastery', label: 'Statistics & Probability Hub', icon: BarChart3 },
   ]);
 
   return (
@@ -42,18 +33,6 @@ export const RootLearningView: React.FC<RootLearningViewProps> = ({ onNavigateTo
               Foundational degree learning hubs, mathematical mastery, and core computational theory powering Machine Learning.
             </p>
           </div>
-
-          {onNavigateToWeek1 && (
-            <button
-              onClick={onNavigateToWeek1}
-              className="flex items-center gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/25 transition-all group shrink-0"
-              title="Navigate to Week 1 of AI Course (CMPE-252)"
-            >
-              <Brain className="w-4 h-4 text-indigo-200 group-hover:scale-110 transition-transform" />
-              <span>Go to Week 1: AI Basics</span>
-              <ArrowRight className="w-3.5 h-3.5 text-indigo-200 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          )}
         </div>
       </div>
 
@@ -83,7 +62,8 @@ export const RootLearningView: React.FC<RootLearningViewProps> = ({ onNavigateTo
 
       {/* Subtab Workspace Content */}
       <div className="flex-1 w-full">
-        <CalculusMasteryHub onNavigateToWeek1={onNavigateToWeek1} />
+        {activeSubtab === 'calculus-mastery' && <CalculusMasteryHub />}
+        {activeSubtab === 'statistics-mastery' && <StatisticsMasteryHub />}
       </div>
 
     </div>

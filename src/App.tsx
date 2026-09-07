@@ -11,7 +11,6 @@ import { AddSemesterModal } from './components/modals/AddSemesterModal';
 export function App() {
   const {
     semesters,
-    fundamentals,
     activeView,
     setActiveView,
     activeSemesterId,
@@ -24,7 +23,6 @@ export function App() {
     currentCourse,
     customNotes,
     toggleConceptMastery,
-    toggleFundamentalMastery,
     toggleDeliverable,
     addCustomNote,
     addCourse,
@@ -37,29 +35,11 @@ export function App() {
   const [isAddSemesterOpen, setIsAddSemesterOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Statistics calculation
-  const fundamentalsMasteredCount = fundamentals.filter(f => f.mastered).length;
-  const totalCoursesCount = semesters.reduce((acc, sem) => acc + sem.courses.length, 0);
-
-  // Direct navigation to Week 1 of AI course (CMPE-252)
-  const navigateToWeek1AI = () => {
-    setActiveSemesterId('sem-1-fall-26');
-    setActiveCourseId('cmpe-252-sec-01');
-    setActiveTab('mylearning');
-    setActiveView('course');
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
       
       {/* Top Application Header */}
       <Header
-        activeView={activeView}
-        setActiveView={setActiveView}
-        fundamentalsMasteredCount={fundamentalsMasteredCount}
-        totalFundamentals={fundamentals.length}
-        currentSemesterName={currentSemester?.name || 'Sem 1 - Fall 26'}
-        totalCoursesCount={totalCoursesCount}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         onReset={resetToDefaults}
@@ -106,14 +86,7 @@ export function App() {
         {/* Dynamic Content View Area */}
         <main className="flex-1 flex flex-col bg-slate-950 overflow-y-auto w-full">
           {activeView === 'fundamentals' ? (
-            <RootLearningView
-              fundamentals={fundamentals}
-              toggleFundamentalMastery={toggleFundamentalMastery}
-              customNotes={customNotes}
-              addCustomNote={addCustomNote}
-              searchQuery={searchQuery}
-              onNavigateToWeek1={navigateToWeek1AI}
-            />
+            <RootLearningView />
           ) : currentCourse ? (
             <CourseWorkspace
               course={currentCourse}

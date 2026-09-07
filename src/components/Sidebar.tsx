@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  FolderPlus, 
-  PlusCircle, 
-  Calendar, 
-  BookOpen, 
-  Brain, 
+import {
+  FolderPlus,
+  PlusCircle,
+  Calendar,
+  BookOpen,
+  Brain,
   ExternalLink,
   ChevronRight,
   Sparkles,
@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenAddCourse,
   onOpenAddSemester,
   isMobileOpen = false,
-  onMobileClose = () => {},
+  onMobileClose = () => { },
 }) => {
   const currentSemester = semesters.find(s => s.id === activeSemesterId) || semesters[0];
 
@@ -97,17 +97,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               setActiveView('fundamentals');
               onMobileClose();
             }}
-            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-              activeView === 'fundamentals'
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 ring-1 ring-indigo-400'
-                : 'bg-slate-800/80 text-slate-200 hover:bg-slate-800 hover:text-white border border-slate-700/60'
-            }`}
+            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${activeView === 'fundamentals'
+              ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 ring-1 ring-indigo-400'
+              : 'bg-slate-800/80 text-slate-200 hover:bg-slate-800 hover:text-white border border-slate-700/60'
+              }`}
           >
             <div className="flex items-center gap-2">
               <Brain className="w-4 h-4 text-indigo-300" />
               <div className="text-left">
                 <p className="font-bold">My Learning</p>
-                <p className="text-[10px] text-slate-300 font-normal">Calculus Mastery Hub</p>
               </div>
             </div>
             <ChevronRight className="w-4 h-4 opacity-70" />
@@ -148,11 +146,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     setActiveView('course');
                     onMobileClose();
                   }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                    isSelected
-                      ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20'
-                      : 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-800'
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${isSelected
+                    ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20'
+                    : 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-800'
+                    }`}
                 >
                   <span>{sem.name}</span>
                   {sem.isCurrent && (
@@ -188,11 +185,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               return (
                 <div
                   key={course.id}
-                  className={`rounded-xl transition-all border p-3 flex flex-col gap-2 cursor-pointer ${
-                    isActive
-                      ? 'bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-slate-900 border-blue-500/50 shadow-md shadow-blue-900/20 ring-1 ring-blue-500/30'
-                      : 'bg-slate-800/40 hover:bg-slate-800/80 border-slate-800/80 text-slate-300'
-                  }`}
+                  className={`rounded-xl transition-all border p-3 flex flex-col gap-2 cursor-pointer ${isActive
+                    ? 'bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-slate-900 border-blue-500/50 shadow-md shadow-blue-900/20 ring-1 ring-blue-500/30'
+                    : 'bg-slate-800/40 hover:bg-slate-800/80 border-slate-800/80 text-slate-300'
+                    }`}
                   onClick={() => {
                     setActiveCourseId(course.id);
                     setActiveView('course');
@@ -201,9 +197,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <span className={`text-xs font-bold font-mono px-2 py-0.5 rounded-md ${
-                        isActive ? 'bg-blue-600 text-white' : 'bg-slate-800 text-blue-300 border border-slate-700'
-                      }`}>
+                      <span className={`text-xs font-bold font-mono px-2 py-0.5 rounded-md ${isActive ? 'bg-blue-600 text-white' : 'bg-slate-800 text-blue-300 border border-slate-700'
+                        }`}>
                         {course.code}
                       </span>
                       <span className="text-[11px] text-slate-400 font-medium">{course.section}</span>

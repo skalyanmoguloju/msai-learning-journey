@@ -1,23 +1,12 @@
 import React from 'react';
 import { 
   GraduationCap, 
-  Brain, 
-  BookOpen, 
   RotateCcw, 
-  Award, 
-  Sparkles, 
   Search,
   Menu
 } from 'lucide-react';
-import { ActiveView } from '../types/course';
 
 interface HeaderProps {
-  activeView: ActiveView;
-  setActiveView: (view: ActiveView) => void;
-  fundamentalsMasteredCount: number;
-  totalFundamentals: number;
-  currentSemesterName: string;
-  totalCoursesCount: number;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   onReset: () => void;
@@ -25,22 +14,16 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  activeView,
-  setActiveView,
-  fundamentalsMasteredCount,
-  totalFundamentals,
-  currentSemesterName,
-  totalCoursesCount,
   searchQuery,
   setSearchQuery,
   onReset,
   onToggleMobileSidebar,
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-slate-100 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3.5">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
+    <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-slate-100 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2.5 md:gap-4">
         
-        {/* Brand and Degree Title */}
+        {/* Brand and Degree Title + Mobile Controls */}
         <div className="flex items-center gap-2.5 sm:gap-3 w-full md:w-auto justify-between md:justify-start">
           <div className="flex items-center gap-2 sm:gap-2.5">
             {onToggleMobileSidebar && (
@@ -69,108 +52,43 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Mobile view switcher indicator */}
-          <div className="flex md:hidden items-center gap-1 bg-slate-800/80 p-1 rounded-lg border border-slate-700/50 shrink-0">
+          {/* Mobile Refresh Button */}
+          <div className="flex md:hidden items-center shrink-0">
             <button
-              onClick={() => setActiveView('fundamentals')}
-              className={`p-1.5 rounded-md text-xs font-medium transition-all ${
-                activeView === 'fundamentals'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-              title="Root Fundamentals"
+              onClick={onReset}
+              title="Reset application to default data"
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-400 border border-slate-700/60 active:scale-95 transition-all"
             >
-              <Brain className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setActiveView('course')}
-              className={`p-1.5 rounded-md text-xs font-medium transition-all ${
-                activeView === 'course'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-              title="Semesters & Courses"
-            >
-              <BookOpen className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* Global Navigation: Root Fundamentals vs Semester Courses */}
-        <div className="hidden md:flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/70 shadow-inner">
-          <button
-            onClick={() => setActiveView('fundamentals')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-              activeView === 'fundamentals'
-                ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-md shadow-indigo-600/30'
-                : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-            }`}
-          >
-            <Brain className="w-4 h-4 text-indigo-300" />
-            <span>My Learning (Fundamentals)</span>
-            <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-indigo-900/60 text-indigo-200 border border-indigo-400/30">
-              Root
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveView('course')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-              activeView === 'course'
-                ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md shadow-blue-600/30'
-                : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-            }`}
-          >
-            <BookOpen className="w-4 h-4 text-blue-300" />
-            <span>Semesters & Courses</span>
-            <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-blue-900/60 text-blue-200 border border-blue-400/30">
-              {currentSemesterName}
-            </span>
-          </button>
-        </div>
-
-        {/* Right Stats & Utility Controls */}
-        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-          {/* Quick Search */}
-          <div className="relative flex-1 md:w-48">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        {/* Right Controls: Search Bar + Refresh (Desktop md+) */}
+        <div className="flex items-center gap-2 sm:gap-2.5 w-full md:w-auto justify-end">
+          {/* Search Bar */}
+          <div className="relative flex-1 md:w-64 lg:w-72">
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
             <input
               type="text"
               placeholder="Search concepts, notes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-slate-800/80 border border-slate-700 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
             />
           </div>
 
-          {/* Program Stats Pills */}
-          <div className="hidden lg:flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/70 border border-slate-700/60 text-xs text-slate-300">
-              <Award className="w-3.5 h-3.5 text-amber-400" />
-              <span>
-                Fundamentals:{' '}
-                <strong className="text-white">
-                  {fundamentalsMasteredCount}/{totalFundamentals}
-                </strong>
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/70 border border-slate-700/60 text-xs text-slate-300">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span>
-                Courses: <strong className="text-white">{totalCoursesCount}</strong>
-              </span>
-            </div>
+          {/* Desktop Refresh Button */}
+          <div className="hidden md:flex items-center shrink-0">
+            <button
+              onClick={onReset}
+              title="Reset application to default data"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700/80 text-slate-300 hover:text-rose-300 border border-slate-700/60 text-xs font-semibold active:scale-95 transition-all"
+            >
+              <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+              <span>Refresh</span>
+            </button>
           </div>
-
-          {/* Reset button */}
-          <button
-            onClick={onReset}
-            title="Reset data to defaults"
-            className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-colors"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
         </div>
 
       </div>
