@@ -7,13 +7,13 @@ import {
 import {
   Chart as ChartJS,
   CategoryScale, LinearScale, PointElement, LineElement,
-  Title, Tooltip, Legend, ScatterController
+  Title, Tooltip, Legend, ScatterController, LineController
 } from 'chart.js';
 import { Scatter, Line } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale, LinearScale, PointElement, LineElement,
-  Title, Tooltip, Legend, ScatterController
+  Title, Tooltip, Legend, ScatterController, LineController
 );
 
 // ─────────────────────────────────────────────
@@ -275,11 +275,12 @@ const Step3: React.FC = () => {
         type: 'line' as const,
         borderColor: '#f59e0b',
         borderWidth: 2,
-        fill: false,
+        fill: false as const,
         pointRadius: 0,
       },
     ],
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any;
 
   const chartOptions = {
     responsive: true, maintainAspectRatio: false,
@@ -496,10 +497,11 @@ const Step5: React.FC = () => {
 
   const gdChartData = {
     datasets: [
-      { label: 'Loss Surface J(w) = w²', data: curvePoints, type: 'line' as const, borderColor: '#e11d48', borderWidth: 2, pointRadius: 0, fill: false },
+      { label: 'Loss Surface J(w) = w²', data: curvePoints, type: 'line' as const, borderColor: '#e11d48', borderWidth: 2, pointRadius: 0, fill: false as const },
       { label: 'Current w', data: [{ x: currentW, y: currentW * currentW }], backgroundColor: '#6366f1', pointRadius: 9 },
     ],
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any;
 
   const gdChartOptions = {
     responsive: true, maintainAspectRatio: false,
