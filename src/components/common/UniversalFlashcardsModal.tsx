@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import katex from 'katex';
 import {
   Sparkles,
@@ -11,7 +11,16 @@ import {
   RotateCcw,
   Shuffle
 } from 'lucide-react';
-import { UniversalFlashcard } from '../../types/weeklyCurriculum';
+export interface UniversalFlashcard {
+  id: string;
+  category: string;
+  title: string;
+  frontPrompt: string;
+  backFormula: string;
+  backExplanation: string;
+  useCase?: string;
+  remark?: string;
+}
 
 // KaTeX inline & block helper
 const MathText: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
@@ -66,6 +75,7 @@ export interface UniversalFlashcardsModalProps {
   flashcards?: UniversalFlashcard[];
   storageKey?: string;
   initialCategory?: string;
+  activeModuleId?: string | number;
 }
 
 export const UniversalFlashcardsModal: React.FC<UniversalFlashcardsModalProps> = ({
@@ -76,13 +86,15 @@ export const UniversalFlashcardsModal: React.FC<UniversalFlashcardsModalProps> =
   cards: rawCards,
   flashcards: rawFlashcards,
   storageKey = 'universal_flashcards_mastered',
-  initialCategory = 'All'
+  initialCategory = 'All',
+  activeModuleId
 }) => {
   const cards = useMemo(() => rawCards || rawFlashcards || [], [rawCards, rawFlashcards]);
   const [cardCategory, setCardCategory] = useState<string>(initialCategory);
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<'deck' | 'grid'>('deck');
+
 
   // Mastered state synced to localStorage
   const [masteredCards, setMasteredCards] = useState<string[]>(() => {
@@ -126,6 +138,27 @@ export const UniversalFlashcardsModal: React.FC<UniversalFlashcardsModalProps> =
     if (cardCategory === 'All') return cards;
     return cards.filter(c => c.category === cardCategory);
   }, [cardCategory, cards]);
+
+  // When modal opens, match activeModuleId or initialCategory to category
+  const prevIsOpenRef = useRef(false);
+  useEffect(() => {
+    if (isOpen && !prevIsOpenRef.current) {
+      if (activeModuleId !== undefined && activeModuleId !== '') {
+        const numMatch = String(activeModuleId).match(/\d+/);
+        const modNum = numMatch ? numMatch[0] : String(activeModuleId);
+        const regex = new RegExp(`(^|\\b)(module|mod|step)\\s*${modNum}(\\b|:)`, 'i');
+        const match = categories.find((c) => regex.test(c));
+        if (match) {
+          setCardCategory(match);
+        } else if (initialCategory && categories.includes(initialCategory)) {
+          setCardCategory(initialCategory);
+        }
+      } else if (initialCategory && categories.includes(initialCategory)) {
+        setCardCategory(initialCategory);
+      }
+    }
+    prevIsOpenRef.current = isOpen;
+  }, [isOpen, activeModuleId, initialCategory, categories]);
 
   const activeCard = filteredCards[currentCardIndex] || filteredCards[0] || cards[0];
 

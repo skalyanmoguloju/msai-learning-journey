@@ -3,10 +3,8 @@ import { Layers } from 'lucide-react';
 import { useMsaiStorage } from './hooks/useMsaiStorage';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
-import { RootLearningView } from './components/RootLearningView';
+import { RootLearningView } from './components/root-learning';
 import { CourseWorkspace } from './components/CourseWorkspace';
-import { AddCourseModal } from './components/modals/AddCourseModal';
-import { AddSemesterModal } from './components/modals/AddSemesterModal';
 
 export function App() {
   const {
@@ -25,14 +23,8 @@ export function App() {
     toggleConceptMastery,
     toggleDeliverable,
     addCustomNote,
-    addCourse,
-    addSemester,
-    resetToDefaults,
   } = useMsaiStorage();
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isAddCourseOpen, setIsAddCourseOpen] = useState(false);
-  const [isAddSemesterOpen, setIsAddSemesterOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   return (
@@ -40,9 +32,6 @@ export function App() {
       
       {/* Top Application Header */}
       <Header
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onReset={resetToDefaults}
         onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
       />
 
@@ -77,8 +66,6 @@ export function App() {
           setActiveCourseId={setActiveCourseId}
           activeView={activeView}
           setActiveView={setActiveView}
-          onOpenAddCourse={() => setIsAddCourseOpen(true)}
-          onOpenAddSemester={() => setIsAddSemesterOpen(true)}
           isMobileOpen={isMobileSidebarOpen}
           onMobileClose={() => setIsMobileSidebarOpen(false)}
         />
@@ -108,22 +95,6 @@ export function App() {
           )}
         </main>
       </div>
-
-      {/* Add Course Modal */}
-      <AddCourseModal
-        isOpen={isAddCourseOpen}
-        onClose={() => setIsAddCourseOpen(false)}
-        semesterName={currentSemester?.name || 'Selected Term'}
-        semesterId={activeSemesterId}
-        onAddCourse={addCourse}
-      />
-
-      {/* Add Semester Modal */}
-      <AddSemesterModal
-        isOpen={isAddSemesterOpen}
-        onClose={() => setIsAddSemesterOpen(false)}
-        onAddSemester={addSemester}
-      />
 
     </div>
   );

@@ -213,32 +213,6 @@ export function useMsaiStorage() {
     setCustomNotes(prev => [newNote, ...prev]);
   };
 
-  const addCourse = (semesterId: string, newCourse: Course) => {
-    setSemesters(prev =>
-      prev.map(sem => {
-        if (sem.id !== semesterId) return sem;
-        return {
-          ...sem,
-          courses: [...sem.courses, newCourse]
-        };
-      })
-    );
-    setActiveCourseId(newCourse.id);
-    setActiveView('course');
-    setActiveTab('class');
-  };
-
-  const addSemester = (name: string) => {
-    const newSem: Semester = {
-      id: `sem-${Date.now()}`,
-      name,
-      isCurrent: false,
-      courses: []
-    };
-    setSemesters(prev => [...prev, newSem]);
-    setActiveSemesterId(newSem.id);
-  };
-
   const resetToDefaults = () => {
     if (window.confirm('Reset all course notes, checks, and data back to defaults?')) {
       localStorage.clear();
@@ -270,8 +244,6 @@ export function useMsaiStorage() {
     toggleFundamentalMastery,
     toggleDeliverable,
     addCustomNote,
-    addCourse,
-    addSemester,
     resetToDefaults
   };
 }

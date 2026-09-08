@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  FolderPlus,
-  PlusCircle,
   Calendar,
   BookOpen,
   Brain,
@@ -21,8 +19,6 @@ interface SidebarProps {
   setActiveCourseId: (id: string) => void;
   activeView: ActiveView;
   setActiveView: (view: ActiveView) => void;
-  onOpenAddCourse: () => void;
-  onOpenAddSemester: () => void;
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
 }
@@ -35,8 +31,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveCourseId,
   activeView,
   setActiveView,
-  onOpenAddCourse,
-  onOpenAddSemester,
   isMobileOpen = false,
   onMobileClose = () => { },
 }) => {
@@ -118,17 +112,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-blue-400" /> Semesters
             </span>
-            <button
-              onClick={() => {
-                onOpenAddSemester();
-                onMobileClose();
-              }}
-              className="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
-              title="Add another semester"
-            >
-              <FolderPlus className="w-3.5 h-3.5" />
-              <span>New Term</span>
-            </button>
           </div>
 
           {/* Semester selector pills */}
@@ -167,16 +150,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5 text-cyan-400" /> Courses ({currentSemester?.courses.length || 0})
             </span>
-            <button
-              onClick={() => {
-                onOpenAddCourse();
-                onMobileClose();
-              }}
-              className="text-[11px] text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>Add Course</span>
-            </button>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -236,15 +209,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {(!currentSemester || currentSemester.courses.length === 0) && (
               <div className="text-center py-6 px-3 bg-slate-800/30 rounded-xl border border-dashed border-slate-700/60 text-slate-400">
                 <p className="text-xs">No courses in this term yet.</p>
-                <button
-                  onClick={() => {
-                    onOpenAddCourse();
-                    onMobileClose();
-                  }}
-                  className="mt-2 text-xs text-blue-400 hover:underline font-semibold"
-                >
-                  + Add your first course
-                </button>
               </div>
             )}
           </div>

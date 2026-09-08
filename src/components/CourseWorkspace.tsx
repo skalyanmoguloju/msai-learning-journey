@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   GraduationCap, 
   Brain, 
@@ -10,16 +10,14 @@ import {
   Sparkles
 } from 'lucide-react';
 import { Course, SubTabType, CustomUserNote } from '../types/course';
-import { ClassTab } from './tabs/ClassTab';
-import { MyLearningTab } from './tabs/MyLearningTab';
-import { ProjectTab } from './tabs/ProjectTab';
-import { PresentationTab } from './tabs/PresentationTab';
+import { ClassTab, MyLearningTab, ProjectTab, PresentationTab } from './curriculum/tabs';
+import { curriculumNavStore } from './curriculum/navigationStore';
 
 interface CourseWorkspaceProps {
   course: Course;
   semesterName: string;
-  activeTab: SubTabType;
-  setActiveTab: (tab: SubTabType) => void;
+  activeTab?: SubTabType;
+  setActiveTab?: (tab: SubTabType) => void;
   toggleConceptMastery: (courseId: string, conceptId: string) => void;
   toggleDeliverable: (courseId: string, deliverableId: string) => void;
   customNotes: CustomUserNote[];
@@ -29,13 +27,35 @@ interface CourseWorkspaceProps {
 export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
   course,
   semesterName,
-  activeTab,
-  setActiveTab,
+  activeTab: propActiveTab,
+  setActiveTab: propSetActiveTab,
   toggleConceptMastery,
   toggleDeliverable,
   customNotes,
   addCustomNote,
 }) => {
+  // In-memory tab selection per course (persists during session, resets on refresh)
+  const [activeTab, setActiveTabState] = useState<SubTabType>(() =>
+    curriculumNavStore.getTabForCourse(course.id, 'class') as SubTabType
+  );
+
+  const handleSelectTab = (tabId: SubTabType) => {
+    curriculumNavStore.setTabForCourse(course.id, tabId);
+    setActiveTabState(tabId);
+    if (propSetActiveTab) {
+      propSetActiveTab(tabId);
+    }
+  };
+
+  // Restore preserved tab when switching courses
+  useEffect(() => {
+    const savedTab = curriculumNavStore.getTabForCourse(course.id, 'class') as SubTabType;
+    setActiveTabState(savedTab);
+    if (propSetActiveTab) {
+      propSetActiveTab(savedTab);
+    }
+  }, [course.id]);
+
   const tabs: { id: SubTabType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'class', label: 'Class', icon: GraduationCap },
     { id: 'mylearning', label: 'MyLearning', icon: Brain },
@@ -108,7 +128,7 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleSelectTab(tab.id)}
               className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap relative shrink-0 ${
                 isActive
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30'

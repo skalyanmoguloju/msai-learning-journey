@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export interface ModuleHeaderProps {
@@ -196,8 +196,35 @@ export const ModuleTemplate: React.FC<ModuleTemplateProps> = ({
   nextLabel = 'Next Module',
   showFooter = true
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const wasNavigatedRef = useRef<boolean>(false);
+
+  // When navigated to a new module, scroll smoothly to the start of the displayed module
+  useEffect(() => {
+    if (wasNavigatedRef.current) {
+      wasNavigatedRef.current = false;
+      containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [moduleId]);
+
+  const handlePrev = () => {
+    if (onPrevModule) {
+      wasNavigatedRef.current = true;
+      onPrevModule();
+      containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleNext = () => {
+    if (onNextModule) {
+      wasNavigatedRef.current = true;
+      onNextModule();
+      containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div ref={containerRef} className="space-y-6 animate-fade-in scroll-mt-6 sm:scroll-mt-8">
       {/* Reusable Header */}
       <ModuleHeader
         moduleId={moduleId}
@@ -208,8 +235,8 @@ export const ModuleTemplate: React.FC<ModuleTemplateProps> = ({
         subtitle={subtitle}
         isCompleted={isCompleted}
         onToggleComplete={onToggleComplete}
-        onPrevModule={onPrevModule}
-        onNextModule={onNextModule}
+        onPrevModule={onPrevModule ? handlePrev : undefined}
+        onNextModule={onNextModule ? handleNext : undefined}
         hasPrev={hasPrev}
         hasNext={hasNext}
         extraActions={extraActions}
@@ -228,8 +255,8 @@ export const ModuleTemplate: React.FC<ModuleTemplateProps> = ({
           totalModules={totalModules}
           isCompleted={isCompleted}
           onToggleComplete={onToggleComplete}
-          onPrevModule={onPrevModule}
-          onNextModule={onNextModule}
+          onPrevModule={onPrevModule ? handlePrev : undefined}
+          onNextModule={onNextModule ? handleNext : undefined}
           hasPrev={hasPrev}
           hasNext={hasNext}
           prevLabel={prevLabel}
