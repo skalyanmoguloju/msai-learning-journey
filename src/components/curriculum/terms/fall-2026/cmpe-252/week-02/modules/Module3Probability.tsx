@@ -988,38 +988,6 @@ export const Module3Probability: React.FC<ModuleProps> = ({ onGoToQuiz, onOpenFl
         </div>
       </div>
 
-      {/* Action Footer Navigation */}
-      <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div className="text-xs font-bold text-white">Ready to test what you've learned?</div>
-          <div className="text-[11px] text-slate-400">
-            Reinforce your probability and statistics mastery with the week-wide interactive practice quiz or formula flashcards.
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3">
-          {onOpenFlashcards && (
-            <button
-              onClick={onOpenFlashcards}
-              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 border border-slate-700 transition"
-            >
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Review Flashcards</span>
-            </button>
-          )}
-
-          {onGoToQuiz && (
-            <button
-              onClick={onGoToQuiz}
-              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-blue-600/30 transition"
-            >
-              <HelpCircle className="w-4 h-4" />
-              <span>Practice Week 2 Quiz</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-      </div>
     </div>
   );
 };
