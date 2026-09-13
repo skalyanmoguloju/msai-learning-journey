@@ -232,38 +232,10 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     };
   }, [s11, s12, s21, s22, rankK]);
 
-  // --- Review Quiz State ---
-  const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
-  const [userSelections, setUserSelections] = useState<Record<string, string>>({});
-
-  const toggleAnswer = (qKey: string, choice: string) => {
-    setUserSelections(prev => ({ ...prev, [qKey]: choice }));
-    setRevealedAnswers(prev => ({ ...prev, [qKey]: true }));
-  };
-
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Module Overview Banner */}
       <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30">
-              <Boxes className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
-                Interactive Learning Guide
-              </span>
-              <h3 className="text-base sm:text-lg font-bold text-white">
-                Linear Algebra &amp; Matrix Factorizations 📐
-              </h3>
-            </div>
-          </div>
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/10 text-blue-300 border border-blue-500/20">
-            Comprehensive Walkthrough
-          </span>
-        </div>
-
         <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
           Linear algebra forms the computational backbone of modern Artificial Intelligence and Machine Learning.
           Models represent datasets as high-dimensional vectors, transform features through matrix multiplications,
@@ -1229,121 +1201,6 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
         </div>
       </div>
 
-      {/* ========================================================================= */}
-      {/* 8. REVIEW & CONCEPT CHECK */}
-      {/* ========================================================================= */}
-      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-purple-500/20 text-purple-400 border border-purple-500/30">
-              <HelpCircle className="w-4 h-4" />
-            </div>
-            <h4 className="text-base font-bold text-white">Review &amp; Concept Check</h4>
-          </div>
-          <span className="text-xs text-slate-400">Validate Core Comprehension</span>
-        </div>
-
-        <div className="space-y-4">
-          {/* Question 1 */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
-            <div className="font-bold text-sm text-white">
-              1. If two non-zero vectors have an inner dot product of zero (<MathText text="$\mathbf{a} \cdot \mathbf{b} = 0$" />), what does that indicate geometrically?
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {[
-                { id: 'A', text: 'A. They are parallel' },
-                { id: 'B', text: 'B. They are perpendicular (orthogonal)' },
-                { id: 'C', text: 'C. They have equal length' }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => toggleAnswer('q1', opt.id)}
-                  className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
-                    userSelections['q1'] === opt.id
-                      ? opt.id === 'B'
-                        ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                        : 'bg-rose-950/60 border-rose-500 text-rose-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
-                  }`}
-                >
-                  {opt.text}
-                </button>
-              ))}
-            </div>
-            {revealedAnswers['q1'] && (
-              <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
-                <strong className="text-emerald-400">Correct Answer: B.</strong> Since <MathText text="$\mathbf{a} \cdot \mathbf{b} = \|\mathbf{a}\| \|\mathbf{b}\| \cos(\theta) = 0$" />, we have <MathText text="$\cos(\theta) = 0 \implies \theta = 90^\circ$" />. Orthogonal vectors carry independent information.
-              </div>
-            )}
-          </div>
-
-          {/* Question 2 */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
-            <div className="font-bold text-sm text-white">
-              2. What computational advantage does LU Decomposition provide when solving <MathText text="$\mathbf{A}\mathbf{x} = \mathbf{b}$" /> across multiple right-hand side vectors?
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {[
-                { id: 'A', text: 'A. Solves via fast triangular substitution O(n²)' },
-                { id: 'B', text: 'B. Calculates the exact probability of error' },
-                { id: 'C', text: 'C. Removes negative entries' }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => toggleAnswer('q2', opt.id)}
-                  className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
-                    userSelections['q2'] === opt.id
-                      ? opt.id === 'A'
-                        ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                        : 'bg-rose-950/60 border-rose-500 text-rose-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
-                  }`}
-                >
-                  {opt.text}
-                </button>
-              ))}
-            </div>
-            {revealedAnswers['q2'] && (
-              <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
-                <strong className="text-emerald-400">Correct Answer: A.</strong> Once <MathText text="$\mathbf{A} = \mathbf{L}\mathbf{U}$" /> is factored (<MathText text="$\mathcal{O}(n^3)$" />), each new RHS system is solved via forward substitution <MathText text="$\mathbf{L}\mathbf{y} = \mathbf{b}$" /> and back substitution <MathText text="$\mathbf{U}\mathbf{x} = \mathbf{y}$" /> in <MathText text="$\mathcal{O}(n^2)$" /> time without refactoring.
-              </div>
-            )}
-          </div>
-
-          {/* Question 3 */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
-            <div className="font-bold text-sm text-white">
-              3. How does Singular Value Decomposition (SVD) enable dimensionality reduction and lossy data compression?
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {[
-                { id: 'A', text: 'A. By isolating top singular values holding most energy' },
-                { id: 'B', text: 'B. By simply counting non-zero entries' },
-                { id: 'C', text: 'C. By zeroing out all off-diagonal values' }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => toggleAnswer('q3', opt.id)}
-                  className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
-                    userSelections['q3'] === opt.id
-                      ? opt.id === 'A'
-                        ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                        : 'bg-rose-950/60 border-rose-500 text-rose-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
-                  }`}
-                >
-                  {opt.text}
-                </button>
-              ))}
-            </div>
-            {revealedAnswers['q3'] && (
-              <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
-                <strong className="text-emerald-400">Correct Answer: A.</strong> By the Eckart–Young–Mirsky theorem, truncating the SVD expansion to the largest <MathText text="$k$" /> singular values gives the optimal rank-<MathText text="$k$" /> approximation in both Frobenius and spectral norms.
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
 
       {/* Action Footer Navigation */}
       <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl flex flex-wrap items-center justify-between gap-4">
