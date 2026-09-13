@@ -3,7 +3,8 @@ import {
   Sparkles,
   Award,
   ArrowRight,
-  HelpCircle
+  HelpCircle,
+  FileText
 } from 'lucide-react';
 import { Course, SyllabusModule } from '../../../../../../types/course';
 import {
@@ -12,10 +13,12 @@ import {
   ModuleAndToolSidebar,
   Toast,
   UniversalFlashcardsModal,
+  DocumentsTemplate,
   curriculumNavStore
 } from '../../../../common';
 import { ML_MODULES } from './types';
 import { ML_WEEK1_FLASHCARDS } from './flashcards';
+import { ML_WEEK1_DOCUMENTS } from './documentsData';
 import { Module1Fundamentals } from './modules/Module1Fundamentals';
 import { Module2SupervisedLinear } from './modules/Module2SupervisedLinear';
 import { Module3Unsupervised } from './modules/Module3Unsupervised';
@@ -40,8 +43,8 @@ export const Week01ML: React.FC<Week01MLProps> = ({ course, module }) => {
   const [activeQuizModuleId, setActiveQuizModuleIdState] = useState<string>(() =>
     curriculumNavStore.getModuleForWeek<string>(`${WEEK_KEY}_quiz`, 'm1')
   );
-  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz'>(() =>
-    curriculumNavStore.getMainTabForWeek(WEEK_KEY, 'study')
+  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz' | 'documents'>(() =>
+    curriculumNavStore.getMainTabForWeek<'study' | 'quiz' | 'documents'>(WEEK_KEY, 'study')
   );
 
   const setActiveModuleId = useCallback((id: string) => {
@@ -54,7 +57,7 @@ export const Week01ML: React.FC<Week01MLProps> = ({ course, module }) => {
     setActiveQuizModuleIdState(id);
   }, []);
 
-  const setActiveMainTab = useCallback((tab: 'study' | 'quiz') => {
+  const setActiveMainTab = useCallback((tab: 'study' | 'quiz' | 'documents') => {
     curriculumNavStore.setMainTabForWeek(WEEK_KEY, tab);
     setActiveMainTabState(tab);
   }, []);
@@ -157,6 +160,16 @@ export const Week01ML: React.FC<Week01MLProps> = ({ course, module }) => {
           totalCount={ML_MODULES.length}
           tools={[
             {
+              id: 'documents-tool',
+              title: 'Documents',
+              icon: FileText,
+              onClick: () => {
+                setActiveMainTab('documents');
+              },
+              isActive: activeMainTab === 'documents',
+              badge: `${ML_WEEK1_DOCUMENTS.length} File${ML_WEEK1_DOCUMENTS.length === 1 ? '' : 's'}`
+            },
+            {
               id: 'flashcards-tool',
               title: 'Flashcards',
               icon: Sparkles,
@@ -251,6 +264,13 @@ export const Week01ML: React.FC<Week01MLProps> = ({ course, module }) => {
                 setActiveMainTab('study');
                 setActiveModuleId(moduleId);
               }}
+            />
+          )}
+
+          {activeMainTab === 'documents' && (
+            <DocumentsTemplate
+              documents={ML_WEEK1_DOCUMENTS}
+              onBackToStudy={() => setActiveMainTab('study')}
             />
           )}
         </main>
