@@ -12,7 +12,6 @@ import {
   Cpu,
   RotateCcw,
   AlertTriangle,
-  BookOpen,
   Check,
   Percent
 } from 'lucide-react';
@@ -24,10 +23,7 @@ interface ModuleProps {
 }
 
 export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpenFlashcards }) => {
-  // Navigation tabs for the 8 topics
-  const [activeTopic, setActiveTopic] = useState<number>(1);
-
-  // --- Topic 1: Matrix Multiplication State ---
+  // --- Matrix Multiplication State ---
   const [m11, setM11] = useState<number>(2);
   const [m12, setM12] = useState<number>(1);
   const [m21, setM21] = useState<number>(1);
@@ -41,7 +37,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     return { row1, row2 };
   }, [m11, m12, m21, m22, vx1, vx2]);
 
-  // --- Topic 2: Dot Product State ---
+  // --- Dot Product State ---
   const [dotA1, setDotA1] = useState<number>(3);
   const [dotA2, setDotA2] = useState<number>(1);
   const [dotB1, setDotB1] = useState<number>(1);
@@ -68,7 +64,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     return { dot, normA, normB, cosAngle, deg, meaning, badgeColor };
   }, [dotA1, dotA2, dotB1, dotB2]);
 
-  // --- Topic 3: Projection State & Visualizer ---
+  // --- Projection State & Visualizer ---
   const [projA1, setProjA1] = useState<number>(3);
   const [projA2, setProjA2] = useState<number>(1);
   const [projB1, setProjB1] = useState<number>(1);
@@ -87,7 +83,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     return { dotAB, dotBB, isZeroB, coeff, p1, p2, perp1, perp2 };
   }, [projA1, projA2, projB1, projB2]);
 
-  // --- Topic 5: Gram-Schmidt State ---
+  // --- Gram-Schmidt State ---
   const [g11, setG11] = useState<number>(3);
   const [g12, setG12] = useState<number>(1);
   const [g21, setG21] = useState<number>(1);
@@ -144,7 +140,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     };
   }, [g11, g12, g21, g22]);
 
-  // --- Topic 6: LU Decomposition State ---
+  // --- LU Decomposition State ---
   const [l11, setL11] = useState<number>(4);
   const [l12, setL12] = useState<number>(3);
   const [l21, setL21] = useState<number>(2);
@@ -192,7 +188,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     };
   }, [l11, l12, l21, l22, lr1, lr2]);
 
-  // --- Topic 7: SVD State ---
+  // --- SVD State ---
   const [s11, setS11] = useState<number>(3);
   const [s12, setS12] = useState<number>(1);
   const [s21, setS21] = useState<number>(0);
@@ -236,7 +232,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     };
   }, [s11, s12, s21, s22, rankK]);
 
-  // --- Topic 8: Review Quiz State ---
+  // --- Review Quiz State ---
   const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
   const [userSelections, setUserSelections] = useState<Record<string, string>>({});
 
@@ -245,20 +241,9 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
     setRevealedAnswers(prev => ({ ...prev, [qKey]: true }));
   };
 
-  const topicsList = [
-    { id: 1, title: 'Vectors & Matrices', icon: Boxes },
-    { id: 2, title: 'Dot Product', icon: Compass },
-    { id: 3, title: 'Vector Projection', icon: Activity },
-    { id: 4, title: 'Orthogonality', icon: Split },
-    { id: 5, title: 'Gram–Schmidt', icon: Layers },
-    { id: 6, title: 'LU Decomposition', icon: Cpu },
-    { id: 7, title: 'SVD & Compression', icon: Minimize2 },
-    { id: 8, title: 'Review Quiz', icon: HelpCircle }
-  ];
-
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Module Banner / Quick Guide */}
+      {/* Module Overview Banner */}
       <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-4 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2.5">
@@ -267,7 +252,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
-                Module 1 Interactive Guide
+                Interactive Learning Guide
               </span>
               <h3 className="text-base sm:text-lg font-bold text-white">
                 Linear Algebra &amp; Matrix Factorizations 📐
@@ -275,7 +260,7 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
             </div>
           </div>
           <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/10 text-blue-300 border border-blue-500/20">
-            8 Essential Core Topics
+            Comprehensive Walkthrough
           </span>
         </div>
 
@@ -285,1121 +270,1080 @@ export const Module1LinearAlgebra: React.FC<ModuleProps> = ({ onGoToQuiz, onOpen
           solve systems <MathText text="$\mathbf{A}\mathbf{x} = \mathbf{b}$" /> via LU decomposition, and compress parameters or uncover latent semantic topics using Singular Value Decomposition (SVD).
         </p>
 
-        {/* Big Picture Tip */}
         <div className="p-3.5 bg-blue-950/40 border border-blue-800/40 rounded-xl text-xs text-blue-200 flex items-start gap-2.5">
           <Sparkles className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
           <div>
-            <strong className="text-white font-semibold">How to learn with this page:</strong> Explore each concept, adjust the matrix and vector inputs to observe the resulting algebraic and geometric transformations, and test your understanding with the embedded checks.
+            <strong className="text-white font-semibold">How to use this guide:</strong> Explore each section below, adjust the matrix and vector inputs to observe the resulting algebraic and geometric transformations in real time, and test your understanding with the concept checks.
           </div>
-        </div>
-
-        {/* Quick Topic Navigation Tabs */}
-        <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-800/60">
-          {topicsList.map(t => {
-            const Icon = t.icon;
-            const isActive = activeTopic === t.id;
-            return (
-              <button
-                key={t.id}
-                onClick={() => setActiveTopic(t.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 border border-blue-500'
-                    : 'bg-slate-950/60 text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-slate-800/80'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{t.id}. {t.title}</span>
-              </button>
-            );
-          })}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* TOPIC 1: VECTORS & MATRICES */}
+      {/* 1. VECTORS & MATRICES */}
       {/* ========================================================================= */}
-      {(activeTopic === 1 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 1
-              </span>
-              <h4 className="text-base font-bold text-white">Vectors and Matrices</h4>
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Boxes className="w-4 h-4" />
             </div>
-            <span className="text-xs text-slate-400">Foundation of Data Representation</span>
+            <h4 className="text-base font-bold text-white">Vectors and Matrices</h4>
           </div>
+          <span className="text-xs text-slate-400">Foundation of Data Representation</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Vector Card */}
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800/90 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Vector</span>
+              <span className="text-[11px] text-slate-500 font-mono">1D Array</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              An ordered list of numbers. Geometrically, it specifies a directed arrow with magnitude and orientation from the origin; algebraically, it represents a single data record or feature coordinate.
+            </p>
+            <div className="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-200">
+              <div className="text-[11px] text-slate-400 mb-1">2D Column Vector:</div>
+              <MathText text="$\mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = [x_1, x_2]^T \in \mathbb{R}^2$" />
+            </div>
+          </div>
+
+          {/* Matrix Card */}
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800/90 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Matrix</span>
+              <span className="text-[11px] text-slate-500 font-mono">2D Tensor</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              A rectangular array of numbers arranged into rows and columns. It functions as a dataset container or a linear transformation operator that maps input vectors to output coordinates.
+            </p>
+            <div className="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-200">
+              <div className="text-[11px] text-slate-400 mb-1">2 × 2 Transformation Matrix:</div>
+              <MathText text="$\mathbf{A} = \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix} \in \mathbb{R}^{2 \times 2}$" />
+            </div>
+          </div>
+        </div>
+
+        {/* Interactive Matrix-Vector Multiplication */}
+        <div className="p-4 bg-slate-950/90 border border-slate-800 rounded-xl space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <Boxes className="w-4 h-4 text-blue-400" />
+              Interactive Matrix-Vector Multiplication: <MathText text="$\mathbf{A}\mathbf{x}$" />
+            </h5>
+            <button
+              onClick={() => {
+                setM11(2); setM12(1); setM21(1); setM22(3);
+                setVx1(4); setVx2(2);
+              }}
+              className="px-2 py-1 rounded bg-slate-800 text-[11px] text-slate-300 hover:bg-slate-700 flex items-center gap-1"
+            >
+              <RotateCcw className="w-3 h-3" /> Reset
+            </button>
+          </div>
+
+          <p className="text-xs text-slate-300">
+            Each row of matrix <MathText text="$\mathbf{A}$" /> forms a dot product with the input column vector <MathText text="$\mathbf{x}$" />:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            {/* Matrix A Inputs */}
+            <div className="md:col-span-5 p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+              <span className="text-xs font-bold text-indigo-300 block">Matrix A (2×2):</span>
+              <div className="grid grid-cols-2 gap-2 max-w-[180px] mx-auto">
+                <input
+                  type="number"
+                  value={m11}
+                  onChange={e => setM11(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
+                  title="a11"
+                />
+                <input
+                  type="number"
+                  value={m12}
+                  onChange={e => setM12(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
+                  title="a12"
+                />
+                <input
+                  type="number"
+                  value={m21}
+                  onChange={e => setM21(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
+                  title="a21"
+                />
+                <input
+                  type="number"
+                  value={m22}
+                  onChange={e => setM22(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
+                  title="a22"
+                />
+              </div>
+            </div>
+
+            {/* Multiply Operator */}
+            <div className="md:col-span-1 text-center font-bold text-slate-500 text-lg">
+              ×
+            </div>
+
+            {/* Vector x Inputs */}
+            <div className="md:col-span-3 p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+              <span className="text-xs font-bold text-blue-300 block">Vector x (2×1):</span>
+              <div className="grid grid-cols-1 gap-2 max-w-[90px] mx-auto">
+                <input
+                  type="number"
+                  value={vx1}
+                  onChange={e => setVx1(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
+                  title="x1"
+                />
+                <input
+                  type="number"
+                  value={vx2}
+                  onChange={e => setVx2(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
+                  title="x2"
+                />
+              </div>
+            </div>
+
+            {/* Result Ax */}
+            <div className="md:col-span-3 p-3 bg-slate-900/90 rounded-xl border border-emerald-900/40 space-y-2">
+              <span className="text-xs font-bold text-emerald-400 block">Result Vector Ax:</span>
+              <div className="p-2 bg-slate-950 rounded-lg border border-emerald-500/20 text-center font-mono text-sm space-y-1">
+                <div className="text-xs text-slate-400">
+                  Row 1: {m11}({vx1}) + {m12}({vx2}) = <strong className="text-emerald-300">{matResult.row1}</strong>
+                </div>
+                <div className="text-xs text-slate-400">
+                  Row 2: {m21}({vx1}) + {m22}({vx2}) = <strong className="text-emerald-300">{matResult.row2}</strong>
+                </div>
+                <div className="pt-1 border-t border-slate-800 text-emerald-400 font-bold text-base">
+                  [{matResult.row1}, {matResult.row2}]ᵀ
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 2. DOT PRODUCT */}
+      {/* ========================================================================= */}
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Compass className="w-4 h-4" />
+            </div>
+            <h4 className="text-base font-bold text-white">The Dot Product</h4>
+          </div>
+          <span className="text-xs text-slate-400">Inner Product &amp; Directional Similarity</span>
+        </div>
+
+        <div className="space-y-3">
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            The dot product (inner product) multiplies matching coordinates across two vectors of identical length and sums the products. Geometrically, it measures the degree of directional alignment between the vectors.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+            <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+              <span className="text-blue-400 font-bold block">General n-Dimensional Sum:</span>
+              <MathText text="$\mathbf{a} \cdot \mathbf{b} = \sum_{i=1}^n a_i b_i = a_1 b_1 + a_2 b_2 + \dots + a_n b_n$" />
+            </div>
+            <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+              <span className="text-indigo-400 font-bold block">Geometric Angle Formula:</span>
+              <MathText text="$\mathbf{a} \cdot \mathbf{b} = \|\mathbf{a}\| \|\mathbf{b}\| \cos(\theta) \implies \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}$" />
+            </div>
+          </div>
+        </div>
+
+        {/* Interactive Dot Product Calculator */}
+        <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+          <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Compass className="w-4 h-4 text-blue-400" />
+            Interactive Vector Alignment &amp; Angle Lab
+          </h5>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Vector Card */}
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800/90 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">Vector</span>
-                <span className="text-[11px] text-slate-500 font-mono">1D Array</span>
+            <div className="space-y-3 p-3.5 bg-slate-900 rounded-xl border border-slate-800">
+              <div>
+                <label className="text-xs font-bold text-blue-400 block mb-1">
+                  Vector a: [a₁, a₂]
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={dotA1}
+                    onChange={e => setDotA1(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
+                  />
+                  <input
+                    type="number"
+                    value={dotA2}
+                    onChange={e => setDotA2(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                An ordered list of numbers. Geometrically, it specifies a directed arrow with magnitude and orientation from the origin; algebraically, it represents a single data record or feature coordinate.
-              </p>
-              <div className="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-200">
-                <div className="text-[11px] text-slate-400 mb-1">2D Column Vector:</div>
-                <MathText text="$\mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = [x_1, x_2]^T \in \mathbb{R}^2$" />
-              </div>
-            </div>
 
-            {/* Matrix Card */}
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800/90 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Matrix</span>
-                <span className="text-[11px] text-slate-500 font-mono">2D Tensor</span>
+              <div>
+                <label className="text-xs font-bold text-amber-400 block mb-1">
+                  Vector b: [b₁, b₂]
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={dotB1}
+                    onChange={e => setDotB1(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-amber-500 focus:outline-none"
+                  />
+                  <input
+                    type="number"
+                    value={dotB2}
+                    onChange={e => setDotB2(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-amber-500 focus:outline-none"
+                  />
+                </div>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                A rectangular array of numbers arranged into rows and columns. It functions as a dataset container or a linear transformation operator that maps input vectors to output coordinates.
-              </p>
-              <div className="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-200">
-                <div className="text-[11px] text-slate-400 mb-1">2 × 2 Transformation Matrix:</div>
-                <MathText text="$\mathbf{A} = \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix} \in \mathbb{R}^{2 \times 2}$" />
-              </div>
-            </div>
-          </div>
 
-          {/* Interactive Matrix-Vector Multiplication */}
-          <div className="p-4 bg-slate-950/90 border border-slate-800 rounded-xl space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Boxes className="w-4 h-4 text-blue-400" />
-                Interactive Matrix-Vector Multiplication: <MathText text="$\mathbf{A}\mathbf{x}$" />
-              </h5>
-              <div className="flex items-center gap-2">
+              {/* Quick Presets */}
+              <div className="flex flex-wrap gap-1.5 pt-1">
                 <button
-                  onClick={() => {
-                    setM11(2); setM12(1); setM21(1); setM22(3);
-                    setVx1(4); setVx2(2);
-                  }}
-                  className="px-2 py-1 rounded bg-slate-800 text-[11px] text-slate-300 hover:bg-slate-700 flex items-center gap-1"
+                  onClick={() => { setDotA1(3); setDotA2(1); setDotB1(1); setDotB2(2); }}
+                  className="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px]"
                 >
-                  <RotateCcw className="w-3 h-3" /> Reset
+                  Default
+                </button>
+                <button
+                  onClick={() => { setDotA1(2); setDotA2(1); setDotB1(1); setDotB2(-2); }}
+                  className="px-2 py-1 bg-purple-900/40 hover:bg-purple-800/60 text-purple-200 rounded text-[10px]"
+                >
+                  Perpendicular (Dot = 0)
+                </button>
+                <button
+                  onClick={() => { setDotA1(2); setDotA2(3); setDotB1(-2); setDotB2(-3); }}
+                  className="px-2 py-1 bg-rose-900/40 hover:bg-rose-800/60 text-rose-200 rounded text-[10px]"
+                >
+                  Opposite (Dot &lt; 0)
                 </button>
               </div>
             </div>
 
-            <p className="text-xs text-slate-300">
-              Each row of matrix <MathText text="$\mathbf{A}$" /> forms a dot product with the input column vector <MathText text="$\mathbf{x}$" />:
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-              {/* Matrix A Inputs */}
-              <div className="md:col-span-5 p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
-                <span className="text-xs font-bold text-indigo-300 block">Matrix A (2×2):</span>
-                <div className="grid grid-cols-2 gap-2 max-w-[180px] mx-auto">
-                  <input
-                    type="number"
-                    value={m11}
-                    onChange={e => setM11(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
-                    title="a11"
-                  />
-                  <input
-                    type="number"
-                    value={m12}
-                    onChange={e => setM12(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
-                    title="a12"
-                  />
-                  <input
-                    type="number"
-                    value={m21}
-                    onChange={e => setM21(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
-                    title="a21"
-                  />
-                  <input
-                    type="number"
-                    value={m22}
-                    onChange={e => setM22(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-indigo-500 focus:outline-none"
-                    title="a22"
-                  />
-                </div>
+            {/* Results & Geometric Meaning */}
+            <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-2.5 font-mono text-xs">
+              <div className="text-slate-400">
+                <MathText text={`$\\mathbf{a} \\cdot \\mathbf{b} = (${dotA1})(${dotB1}) + (${dotA2})(${dotB2}) = $`} />
+                <span className="text-base font-bold text-white ml-1">{dotStats.dot.toFixed(4)}</span>
+              </div>
+              <div className="text-slate-400">
+                <MathText text={`$\\|\\mathbf{a}\\| = \\sqrt{${dotA1}^2 + ${dotA2}^2} = ${dotStats.normA.toFixed(4)}$`} />
+              </div>
+              <div className="text-slate-400">
+                <MathText text={`$\\|\\mathbf{b}\\| = \\sqrt{${dotB1}^2 + ${dotB2}^2} = ${dotStats.normB.toFixed(4)}$`} />
+              </div>
+              <div className="text-slate-400">
+                <MathText text={`$\\cos(\\theta) = ${dotStats.cosAngle.toFixed(4)} \\implies \\theta \\approx ${dotStats.deg.toFixed(1)}^\\circ$`} />
               </div>
 
-              {/* Multiply Operator */}
-              <div className="md:col-span-1 text-center font-bold text-slate-500 text-lg">
-                ×
-              </div>
-
-              {/* Vector x Inputs */}
-              <div className="md:col-span-3 p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
-                <span className="text-xs font-bold text-blue-300 block">Vector x (2×1):</span>
-                <div className="grid grid-cols-1 gap-2 max-w-[90px] mx-auto">
-                  <input
-                    type="number"
-                    value={vx1}
-                    onChange={e => setVx1(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
-                    title="x1"
-                  />
-                  <input
-                    type="number"
-                    value={vx2}
-                    onChange={e => setVx2(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
-                    title="x2"
-                  />
-                </div>
-              </div>
-
-              {/* Result Ax */}
-              <div className="md:col-span-3 p-3 bg-slate-900/90 rounded-xl border border-emerald-900/40 space-y-2">
-                <span className="text-xs font-bold text-emerald-400 block">Result Vector Ax:</span>
-                <div className="p-2 bg-slate-950 rounded-lg border border-emerald-500/20 text-center font-mono text-sm space-y-1">
-                  <div className="text-xs text-slate-400">
-                    Row 1: {m11}({vx1}) + {m12}({vx2}) = <strong className="text-emerald-300">{matResult.row1}</strong>
-                  </div>
-                  <div className="text-xs text-slate-400">
-                    Row 2: {m21}({vx1}) + {m22}({vx2}) = <strong className="text-emerald-300">{matResult.row2}</strong>
-                  </div>
-                  <div className="pt-1 border-t border-slate-800 text-emerald-400 font-bold text-base">
-                    [{matResult.row1}, {matResult.row2}]ᵀ
-                  </div>
-                </div>
+              <div className={`p-2.5 rounded-lg border text-xs font-sans font-semibold mt-2 ${dotStats.badgeColor}`}>
+                {dotStats.meaning}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* ========================================================================= */}
-      {/* TOPIC 2: DOT PRODUCT */}
+      {/* 3. VECTOR PROJECTION */}
       {/* ========================================================================= */}
-      {(activeTopic === 2 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 2
-              </span>
-              <h4 className="text-base font-bold text-white">The Dot Product</h4>
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Activity className="w-4 h-4" />
             </div>
-            <span className="text-xs text-slate-400">Inner Product &amp; Directional Similarity</span>
+            <h4 className="text-base font-bold text-white">Vector Projection</h4>
           </div>
+          <span className="text-xs text-slate-400">Orthogonal Shadow &amp; Decomposition</span>
+        </div>
 
-          <div className="space-y-3">
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              The dot product (inner product) multiplies matching coordinates across two vectors of identical length and sums the products. Geometrically, it measures the degree of directional alignment between the vectors.
-            </p>
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          The orthogonal projection of vector <MathText text="$\mathbf{a}$" /> onto vector <MathText text="$\mathbf{b}$" /> represents the geometric “shadow” cast by <MathText text="$\mathbf{a}$" /> along the line of <MathText text="$\mathbf{b}$" />. The scalar coefficient determines how many units of <MathText text="$\mathbf{b}$" /> are contained in <MathText text="$\mathbf{a}$" />.
+        </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
-              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-                <span className="text-blue-400 font-bold block">General n-Dimensional Sum:</span>
-                <MathText text="$\mathbf{a} \cdot \mathbf{b} = \sum_{i=1}^n a_i b_i = a_1 b_1 + a_2 b_2 + \dots + a_n b_n$" />
-              </div>
-              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-                <span className="text-indigo-400 font-bold block">Geometric Angle Formula:</span>
-                <MathText text="$\mathbf{a} \cdot \mathbf{b} = \|\mathbf{a}\| \|\mathbf{b}\| \cos(\theta) \implies \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \|\mathbf{b}\|}$" />
-              </div>
-            </div>
-          </div>
+        <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs">
+          <span className="text-emerald-400 font-bold block mb-1">Projection Formula:</span>
+          <MathText text="$\text{proj}_{\mathbf{b}}(\mathbf{a}) = \left( \frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}} \right) \mathbf{b} = \left( \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{b}\|^2} \right) \mathbf{b}$" />
+        </div>
 
-          {/* Interactive Dot Product Calculator */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* Interactive Controls */}
+          <div className="lg:col-span-6 space-y-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
             <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Compass className="w-4 h-4 text-blue-400" />
-              Interactive Vector Alignment &amp; Angle Lab
+              <Activity className="w-4 h-4 text-emerald-400" /> Adjust Vectors
             </h5>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3 p-3.5 bg-slate-900 rounded-xl border border-slate-800">
-                <div>
-                  <label className="text-xs font-bold text-blue-400 block mb-1">
-                    Vector a: [a₁, a₂]
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      value={dotA1}
-                      onChange={e => setDotA1(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
-                    />
-                    <input
-                      type="number"
-                      value={dotA2}
-                      onChange={e => setDotA2(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-blue-500 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-amber-400 block mb-1">
-                    Vector b: [b₁, b₂]
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      value={dotB1}
-                      onChange={e => setDotB1(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-amber-500 focus:outline-none"
-                    />
-                    <input
-                      type="number"
-                      value={dotB2}
-                      onChange={e => setDotB2(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700 focus:border-amber-500 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                {/* Quick Presets */}
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  <button
-                    onClick={() => { setDotA1(3); setDotA2(1); setDotB1(1); setDotB2(2); }}
-                    className="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px]"
-                  >
-                    Default
-                  </button>
-                  <button
-                    onClick={() => { setDotA1(2); setDotA2(1); setDotB1(1); setDotB2(-2); }}
-                    className="px-2 py-1 bg-purple-900/40 hover:bg-purple-800/60 text-purple-200 rounded text-[10px]"
-                  >
-                    Perpendicular (Dot = 0)
-                  </button>
-                  <button
-                    onClick={() => { setDotA1(2); setDotA2(3); setDotB1(-2); setDotB2(-3); }}
-                    className="px-2 py-1 bg-rose-900/40 hover:bg-rose-800/60 text-rose-200 rounded text-[10px]"
-                  >
-                    Opposite (Dot &lt; 0)
-                  </button>
-                </div>
-              </div>
-
-              {/* Results & Geometric Meaning */}
-              <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-2.5 font-mono text-xs">
-                <div className="text-slate-400">
-                  <MathText text={`$\\mathbf{a} \\cdot \\mathbf{b} = (${dotA1})(${dotB1}) + (${dotA2})(${dotB2}) = $`} />
-                  <span className="text-base font-bold text-white ml-1">{dotStats.dot.toFixed(4)}</span>
-                </div>
-                <div className="text-slate-400">
-                  <MathText text={`$\\|\\mathbf{a}\\| = \\sqrt{${dotA1}^2 + ${dotA2}^2} = ${dotStats.normA.toFixed(4)}$`} />
-                </div>
-                <div className="text-slate-400">
-                  <MathText text={`$\\|\\mathbf{b}\\| = \\sqrt{${dotB1}^2 + ${dotB2}^2} = ${dotStats.normB.toFixed(4)}$`} />
-                </div>
-                <div className="text-slate-400">
-                  <MathText text={`$\\cos(\\theta) = ${dotStats.cosAngle.toFixed(4)} \\implies \\theta \\approx ${dotStats.deg.toFixed(1)}^\\circ$`} />
-                </div>
-
-                <div className={`p-2.5 rounded-lg border text-xs font-sans font-semibold mt-2 ${dotStats.badgeColor}`}>
-                  {dotStats.meaning}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* TOPIC 3: VECTOR PROJECTION */}
-      {/* ========================================================================= */}
-      {(activeTopic === 3 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 3
-              </span>
-              <h4 className="text-base font-bold text-white">Vector Projection</h4>
-            </div>
-            <span className="text-xs text-slate-400">Orthogonal Shadow &amp; Decomposition</span>
-          </div>
-
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            The orthogonal projection of vector <MathText text="$\mathbf{a}$" /> onto vector <MathText text="$\mathbf{b}$" /> represents the geometric “shadow” cast by <MathText text="$\mathbf{a}$" /> along the line of <MathText text="$\mathbf{b}$" />. The scalar coefficient determines how many units of <MathText text="$\mathbf{b}$" /> are contained in <MathText text="$\mathbf{a}$" />.
-          </p>
-
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs">
-            <span className="text-emerald-400 font-bold block mb-1">Projection Formula:</span>
-            <MathText text="$\text{proj}_{\mathbf{b}}(\mathbf{a}) = \left( \frac{\mathbf{a} \cdot \mathbf{b}}{\mathbf{b} \cdot \mathbf{b}} \right) \mathbf{b} = \left( \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{b}\|^2} \right) \mathbf{b}$" />
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-            {/* Interactive Controls */}
-            <div className="lg:col-span-6 space-y-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
-              <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Activity className="w-4 h-4 text-emerald-400" /> Adjust Vectors
-              </h5>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs font-bold text-blue-400 block mb-1">Vector a (Blue):</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="number"
-                      value={projA1}
-                      onChange={e => setProjA1(Number(e.target.value))}
-                      className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                    <input
-                      type="number"
-                      value={projA2}
-                      onChange={e => setProjA2(Number(e.target.value))}
-                      className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-amber-400 block mb-1">Vector b (Amber):</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="number"
-                      value={projB1}
-                      onChange={e => setProjB1(Number(e.target.value))}
-                      className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                    <input
-                      type="number"
-                      value={projB2}
-                      onChange={e => setProjB2(Number(e.target.value))}
-                      className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Mathematical Readout */}
-              <div className="p-3 bg-slate-900 rounded-lg border border-slate-800 text-xs font-mono space-y-1.5 text-slate-300">
-                <div><MathText text={`$\\mathbf{a} \\cdot \\mathbf{b} = ${projStats.dotAB.toFixed(2)}$`} /></div>
-                <div><MathText text={`$\\mathbf{b} \\cdot \\mathbf{b} = \\|\\mathbf{b}\\|^2 = ${projStats.dotBB.toFixed(2)}$`} /></div>
-                <div><MathText text={`$\\text{Coefficient } c = \\frac{\\mathbf{a} \\cdot \\mathbf{b}}{\\mathbf{b} \\cdot \\mathbf{b}} = ${projStats.coeff.toFixed(4)}$`} /></div>
-                <div className="pt-1 border-t border-slate-800 text-emerald-400 font-bold">
-                  <MathText text={`$\\text{proj}_{\\mathbf{b}}(\\mathbf{a}) = [${projStats.p1.toFixed(3)}, ${projStats.p2.toFixed(3)}]^T$`} />
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  <MathText text={`$\\mathbf{a}_{\\perp} = \\mathbf{a} - \\text{proj}_{\\mathbf{b}}(\\mathbf{a}) = [${projStats.perp1.toFixed(3)}, ${projStats.perp2.toFixed(3)}]^T$`} />
-                </div>
-              </div>
-            </div>
-
-            {/* SVG Visualizer */}
-            <div className="lg:col-span-6 p-4 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 self-start">
-                2D Geometric Plane (Origin at Center)
-              </span>
-              <div className="w-full max-w-[340px] aspect-square bg-slate-900 rounded-xl border border-slate-800 p-2 relative overflow-hidden flex items-center justify-center">
-                <svg viewBox="-6 -6 12 12" className="w-full h-full">
-                  <defs>
-                    <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b82f6" />
-                    </marker>
-                    <marker id="arrow-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
-                    </marker>
-                    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
-                    </marker>
-                  </defs>
-
-                  {/* Grid Lines */}
-                  {[-4, -2, 2, 4].map(v => (
-                    <g key={v}>
-                      <line x1={v} y1="-5.5" x2={v} y2="5.5" stroke="#1e293b" strokeWidth="0.05" />
-                      <line x1="-5.5" y1={v} x2="5.5" y2={v} stroke="#1e293b" strokeWidth="0.05" />
-                    </g>
-                  ))}
-
-                  {/* Axes */}
-                  <line x1="-5.5" y1="0" x2="5.5" y2="0" stroke="#475569" strokeWidth="0.1" />
-                  <line x1="0" y1="-5.5" x2="0" y2="5.5" stroke="#475569" strokeWidth="0.1" />
-
-                  {/* Dashed line of Vector b */}
-                  {projStats.dotBB > 0.001 && (
-                    <line
-                      x1={-projB1 * 4}
-                      y1={projB2 * 4}
-                      x2={projB1 * 4}
-                      y2={-projB2 * 4}
-                      stroke="#f59e0b"
-                      strokeWidth="0.06"
-                      strokeDasharray="0.3,0.3"
-                      opacity="0.3"
-                    />
-                  )}
-
-                  {/* Perpendicular drop line from tip of a to proj */}
-                  <line
-                    x1={projA1}
-                    y1={-projA2}
-                    x2={projStats.p1}
-                    y2={-projStats.p2}
-                    stroke="#94a3b8"
-                    strokeWidth="0.08"
-                    strokeDasharray="0.2,0.2"
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs font-bold text-blue-400 block mb-1">Vector a (Blue):</label>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    value={projA1}
+                    onChange={e => setProjA1(Number(e.target.value))}
+                    className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
                   />
-
-                  {/* Vector a (Blue) */}
-                  <line
-                    x1="0"
-                    y1="0"
-                    x2={projA1}
-                    y2={-projA2}
-                    stroke="#3b82f6"
-                    strokeWidth="0.18"
-                    markerEnd="url(#arrow-blue)"
+                  <input
+                    type="number"
+                    value={projA2}
+                    onChange={e => setProjA2(Number(e.target.value))}
+                    className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
                   />
-                  <text x={projA1 + 0.3} y={-projA2 - 0.3} fill="#3b82f6" fontSize="0.9" fontWeight="bold">
-                    a
-                  </text>
+                </div>
+              </div>
 
-                  {/* Vector b (Amber) */}
+              <div>
+                <label className="text-xs font-bold text-amber-400 block mb-1">Vector b (Amber):</label>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    value={projB1}
+                    onChange={e => setProjB1(Number(e.target.value))}
+                    className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  />
+                  <input
+                    type="number"
+                    value={projB2}
+                    onChange={e => setProjB2(Number(e.target.value))}
+                    className="w-full p-2 bg-slate-900 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Mathematical Readout */}
+            <div className="p-3 bg-slate-900 rounded-lg border border-slate-800 text-xs font-mono space-y-1.5 text-slate-300">
+              <div><MathText text={`$\\mathbf{a} \\cdot \\mathbf{b} = ${projStats.dotAB.toFixed(2)}$`} /></div>
+              <div><MathText text={`$\\mathbf{b} \\cdot \\mathbf{b} = \\|\\mathbf{b}\\|^2 = ${projStats.dotBB.toFixed(2)}$`} /></div>
+              <div><MathText text={`$\\text{Coefficient } c = \\frac{\\mathbf{a} \\cdot \\mathbf{b}}{\\mathbf{b} \\cdot \\mathbf{b}} = ${projStats.coeff.toFixed(4)}$`} /></div>
+              <div className="pt-1 border-t border-slate-800 text-emerald-400 font-bold">
+                <MathText text={`$\\text{proj}_{\\mathbf{b}}(\\mathbf{a}) = [${projStats.p1.toFixed(3)}, ${projStats.p2.toFixed(3)}]^T$`} />
+              </div>
+              <div className="text-[11px] text-slate-400">
+                <MathText text={`$\\mathbf{a}_{\\perp} = \\mathbf{a} - \\text{proj}_{\\mathbf{b}}(\\mathbf{a}) = [${projStats.perp1.toFixed(3)}, ${projStats.perp2.toFixed(3)}]^T$`} />
+              </div>
+            </div>
+          </div>
+
+          {/* SVG Visualizer */}
+          <div className="lg:col-span-6 p-4 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 self-start">
+              2D Geometric Plane (Origin at Center)
+            </span>
+            <div className="w-full max-w-[340px] aspect-square bg-slate-900 rounded-xl border border-slate-800 p-2 relative overflow-hidden flex items-center justify-center">
+              <svg viewBox="-6 -6 12 12" className="w-full h-full">
+                <defs>
+                  <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b82f6" />
+                  </marker>
+                  <marker id="arrow-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+                  </marker>
+                  <marker id="arrow-emerald" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+                  </marker>
+                </defs>
+
+                {/* Grid Lines */}
+                {[-4, -2, 2, 4].map(v => (
+                  <g key={v}>
+                    <line x1={v} y1="-5.5" x2={v} y2="5.5" stroke="#1e293b" strokeWidth="0.05" />
+                    <line x1="-5.5" y1={v} x2="5.5" y2={v} stroke="#1e293b" strokeWidth="0.05" />
+                  </g>
+                ))}
+
+                {/* Axes */}
+                <line x1="-5.5" y1="0" x2="5.5" y2="0" stroke="#475569" strokeWidth="0.1" />
+                <line x1="0" y1="-5.5" x2="0" y2="5.5" stroke="#475569" strokeWidth="0.1" />
+
+                {/* Dashed line of Vector b */}
+                {projStats.dotBB > 0.001 && (
                   <line
-                    x1="0"
-                    y1="0"
-                    x2={projB1}
-                    y2={-projB2}
+                    x1={-projB1 * 4}
+                    y1={projB2 * 4}
+                    x2={projB1 * 4}
+                    y2={-projB2 * 4}
                     stroke="#f59e0b"
-                    strokeWidth="0.18"
-                    markerEnd="url(#arrow-amber)"
+                    strokeWidth="0.06"
+                    strokeDasharray="0.3,0.3"
+                    opacity="0.3"
                   />
-                  <text x={projB1 + 0.3} y={-projB2 - 0.3} fill="#f59e0b" fontSize="0.9" fontWeight="bold">
-                    b
-                  </text>
+                )}
 
-                  {/* Projection Vector (Emerald) */}
-                  <line
-                    x1="0"
-                    y1="0"
-                    x2={projStats.p1}
-                    y2={-projStats.p2}
-                    stroke="#10b981"
-                    strokeWidth="0.24"
-                    markerEnd="url(#arrow-emerald)"
-                  />
-                  <text x={projStats.p1 - 0.2} y={-projStats.p2 + 0.8} fill="#10b981" fontSize="0.75" fontWeight="bold">
-                    proj
-                  </text>
-                </svg>
-              </div>
-              <div className="flex gap-4 text-[10px] text-slate-400 mt-2">
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" /> Vector a</span>
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" /> Vector b</span>
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" /> Shadow proj_b(a)</span>
-              </div>
+                {/* Perpendicular drop line from tip of a to proj */}
+                <line
+                  x1={projA1}
+                  y1={-projA2}
+                  x2={projStats.p1}
+                  y2={-projStats.p2}
+                  stroke="#94a3b8"
+                  strokeWidth="0.08"
+                  strokeDasharray="0.2,0.2"
+                />
+
+                {/* Vector a (Blue) */}
+                <line
+                  x1="0"
+                  y1="0"
+                  x2={projA1}
+                  y2={-projA2}
+                  stroke="#3b82f6"
+                  strokeWidth="0.18"
+                  markerEnd="url(#arrow-blue)"
+                />
+                <text x={projA1 + 0.3} y={-projA2 - 0.3} fill="#3b82f6" fontSize="0.9" fontWeight="bold">
+                  a
+                </text>
+
+                {/* Vector b (Amber) */}
+                <line
+                  x1="0"
+                  y1="0"
+                  x2={projB1}
+                  y2={-projB2}
+                  stroke="#f59e0b"
+                  strokeWidth="0.18"
+                  markerEnd="url(#arrow-amber)"
+                />
+                <text x={projB1 + 0.3} y={-projB2 - 0.3} fill="#f59e0b" fontSize="0.9" fontWeight="bold">
+                  b
+                </text>
+
+                {/* Projection Vector (Emerald) */}
+                <line
+                  x1="0"
+                  y1="0"
+                  x2={projStats.p1}
+                  y2={-projStats.p2}
+                  stroke="#10b981"
+                  strokeWidth="0.24"
+                  markerEnd="url(#arrow-emerald)"
+                />
+                <text x={projStats.p1 - 0.2} y={-projStats.p2 + 0.8} fill="#10b981" fontSize="0.75" fontWeight="bold">
+                  proj
+                </text>
+              </svg>
+            </div>
+            <div className="flex gap-4 text-[10px] text-slate-400 mt-2">
+              <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" /> Vector a</span>
+              <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" /> Vector b</span>
+              <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" /> Shadow proj_b(a)</span>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* ========================================================================= */}
-      {/* TOPIC 4: ORTHOGONALITY */}
+      {/* 4. ORTHOGONALITY */}
       {/* ========================================================================= */}
-      {(activeTopic === 4 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 4
-              </span>
-              <h4 className="text-base font-bold text-white">Orthogonality &amp; Independence</h4>
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Split className="w-4 h-4" />
             </div>
-            <span className="text-xs text-slate-400">Zero Redundancy &amp; Perpendicularity</span>
+            <h4 className="text-base font-bold text-white">Orthogonality &amp; Independence</h4>
           </div>
+          <span className="text-xs text-slate-400">Zero Redundancy &amp; Perpendicularity</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+            <span className="text-xs font-bold text-purple-400 uppercase tracking-wider block">
+              Mathematical Condition
+            </span>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Two non-zero vectors <MathText text="$\mathbf{a}$" /> and <MathText text="$\mathbf{b}$" /> are orthogonal (<MathText text="$\mathbf{a} \perp \mathbf{b}$" />) if and only if their inner product equals zero:
+            </p>
+            <div className="p-2.5 bg-slate-900 rounded-lg border border-slate-800 font-mono text-xs text-white">
+              <MathText text="$\mathbf{a} \perp \mathbf{b} \iff \mathbf{a} \cdot \mathbf{b} = 0$" />
+            </div>
+          </div>
+
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
+              Machine Learning Intuition
+            </span>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Orthogonal vectors carry zero informational overlap (multicollinearity = 0). Decomposing signals, model weights, or image pixels onto an orthogonal coordinate basis eliminates redundant representation.
+            </p>
+          </div>
+        </div>
+
+        {/* Worked Example */}
+        <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+          <span className="text-xs font-bold text-white block">Concrete 2D Orthogonality Test:</span>
+          <div className="p-3 bg-slate-900 rounded-lg border border-slate-800 font-mono text-xs text-slate-300 space-y-1">
+            <div><MathText text="$\mathbf{a} = [2, 1]^T, \quad \mathbf{b} = [1, -2]^T$" /></div>
+            <div><MathText text="$\mathbf{a} \cdot \mathbf{b} = (2)(1) + (1)(-2) = 2 - 2 = 0$" /></div>
+            <div className="text-emerald-400 font-bold pt-1">
+              <MathText text="$\implies \mathbf{a} \perp \mathbf{b} \quad (\text{Vectors are exactly perpendicular at } 90^\circ)$" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 5. GRAM-SCHMIDT PROCESS */}
+      {/* ========================================================================= */}
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Layers className="w-4 h-4" />
+            </div>
+            <h4 className="text-base font-bold text-white">The Gram–Schmidt Process</h4>
+          </div>
+          <span className="text-xs text-slate-400">Orthonormal Basis Construction</span>
+        </div>
+
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          The Gram–Schmidt algorithm transforms any set of linearly independent vectors into an orthonormal basis—vectors that are mutually orthogonal (<MathText text="$\mathbf{q}_i \cdot \mathbf{q}_j = 0$" />) and have unit length (<MathText text="$\|\mathbf{q}_i\| = 1$" />).
+        </p>
+
+        {/* Step-by-Step Algorithm Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+            <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-[10px] font-bold">
+              Step 1: Normalize v₁
+            </span>
+            <p className="text-[11px] text-slate-400">Scale the first vector to unit length:</p>
+            <div className="font-mono text-xs text-white">
+              <MathText text="$\mathbf{q}_1 = \frac{\mathbf{v}_1}{\|\mathbf{v}_1\|}$" />
+            </div>
+          </div>
+
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+            <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[10px] font-bold">
+              Step 2: Remove Projection
+            </span>
+            <p className="text-[11px] text-slate-400">Subtract shadow of v₂ onto q₁:</p>
+            <div className="font-mono text-xs text-white">
+              <MathText text="$\mathbf{u}_2 = \mathbf{v}_2 - (\mathbf{v}_2 \cdot \mathbf{q}_1)\mathbf{q}_1$" />
+            </div>
+          </div>
+
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+            <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold">
+              Step 3: Normalize u₂
+            </span>
+            <p className="text-[11px] text-slate-400">Scale remainder to unit length:</p>
+            <div className="font-mono text-xs text-white">
+              <MathText text="$\mathbf{q}_2 = \frac{\mathbf{u}_2}{\|\mathbf{u}_2\|}$" />
+            </div>
+          </div>
+        </div>
+
+        {/* Interactive Gram-Schmidt Calculator */}
+        <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+          <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Layers className="w-4 h-4 text-blue-400" /> Interactive Gram–Schmidt Solver
+          </h5>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
-              <span className="text-xs font-bold text-purple-400 uppercase tracking-wider block">
-                Mathematical Condition
-              </span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Two non-zero vectors <MathText text="$\mathbf{a}$" /> and <MathText text="$\mathbf{b}$" /> are orthogonal (<MathText text="$\mathbf{a} \perp \mathbf{b}$" />) if and only if their inner product equals zero:
-              </p>
-              <div className="p-2.5 bg-slate-900 rounded-lg border border-slate-800 font-mono text-xs text-white">
-                <MathText text="$\mathbf{a} \perp \mathbf{b} \iff \mathbf{a} \cdot \mathbf{b} = 0$" />
+            <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
+              <span className="text-xs font-bold text-slate-300 block">Input Linearly Independent Vectors:</span>
+              <div>
+                <label className="text-xs font-bold text-blue-400 block mb-1">Vector v₁: [x, y]</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={g11}
+                    onChange={e => setG11(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  />
+                  <input
+                    type="number"
+                    value={g12}
+                    onChange={e => setG12(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-amber-400 block mb-1">Vector v₂: [x, y]</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={g21}
+                    onChange={e => setG21(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  />
+                  <input
+                    type="number"
+                    value={g22}
+                    onChange={e => setG22(Number(e.target.value))}
+                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
-                Machine Learning Intuition
-              </span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Orthogonal vectors carry zero informational overlap (multicollinearity = 0). Decomposing signals, model weights, or image pixels onto an orthogonal coordinate basis eliminates redundant representation.
-              </p>
-            </div>
-          </div>
+            {/* Step by Step Breakdown */}
+            <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-2 font-mono text-xs">
+              {gramStats.error ? (
+                <div className="p-3 rounded-lg bg-rose-950/50 border border-rose-800 text-rose-300 text-xs font-sans">
+                  <AlertTriangle className="w-4 h-4 inline-block mr-1 text-rose-400" />
+                  {gramStats.error}
+                </div>
+              ) : (
+                <>
+                  <div className="text-slate-400">
+                    Step 1: <MathText text={`$\\|\\mathbf{v}_1\\| = ${gramStats.normV1?.toFixed(4)}$`} />
+                    <div className="text-blue-300 font-bold">
+                      <MathText text={`$\\mathbf{q}_1 = [${gramStats.q1x?.toFixed(4)}, ${gramStats.q1y?.toFixed(4)}]^T$`} />
+                    </div>
+                  </div>
 
-          {/* Worked Example */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
-            <span className="text-xs font-bold text-white block">Concrete 2D Orthogonality Test:</span>
-            <div className="p-3 bg-slate-900 rounded-lg border border-slate-800 font-mono text-xs text-slate-300 space-y-1">
-              <div><MathText text="$\mathbf{a} = [2, 1]^T, \quad \mathbf{b} = [1, -2]^T$" /></div>
-              <div><MathText text="$\mathbf{a} \cdot \mathbf{b} = (2)(1) + (1)(-2) = 2 - 2 = 0$" /></div>
-              <div className="text-emerald-400 font-bold pt-1">
-                <MathText text="$\implies \mathbf{a} \perp \mathbf{b} \quad (\text{Vectors are exactly perpendicular at } 90^\circ)$" />
-              </div>
+                  <div className="text-slate-400 pt-1 border-t border-slate-800">
+                    Step 2: Projection onto q₁
+                    <div className="text-slate-300">
+                      <MathText text={`$\\text{proj}_{\\mathbf{q}_1}(\\mathbf{v}_2) = [${gramStats.projX?.toFixed(4)}, ${gramStats.projY?.toFixed(4)}]^T$`} />
+                    </div>
+                    <div className="text-slate-300">
+                      <MathText text={`$\\mathbf{u}_2 = \\mathbf{v}_2 - \\text{proj} = [${gramStats.u2x?.toFixed(4)}, ${gramStats.u2y?.toFixed(4)}]^T$`} />
+                    </div>
+                  </div>
+
+                  <div className="text-slate-400 pt-1 border-t border-slate-800">
+                    Step 3: <MathText text={`$\\|\\mathbf{u}_2\\| = ${gramStats.normU2?.toFixed(4)}$`} />
+                    <div className="text-emerald-400 font-bold">
+                      <MathText text={`$\\mathbf{q}_2 = [${gramStats.q2x?.toFixed(4)}, ${gramStats.q2y?.toFixed(4)}]^T$`} />
+                    </div>
+                  </div>
+
+                  <div className="pt-1 border-t border-slate-800 text-purple-300 font-bold text-[11px] font-sans flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5 text-purple-400" />
+                    Orthogonality Verification: <MathText text={`$\\mathbf{q}_1 \\cdot \\mathbf{q}_2 = ${Math.abs(gramStats.checkDot || 0) < 0.0001 ? '0.0000' : gramStats.checkDot?.toFixed(4)}$`} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* ========================================================================= */}
-      {/* TOPIC 5: GRAM-SCHMIDT PROCESS */}
+      {/* 6. LU DECOMPOSITION */}
       {/* ========================================================================= */}
-      {(activeTopic === 5 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 5
-              </span>
-              <h4 className="text-base font-bold text-white">The Gram–Schmidt Process</h4>
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Cpu className="w-4 h-4" />
             </div>
-            <span className="text-xs text-slate-400">Orthonormal Basis Construction</span>
+            <h4 className="text-base font-bold text-white">LU Decomposition</h4>
           </div>
+          <span className="text-xs text-slate-400">Triangular Factorization &amp; Fast Solving</span>
+        </div>
 
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            The Gram–Schmidt algorithm transforms any set of linearly independent vectors into an orthonormal basis—vectors that are mutually orthogonal (<MathText text="$\mathbf{q}_i \cdot \mathbf{q}_j = 0$" />) and have unit length (<MathText text="$\|\mathbf{q}_i\| = 1$" />).
-          </p>
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          LU factorization decomposes square matrix <MathText text="$\mathbf{A}$" /> into a unit lower-triangular matrix <MathText text="$\mathbf{L}$" /> and an upper-triangular matrix <MathText text="$\mathbf{U}$" /> (<MathText text="$\mathbf{A} = \mathbf{L}\mathbf{U}$" />). To solve <MathText text="$\mathbf{A}\mathbf{x} = \mathbf{r}$" />, we factor once (<MathText text="$\mathcal{O}(n^3)$" />) and then solve two fast triangular systems via forward and back substitution (<MathText text="$\mathcal{O}(n^2)$" />).
+        </p>
 
-          {/* Step-by-Step Algorithm Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-[10px] font-bold">
-                Step 1: Normalize v₁
-              </span>
-              <p className="text-[11px] text-slate-400">Scale the first vector to unit length:</p>
-              <div className="font-mono text-xs text-white">
-                <MathText text="$\mathbf{q}_1 = \frac{\mathbf{v}_1}{\|\mathbf{v}_1\|}$" />
-              </div>
+        <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <span className="text-blue-400 font-bold block mb-1">1. Forward Substitution:</span>
+              <MathText text="$\mathbf{L}\mathbf{y} = \mathbf{r} \implies y_1 = r_1, \quad y_2 = r_2 - l_{21} y_1$" />
             </div>
-
-            <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
-              <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[10px] font-bold">
-                Step 2: Remove Projection
-              </span>
-              <p className="text-[11px] text-slate-400">Subtract shadow of v₂ onto q₁:</p>
-              <div className="font-mono text-xs text-white">
-                <MathText text="$\mathbf{u}_2 = \mathbf{v}_2 - (\mathbf{v}_2 \cdot \mathbf{q}_1)\mathbf{q}_1$" />
-              </div>
-            </div>
-
-            <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
-              <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold">
-                Step 3: Normalize u₂
-              </span>
-              <p className="text-[11px] text-slate-400">Scale remainder to unit length:</p>
-              <div className="font-mono text-xs text-white">
-                <MathText text="$\mathbf{q}_2 = \frac{\mathbf{u}_2}{\|\mathbf{u}_2\|}$" />
-              </div>
+            <div>
+              <span className="text-emerald-400 font-bold block mb-1">2. Back Substitution:</span>
+              <MathText text="$\mathbf{U}\mathbf{x} = \mathbf{y} \implies x_2 = \frac{y_2}{u_{22}}, \quad x_1 = \frac{y_1 - u_{12} x_2}{u_{11}}$" />
             </div>
           </div>
+        </div>
 
-          {/* Interactive Gram-Schmidt Calculator */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
-            <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Layers className="w-4 h-4 text-blue-400" /> Interactive Gram–Schmidt Solver
-            </h5>
+        {/* Interactive LU Solver */}
+        <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+          <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-blue-400" /> Interactive 2×2 LU Linear System Solver
+          </h5>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
-                <span className="text-xs font-bold text-slate-300 block">Input Linearly Independent Vectors:</span>
-                <div>
-                  <label className="text-xs font-bold text-blue-400 block mb-1">Vector v₁: [x, y]</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      value={g11}
-                      onChange={e => setG11(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                    <input
-                      type="number"
-                      value={g12}
-                      onChange={e => setG12(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-amber-400 block mb-1">Vector v₂: [x, y]</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      value={g21}
-                      onChange={e => setG21(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                    <input
-                      type="number"
-                      value={g22}
-                      onChange={e => setG22(Number(e.target.value))}
-                      className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    />
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            {/* Inputs */}
+            <div className="md:col-span-5 p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
+              <span className="text-xs font-bold text-slate-300 block">Matrix A entries:</span>
+              <div className="grid grid-cols-2 gap-2 max-w-[180px] mx-auto">
+                <input
+                  type="number"
+                  value={l11}
+                  onChange={e => setL11(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A11"
+                />
+                <input
+                  type="number"
+                  value={l12}
+                  onChange={e => setL12(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A12"
+                />
+                <input
+                  type="number"
+                  value={l21}
+                  onChange={e => setL21(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A21"
+                />
+                <input
+                  type="number"
+                  value={l22}
+                  onChange={e => setL22(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A22"
+                />
               </div>
 
-              {/* Step by Step Breakdown */}
-              <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-2 font-mono text-xs">
-                {gramStats.error ? (
-                  <div className="p-3 rounded-lg bg-rose-950/50 border border-rose-800 text-rose-300 text-xs font-sans">
-                    <AlertTriangle className="w-4 h-4 inline-block mr-1 text-rose-400" />
-                    {gramStats.error}
+              <span className="text-xs font-bold text-slate-300 block pt-2 border-t border-slate-800">
+                Target Vector r:
+              </span>
+              <div className="grid grid-cols-2 gap-2 max-w-[180px] mx-auto">
+                <input
+                  type="number"
+                  value={lr1}
+                  onChange={e => setLr1(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="r1"
+                />
+                <input
+                  type="number"
+                  value={lr2}
+                  onChange={e => setLr2(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="r2"
+                />
+              </div>
+            </div>
+
+            {/* Calculated LU Factors & Solution */}
+            <div className="md:col-span-7 p-3.5 bg-slate-900 rounded-xl border border-slate-800 font-mono text-xs space-y-2.5">
+              {luStats.error ? (
+                <div className="p-3 rounded-lg bg-rose-950/50 border border-rose-800 text-rose-300 text-xs font-sans">
+                  <AlertTriangle className="w-4 h-4 inline-block mr-1 text-rose-400" />
+                  {luStats.error}
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                      <span className="text-blue-400 font-bold block mb-1">Matrix L:</span>
+                      <div>[ 1.000, 0.000 ]</div>
+                      <div>[ {luStats.lMultiplier?.toFixed(3)}, 1.000 ]</div>
+                    </div>
+                    <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                      <span className="text-indigo-400 font-bold block mb-1">Matrix U:</span>
+                      <div>[ {luStats.u11?.toFixed(3)}, {luStats.u12?.toFixed(3)} ]</div>
+                      <div>[ 0.000, {luStats.u22?.toFixed(3)} ]</div>
+                    </div>
                   </div>
-                ) : (
-                  <>
+
+                  <div className="p-2 bg-slate-950 rounded border border-slate-800 space-y-1">
                     <div className="text-slate-400">
-                      Step 1: <MathText text={`$\\|\\mathbf{v}_1\\| = ${gramStats.normV1?.toFixed(4)}$`} />
-                      <div className="text-blue-300 font-bold">
-                        <MathText text={`$\\mathbf{q}_1 = [${gramStats.q1x?.toFixed(4)}, ${gramStats.q1y?.toFixed(4)}]^T$`} />
-                      </div>
+                      Forward Subst (Ly = r) → <strong className="text-amber-300 font-bold">y = [{luStats.y1?.toFixed(3)}, {luStats.y2?.toFixed(3)}]ᵀ</strong>
                     </div>
+                    <div className="text-slate-400">
+                      Back Subst (Ux = y) → <strong className="text-emerald-400 font-bold text-sm">x = [{luStats.x1?.toFixed(3)}, {luStats.x2?.toFixed(3)}]ᵀ</strong>
+                    </div>
+                  </div>
 
-                    <div className="text-slate-400 pt-1 border-t border-slate-800">
-                      Step 2: Projection onto q₁
-                      <div className="text-slate-300">
-                        <MathText text={`$\\text{proj}_{\\mathbf{q}_1}(\\mathbf{v}_2) = [${gramStats.projX?.toFixed(4)}, ${gramStats.projY?.toFixed(4)}]^T$`} />
-                      </div>
-                      <div className="text-slate-300">
-                        <MathText text={`$\\mathbf{u}_2 = \\mathbf{v}_2 - \\text{proj} = [${gramStats.u2x?.toFixed(4)}, ${gramStats.u2y?.toFixed(4)}]^T$`} />
-                      </div>
-                    </div>
-
-                    <div className="text-slate-400 pt-1 border-t border-slate-800">
-                      Step 3: <MathText text={`$\\|\\mathbf{u}_2\\| = ${gramStats.normU2?.toFixed(4)}$`} />
-                      <div className="text-emerald-400 font-bold">
-                        <MathText text={`$\\mathbf{q}_2 = [${gramStats.q2x?.toFixed(4)}, ${gramStats.q2y?.toFixed(4)}]^T$`} />
-                      </div>
-                    </div>
-
-                    <div className="pt-1 border-t border-slate-800 text-purple-300 font-bold text-[11px] font-sans flex items-center gap-1">
-                      <Check className="w-3.5 h-3.5 text-purple-400" />
-                      Orthogonality Verification: <MathText text={`$\\mathbf{q}_1 \\cdot \\mathbf{q}_2 = ${Math.abs(gramStats.checkDot || 0) < 0.0001 ? '0.0000' : gramStats.checkDot?.toFixed(4)}$`} />
-                    </div>
-                  </>
-                )}
-              </div>
+                  <div className="text-[11px] text-slate-400 font-sans flex items-center gap-1.5 pt-1">
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    System Check: <MathText text={`$\\mathbf{A}\\mathbf{x} = [${luStats.checkR1?.toFixed(2)}, ${luStats.checkR2?.toFixed(2)}]^T = \\mathbf{r}$`} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* ========================================================================= */}
-      {/* TOPIC 6: LU DECOMPOSITION */}
+      {/* 7. SINGULAR VALUE DECOMPOSITION (SVD) */}
       {/* ========================================================================= */}
-      {(activeTopic === 6 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 6
-              </span>
-              <h4 className="text-base font-bold text-white">LU Decomposition</h4>
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">
+              <Minimize2 className="w-4 h-4" />
             </div>
-            <span className="text-xs text-slate-400">Triangular Factorization &amp; Fast Solving</span>
+            <h4 className="text-base font-bold text-white">Singular Value Decomposition (SVD)</h4>
           </div>
+          <span className="text-xs text-slate-400">Spectral Factorization &amp; Low-Rank Compression</span>
+        </div>
 
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            LU factorization decomposes square matrix <MathText text="$\mathbf{A}$" /> into a unit lower-triangular matrix <MathText text="$\mathbf{L}$" /> and an upper-triangular matrix <MathText text="$\mathbf{U}$" /> (<MathText text="$\mathbf{A} = \mathbf{L}\mathbf{U}$" />). To solve <MathText text="$\mathbf{A}\mathbf{x} = \mathbf{r}$" />, we factor once (<MathText text="$\mathcal{O}(n^3)$" />) and then solve two fast triangular systems via forward and back substitution (<MathText text="$\mathcal{O}(n^2)$" />).
-          </p>
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          SVD decomposes any real matrix into two orthonormal rotation matrices <MathText text="$\mathbf{U}$" /> and <MathText text="$\mathbf{V}^T$" />, separated by a diagonal matrix <MathText text="$\mathbf{\Sigma}$" /> of non-negative singular values arranged in descending order:
+        </p>
 
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs space-y-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <span className="text-blue-400 font-bold block mb-1">1. Forward Substitution:</span>
-                <MathText text="$\mathbf{L}\mathbf{y} = \mathbf{r} \implies y_1 = r_1, \quad y_2 = r_2 - l_{21} y_1$" />
-              </div>
-              <div>
-                <span className="text-emerald-400 font-bold block mb-1">2. Back Substitution:</span>
-                <MathText text="$\mathbf{U}\mathbf{x} = \mathbf{y} \implies x_2 = \frac{y_2}{u_{22}}, \quad x_1 = \frac{y_1 - u_{12} x_2}{u_{11}}$" />
-              </div>
-            </div>
+        <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-center text-xs text-white">
+          <MathText text="$\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^T = \sum_{i=1}^r \sigma_i \mathbf{u}_i \mathbf{v}_i^T \quad \text{with} \quad \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r \ge 0$" />
+        </div>
+
+        {/* 3 Matrix Roles Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span className="text-xs font-bold text-blue-400 block">Matrix U (Output Basis)</span>
+            <p className="text-xs text-slate-300">
+              Left singular vectors. Columns are orthonormal eigenvectors of <MathText text="$\mathbf{A}\mathbf{A}^T$" /> that capture principal output directions.
+            </p>
           </div>
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span className="text-xs font-bold text-emerald-400 block">Matrix Σ (Singular Values)</span>
+            <p className="text-xs text-slate-300">
+              Square roots of eigenvalues of <MathText text="$\mathbf{A}^T\mathbf{A}$" /> (<MathText text="$\sigma_i = \sqrt{\lambda_i}$" />). Represents the energy/scaling along each mode.
+            </p>
+          </div>
+          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span className="text-xs font-bold text-amber-400 block">Matrix Vᵀ (Input Basis)</span>
+            <p className="text-xs text-slate-300">
+              Right singular vectors. Rows are orthonormal eigenvectors of <MathText text="$\mathbf{A}^T\mathbf{A}$" /> representing principal input directions.
+            </p>
+          </div>
+        </div>
 
-          {/* Interactive LU Solver */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+        {/* Interactive SVD Spectrum & Truncation Tool */}
+        <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-blue-400" /> Interactive 2×2 LU Linear System Solver
+              <Minimize2 className="w-4 h-4 text-blue-400" />
+              Interactive 2×2 SVD &amp; Energy Truncation Lab
             </h5>
+            <span className="text-xs text-slate-400 font-mono">Eckart-Young Low-Rank Approximation</span>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-              {/* Inputs */}
-              <div className="md:col-span-5 p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
-                <span className="text-xs font-bold text-slate-300 block">Matrix A entries:</span>
-                <div className="grid grid-cols-2 gap-2 max-w-[180px] mx-auto">
-                  <input
-                    type="number"
-                    value={l11}
-                    onChange={e => setL11(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A11"
-                  />
-                  <input
-                    type="number"
-                    value={l12}
-                    onChange={e => setL12(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A12"
-                  />
-                  <input
-                    type="number"
-                    value={l21}
-                    onChange={e => setL21(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A21"
-                  />
-                  <input
-                    type="number"
-                    value={l22}
-                    onChange={e => setL22(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A22"
-                  />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+            {/* Matrix Inputs & Rank Slider */}
+            <div className="md:col-span-6 p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
+              <span className="text-xs font-bold text-slate-300 block">Matrix A entries:</span>
+              <div className="grid grid-cols-2 gap-2 max-w-[180px]">
+                <input
+                  type="number"
+                  value={s11}
+                  onChange={e => setS11(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A11"
+                />
+                <input
+                  type="number"
+                  value={s12}
+                  onChange={e => setS12(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A12"
+                />
+                <input
+                  type="number"
+                  value={s21}
+                  onChange={e => setS21(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A21"
+                />
+                <input
+                  type="number"
+                  value={s22}
+                  onChange={e => setS22(Number(e.target.value))}
+                  className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
+                  title="A22"
+                />
+              </div>
+
+              <div className="space-y-1.5 pt-2 border-t border-slate-800">
+                <div className="flex justify-between text-xs">
+                  <span className="font-semibold text-slate-300">Keep Top-k Singular Values:</span>
+                  <span className="font-bold text-blue-400 font-mono">k = {rankK}</span>
                 </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="2"
+                  value={rankK}
+                  onChange={e => setRankK(Number(e.target.value))}
+                  className="w-full accent-blue-500 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-slate-500">
+                  <span>k=1 (Rank-1 Truncation)</span>
+                  <span>k=2 (Full Reconstruction)</span>
+                </div>
+              </div>
+            </div>
 
-                <span className="text-xs font-bold text-slate-300 block pt-2 border-t border-slate-800">
-                  Target Vector r:
-                </span>
-                <div className="grid grid-cols-2 gap-2 max-w-[180px] mx-auto">
-                  <input
-                    type="number"
-                    value={lr1}
-                    onChange={e => setLr1(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="r1"
-                  />
-                  <input
-                    type="number"
-                    value={lr2}
-                    onChange={e => setLr2(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="r2"
+            {/* SVD Analytics */}
+            <div className="md:col-span-6 p-4 bg-slate-900 rounded-xl border border-slate-800 font-mono text-xs space-y-2.5">
+              <div className="text-slate-300">
+                <span className="text-slate-400 block text-[11px]">Normal Matrix AᵀA:</span>
+                [{svdStats.ata11.toFixed(2)}, {svdStats.ata12.toFixed(2)}; {svdStats.ata12.toFixed(2)}, {svdStats.ata22.toFixed(2)}]
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-800">
+                <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                  <span className="text-emerald-400 font-bold block">σ₁ (Principal):</span>
+                  <span className="text-base text-white">{svdStats.sigma1.toFixed(4)}</span>
+                </div>
+                <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                  <span className="text-indigo-400 font-bold block">σ₂ (Secondary):</span>
+                  <span className="text-base text-white">{svdStats.sigma2.toFixed(4)}</span>
+                </div>
+              </div>
+
+              {/* Energy Retained Gauge */}
+              <div className="space-y-1 pt-1">
+                <div className="flex justify-between text-xs font-sans">
+                  <span className="text-slate-400 flex items-center gap-1">
+                    <Percent className="w-3.5 h-3.5 text-emerald-400" /> Retained Energy:
+                  </span>
+                  <span className="font-bold text-emerald-300 font-mono">{svdStats.energyPct.toFixed(2)}%</span>
+                </div>
+                <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                  <div
+                    className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 transition-all duration-300"
+                    style={{ width: `${Math.min(100, Math.max(0, svdStats.energyPct))}%` }}
                   />
                 </div>
               </div>
 
-              {/* Calculated LU Factors & Solution */}
-              <div className="md:col-span-7 p-3.5 bg-slate-900 rounded-xl border border-slate-800 font-mono text-xs space-y-2.5">
-                {luStats.error ? (
-                  <div className="p-3 rounded-lg bg-rose-950/50 border border-rose-800 text-rose-300 text-xs font-sans">
-                    <AlertTriangle className="w-4 h-4 inline-block mr-1 text-rose-400" />
-                    {luStats.error}
-                  </div>
+              <p className="font-sans text-[11px] text-slate-400 leading-relaxed pt-1">
+                {rankK === 1 ? (
+                  <span>
+                    <strong>Rank-1 Approximation:</strong> Discarding <MathText text="$\sigma_2$" /> reduces memory storage while preserving <strong>{svdStats.energyPct.toFixed(1)}%</strong> of variance (foundation of Low-Rank Adaptation &amp; PCA).
+                  </span>
                 ) : (
-                  <>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div className="p-2 bg-slate-950 rounded border border-slate-800">
-                        <span className="text-blue-400 font-bold block mb-1">Matrix L:</span>
-                        <div>[ 1.000, 0.000 ]</div>
-                        <div>[ {luStats.lMultiplier?.toFixed(3)}, 1.000 ]</div>
-                      </div>
-                      <div className="p-2 bg-slate-950 rounded border border-slate-800">
-                        <span className="text-indigo-400 font-bold block mb-1">Matrix U:</span>
-                        <div>[ {luStats.u11?.toFixed(3)}, {luStats.u12?.toFixed(3)} ]</div>
-                        <div>[ 0.000, {luStats.u22?.toFixed(3)} ]</div>
-                      </div>
-                    </div>
-
-                    <div className="p-2 bg-slate-950 rounded border border-slate-800 space-y-1">
-                      <div className="text-slate-400">
-                        Forward Subst (Ly = r) → <strong className="text-amber-300 font-bold">y = [{luStats.y1?.toFixed(3)}, {luStats.y2?.toFixed(3)}]ᵀ</strong>
-                      </div>
-                      <div className="text-slate-400">
-                        Back Subst (Ux = y) → <strong className="text-emerald-400 font-bold text-sm">x = [{luStats.x1?.toFixed(3)}, {luStats.x2?.toFixed(3)}]ᵀ</strong>
-                      </div>
-                    </div>
-
-                    <div className="text-[11px] text-slate-400 font-sans flex items-center gap-1.5 pt-1">
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      System Check: <MathText text={`$\\mathbf{A}\\mathbf{x} = [${luStats.checkR1?.toFixed(2)}, ${luStats.checkR2?.toFixed(2)}]^T = \\mathbf{r}$`} />
-                    </div>
-                  </>
+                  <span>
+                    <strong>Full Rank-2 Reconstruction:</strong> Exactly 100% of the matrix spectrum is preserved without information loss.
+                  </span>
                 )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* TOPIC 7: SINGULAR VALUE DECOMPOSITION (SVD) */}
-      {/* ========================================================================= */}
-      {(activeTopic === 7 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold">
-                Topic 7
-              </span>
-              <h4 className="text-base font-bold text-white">Singular Value Decomposition (SVD)</h4>
-            </div>
-            <span className="text-xs text-slate-400">Spectral Factorization &amp; Low-Rank Compression</span>
-          </div>
-
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            SVD decomposes any real matrix into two orthonormal rotation matrices <MathText text="$\mathbf{U}$" /> and <MathText text="$\mathbf{V}^T$" />, separated by a diagonal matrix <MathText text="$\mathbf{\Sigma}$" /> of non-negative singular values arranged in descending order:
-          </p>
-
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-center text-xs text-white">
-            <MathText text="$\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^T = \sum_{i=1}^r \sigma_i \mathbf{u}_i \mathbf{v}_i^T \quad \text{with} \quad \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r \ge 0$" />
-          </div>
-
-          {/* 3 Matrix Roles Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-              <span className="text-xs font-bold text-blue-400 block">Matrix U (Output Basis)</span>
-              <p className="text-xs text-slate-300">
-                Left singular vectors. Columns are orthonormal eigenvectors of <MathText text="$\mathbf{A}\mathbf{A}^T$" /> that capture principal output directions.
-              </p>
-            </div>
-            <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-              <span className="text-xs font-bold text-emerald-400 block">Matrix Σ (Singular Values)</span>
-              <p className="text-xs text-slate-300">
-                Square roots of eigenvalues of <MathText text="$\mathbf{A}^T\mathbf{A}$" /> (<MathText text="$\sigma_i = \sqrt{\lambda_i}$" />). Represents the energy/scaling along each mode.
-              </p>
-            </div>
-            <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-              <span className="text-xs font-bold text-amber-400 block">Matrix Vᵀ (Input Basis)</span>
-              <p className="text-xs text-slate-300">
-                Right singular vectors. Rows are orthonormal eigenvectors of <MathText text="$\mathbf{A}^T\mathbf{A}$" /> representing principal input directions.
               </p>
             </div>
           </div>
-
-          {/* Interactive SVD Spectrum & Truncation Tool */}
-          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <h5 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Minimize2 className="w-4 h-4 text-blue-400" />
-                Interactive 2×2 SVD &amp; Energy Truncation Lab
-              </h5>
-              <span className="text-xs text-slate-400 font-mono">Eckart-Young Low-Rank Approximation</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-              {/* Matrix Inputs & Rank Slider */}
-              <div className="md:col-span-6 p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
-                <span className="text-xs font-bold text-slate-300 block">Matrix A entries:</span>
-                <div className="grid grid-cols-2 gap-2 max-w-[180px]">
-                  <input
-                    type="number"
-                    value={s11}
-                    onChange={e => setS11(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A11"
-                  />
-                  <input
-                    type="number"
-                    value={s12}
-                    onChange={e => setS12(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A12"
-                  />
-                  <input
-                    type="number"
-                    value={s21}
-                    onChange={e => setS21(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A21"
-                  />
-                  <input
-                    type="number"
-                    value={s22}
-                    onChange={e => setS22(Number(e.target.value))}
-                    className="p-2 bg-slate-950 text-center font-mono text-sm text-white rounded border border-slate-700"
-                    title="A22"
-                  />
-                </div>
-
-                <div className="space-y-1.5 pt-2 border-t border-slate-800">
-                  <div className="flex justify-between text-xs">
-                    <span className="font-semibold text-slate-300">Keep Top-k Singular Values:</span>
-                    <span className="font-bold text-blue-400 font-mono">k = {rankK}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="1"
-                    max="2"
-                    value={rankK}
-                    onChange={e => setRankK(Number(e.target.value))}
-                    className="w-full accent-blue-500 cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[10px] text-slate-500">
-                    <span>k=1 (Rank-1 Truncation)</span>
-                    <span>k=2 (Full Reconstruction)</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* SVD Analytics */}
-              <div className="md:col-span-6 p-4 bg-slate-900 rounded-xl border border-slate-800 font-mono text-xs space-y-2.5">
-                <div className="text-slate-300">
-                  <span className="text-slate-400 block text-[11px]">Normal Matrix AᵀA:</span>
-                  [{svdStats.ata11.toFixed(2)}, {svdStats.ata12.toFixed(2)}; {svdStats.ata12.toFixed(2)}, {svdStats.ata22.toFixed(2)}]
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-800">
-                  <div className="p-2 bg-slate-950 rounded border border-slate-800">
-                    <span className="text-emerald-400 font-bold block">σ₁ (Principal):</span>
-                    <span className="text-base text-white">{svdStats.sigma1.toFixed(4)}</span>
-                  </div>
-                  <div className="p-2 bg-slate-950 rounded border border-slate-800">
-                    <span className="text-indigo-400 font-bold block">σ₂ (Secondary):</span>
-                    <span className="text-base text-white">{svdStats.sigma2.toFixed(4)}</span>
-                  </div>
-                </div>
-
-                {/* Energy Retained Gauge */}
-                <div className="space-y-1 pt-1">
-                  <div className="flex justify-between text-xs font-sans">
-                    <span className="text-slate-400 flex items-center gap-1">
-                      <Percent className="w-3.5 h-3.5 text-emerald-400" /> Retained Energy:
-                    </span>
-                    <span className="font-bold text-emerald-300 font-mono">{svdStats.energyPct.toFixed(2)}%</span>
-                  </div>
-                  <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800">
-                    <div
-                      className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 transition-all duration-300"
-                      style={{ width: `${Math.min(100, Math.max(0, svdStats.energyPct))}%` }}
-                    />
-                  </div>
-                </div>
-
-                <p className="font-sans text-[11px] text-slate-400 leading-relaxed pt-1">
-                  {rankK === 1 ? (
-                    <span>
-                      <strong>Rank-1 Approximation:</strong> Discarding <MathText text="$\sigma_2$" /> reduces memory storage while preserving <strong>{svdStats.energyPct.toFixed(1)}%</strong> of variance (foundation of Low-Rank Adaptation &amp; PCA).
-                    </span>
-                  ) : (
-                    <span>
-                      <strong>Full Rank-2 Reconstruction:</strong> Exactly 100% of the matrix spectrum is preserved without information loss.
-                    </span>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
-      )}
+      </div>
 
       {/* ========================================================================= */}
-      {/* TOPIC 8: REVIEW QUIZ */}
+      {/* 8. REVIEW & CONCEPT CHECK */}
       {/* ========================================================================= */}
-      {(activeTopic === 8 || activeTopic === 0) && (
-        <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-mono text-xs font-bold">
-                Topic 8
-              </span>
-              <h4 className="text-base font-bold text-white">Module 1 Review &amp; Concept Check</h4>
+      <div className="p-5 sm:p-6 bg-slate-900 border border-slate-800 rounded-2xl space-y-5 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-purple-500/20 text-purple-400 border border-purple-500/30">
+              <HelpCircle className="w-4 h-4" />
             </div>
-            <span className="text-xs text-slate-400">Validate Core Comprehension</span>
+            <h4 className="text-base font-bold text-white">Review &amp; Concept Check</h4>
+          </div>
+          <span className="text-xs text-slate-400">Validate Core Comprehension</span>
+        </div>
+
+        <div className="space-y-4">
+          {/* Question 1 */}
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
+            <div className="font-bold text-sm text-white">
+              1. If two non-zero vectors have an inner dot product of zero (<MathText text="$\mathbf{a} \cdot \mathbf{b} = 0$" />), what does that indicate geometrically?
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {[
+                { id: 'A', text: 'A. They are parallel' },
+                { id: 'B', text: 'B. They are perpendicular (orthogonal)' },
+                { id: 'C', text: 'C. They have equal length' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  onClick={() => toggleAnswer('q1', opt.id)}
+                  className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
+                    userSelections['q1'] === opt.id
+                      ? opt.id === 'B'
+                        ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
+                        : 'bg-rose-950/60 border-rose-500 text-rose-300'
+                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
+                  }`}
+                >
+                  {opt.text}
+                </button>
+              ))}
+            </div>
+            {revealedAnswers['q1'] && (
+              <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
+                <strong className="text-emerald-400">Correct Answer: B.</strong> Since <MathText text="$\mathbf{a} \cdot \mathbf{b} = \|\mathbf{a}\| \|\mathbf{b}\| \cos(\theta) = 0$" />, we have <MathText text="$\cos(\theta) = 0 \implies \theta = 90^\circ$" />. Orthogonal vectors carry independent information.
+              </div>
+            )}
           </div>
 
-          <div className="space-y-4">
-            {/* Question 1 */}
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
-              <div className="font-bold text-sm text-white">
-                1. If two non-zero vectors have an inner dot product of zero (<MathText text="$\mathbf{a} \cdot \mathbf{b} = 0$" />), what does that indicate geometrically?
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {[
-                  { id: 'A', text: 'A. They are parallel' },
-                  { id: 'B', text: 'B. They are perpendicular (orthogonal)' },
-                  { id: 'C', text: 'C. They have equal length' }
-                ].map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => toggleAnswer('q1', opt.id)}
-                    className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
-                      userSelections['q1'] === opt.id
-                        ? opt.id === 'B'
-                          ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                          : 'bg-rose-950/60 border-rose-500 text-rose-300'
-                        : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
-                    }`}
-                  >
-                    {opt.text}
-                  </button>
-                ))}
-              </div>
-              {revealedAnswers['q1'] && (
-                <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
-                  <strong className="text-emerald-400">Correct Answer: B.</strong> Since <MathText text="$\mathbf{a} \cdot \mathbf{b} = \|\mathbf{a}\| \|\mathbf{b}\| \cos(\theta) = 0$" />, we have <MathText text="$\cos(\theta) = 0 \implies \theta = 90^\circ$" />. Orthogonal vectors carry independent information.
-                </div>
-              )}
+          {/* Question 2 */}
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
+            <div className="font-bold text-sm text-white">
+              2. What computational advantage does LU Decomposition provide when solving <MathText text="$\mathbf{A}\mathbf{x} = \mathbf{b}$" /> across multiple right-hand side vectors?
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {[
+                { id: 'A', text: 'A. Solves via fast triangular substitution O(n²)' },
+                { id: 'B', text: 'B. Calculates the exact probability of error' },
+                { id: 'C', text: 'C. Removes negative entries' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  onClick={() => toggleAnswer('q2', opt.id)}
+                  className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
+                    userSelections['q2'] === opt.id
+                      ? opt.id === 'A'
+                        ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
+                        : 'bg-rose-950/60 border-rose-500 text-rose-300'
+                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
+                  }`}
+                >
+                  {opt.text}
+                </button>
+              ))}
+            </div>
+            {revealedAnswers['q2'] && (
+              <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
+                <strong className="text-emerald-400">Correct Answer: A.</strong> Once <MathText text="$\mathbf{A} = \mathbf{L}\mathbf{U}$" /> is factored (<MathText text="$\mathcal{O}(n^3)$" />), each new RHS system is solved via forward substitution <MathText text="$\mathbf{L}\mathbf{y} = \mathbf{b}$" /> and back substitution <MathText text="$\mathbf{U}\mathbf{x} = \mathbf{y}$" /> in <MathText text="$\mathcal{O}(n^2)$" /> time without refactoring.
+              </div>
+            )}
+          </div>
 
-            {/* Question 2 */}
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
-              <div className="font-bold text-sm text-white">
-                2. What computational advantage does LU Decomposition provide when solving <MathText text="$\mathbf{A}\mathbf{x} = \mathbf{b}$" /> across multiple right-hand side vectors?
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {[
-                  { id: 'A', text: 'A. Solves via fast triangular substitution O(n²)' },
-                  { id: 'B', text: 'B. Calculates the exact probability of error' },
-                  { id: 'C', text: 'C. Removes negative entries' }
-                ].map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => toggleAnswer('q2', opt.id)}
-                    className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
-                      userSelections['q2'] === opt.id
-                        ? opt.id === 'A'
-                          ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                          : 'bg-rose-950/60 border-rose-500 text-rose-300'
-                        : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
-                    }`}
-                  >
-                    {opt.text}
-                  </button>
-                ))}
-              </div>
-              {revealedAnswers['q2'] && (
-                <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
-                  <strong className="text-emerald-400">Correct Answer: A.</strong> Once <MathText text="$\mathbf{A} = \mathbf{L}\mathbf{U}$" /> is factored (<MathText text="$\mathcal{O}(n^3)$" />), each new RHS system is solved via forward substitution <MathText text="$\mathbf{L}\mathbf{y} = \mathbf{b}$" /> and back substitution <MathText text="$\mathbf{U}\mathbf{x} = \mathbf{y}$" /> in <MathText text="$\mathcal{O}(n^2)$" /> time without refactoring.
-                </div>
-              )}
+          {/* Question 3 */}
+          <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
+            <div className="font-bold text-sm text-white">
+              3. How does Singular Value Decomposition (SVD) enable dimensionality reduction and lossy data compression?
             </div>
-
-            {/* Question 3 */}
-            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
-              <div className="font-bold text-sm text-white">
-                3. How does Singular Value Decomposition (SVD) enable dimensionality reduction and lossy data compression?
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {[
-                  { id: 'A', text: 'A. By isolating top singular values holding most energy' },
-                  { id: 'B', text: 'B. By simply counting non-zero entries' },
-                  { id: 'C', text: 'C. By zeroing out all off-diagonal values' }
-                ].map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => toggleAnswer('q3', opt.id)}
-                    className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
-                      userSelections['q3'] === opt.id
-                        ? opt.id === 'A'
-                          ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
-                          : 'bg-rose-950/60 border-rose-500 text-rose-300'
-                        : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
-                    }`}
-                  >
-                    {opt.text}
-                  </button>
-                ))}
-              </div>
-              {revealedAnswers['q3'] && (
-                <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
-                  <strong className="text-emerald-400">Correct Answer: A.</strong> By the Eckart–Young–Mirsky theorem, truncating the SVD expansion to the largest <MathText text="$k$" /> singular values gives the optimal rank-<MathText text="$k$" /> approximation in both Frobenius and spectral norms.
-                </div>
-              )}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {[
+                { id: 'A', text: 'A. By isolating top singular values holding most energy' },
+                { id: 'B', text: 'B. By simply counting non-zero entries' },
+                { id: 'C', text: 'C. By zeroing out all off-diagonal values' }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  onClick={() => toggleAnswer('q3', opt.id)}
+                  className={`p-2.5 rounded-lg text-xs font-medium text-left border transition ${
+                    userSelections['q3'] === opt.id
+                      ? opt.id === 'A'
+                        ? 'bg-emerald-950/60 border-emerald-500 text-emerald-300'
+                        : 'bg-rose-950/60 border-rose-500 text-rose-300'
+                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
+                  }`}
+                >
+                  {opt.text}
+                </button>
+              ))}
             </div>
+            {revealedAnswers['q3'] && (
+              <div className="p-3 bg-slate-900 rounded-lg border border-emerald-500/30 text-xs text-slate-200">
+                <strong className="text-emerald-400">Correct Answer: A.</strong> By the Eckart–Young–Mirsky theorem, truncating the SVD expansion to the largest <MathText text="$k$" /> singular values gives the optimal rank-<MathText text="$k$" /> approximation in both Frobenius and spectral norms.
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
 
       {/* Action Footer Navigation */}
       <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl flex flex-wrap items-center justify-between gap-4">
