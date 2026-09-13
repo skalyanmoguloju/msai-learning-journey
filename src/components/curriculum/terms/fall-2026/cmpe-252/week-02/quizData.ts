@@ -149,28 +149,144 @@ export const AI_WEEK2_QUIZ: Record<string, QuizModule> = {
     sub: 'Direction of Steepest Ascent & Multivariable Chain Rule',
     questions: [
       {
-        id: 'w2_s2_q3',
-        question: 'What is the geometric relationship between the gradient vector ∇f(x) and the level curve (contour) f(x) = c passing through point x?',
+        id: 'w2_s2_q1',
+        question: 'What is a partial derivative?',
         options: [
-          'The gradient vector is tangent (parallel) to the level curve.',
-          'The gradient vector is orthogonal (perpendicular) to the level curve and points in the direction of steepest increase.',
-          'The gradient vector always points toward the global coordinate origin (0, 0).',
-          'The gradient vector magnitude equals the determinant of the Hessian.'
+          'Derivative with respect to every variable at the same time',
+          'Derivative with respect to one variable while keeping other variables constant',
+          'The average of all derivatives',
+          'The derivative of a matrix only'
         ],
         correct: 1,
-        explanation: 'Because the value of $f(\\mathbf{x})$ is constant along the level curve $f(\\mathbf{x}) = c$, the directional derivative along the tangent vector is zero: $\\nabla f \\cdot \\mathbf{v} = 0$. Hence, $\\nabla f$ is strictly normal (orthogonal) to the contour curve and points toward the steepest rate of increase.'
+        explanation: 'For a multivariable function such as $f(x, y) = x^2 + 3y$, the partial derivative with respect to $x$ treats $y$ as a constant: $\\frac{\\partial f}{\\partial x} = 2x$. The partial derivative with respect to $y$ treats $x$ as constant: $\\frac{\\partial f}{\\partial y} = 3$.'
+      },
+      {
+        id: 'w2_s2_q2',
+        question: 'Let $f(x, y) = x^2 + 3y$. What is $\\frac{\\partial f}{\\partial x}$?',
+        options: ['$x^2$', '$2x$', '$3$', '$2x + 3$'],
+        correct: 1,
+        explanation: 'When differentiating with respect to $x$, treat $3y$ as a constant: $\\frac{\\partial}{\\partial x}(x^2) = 2x$ and $\\frac{\\partial}{\\partial x}(3y) = 0$. Therefore, $\\frac{\\partial f}{\\partial x} = 2x$.'
+      },
+      {
+        id: 'w2_s2_q3',
+        question: 'Let $f(x, y) = x^2 + 3y$. What is $\\frac{\\partial f}{\\partial y}$?',
+        options: ['$2x$', '$3y$', '$3$', '$x^2 + 3$'],
+        correct: 2,
+        explanation: 'When differentiating with respect to $y$, treat $x^2$ as a constant: $\\frac{\\partial}{\\partial y}(x^2) = 0$ and $\\frac{\\partial}{\\partial y}(3y) = 3$. Therefore, $\\frac{\\partial f}{\\partial y} = 3$.'
       },
       {
         id: 'w2_s2_q4',
-        question: 'In computational backpropagation, if a loss L depends on x through two pathways y₁ and y₂, what is ∂L/∂x?',
+        question: 'For $f(x, y) = x^2 + 3y$, what is the gradient at the point (2, 5)?',
+        options: ['[2, 3]', '[4, 3]', '[4, 5]', '[2, 5]'],
+        correct: 1,
+        explanation: 'The gradient vector is $\\nabla f = \\begin{bmatrix} \\frac{\\partial f}{\\partial x} \\\\ \\frac{\\partial f}{\\partial y} \\end{bmatrix} = \\begin{bmatrix} 2x \\\\ 3 \\end{bmatrix}$. At $(x=2, y=5)$: $\\nabla f(2, 5) = \\begin{bmatrix} 2(2) \\\\ 3 \\end{bmatrix} = \\begin{bmatrix} 4 \\\\ 3 \\end{bmatrix}$.'
+      },
+      {
+        id: 'w2_s2_q5',
+        question: 'What does the gradient vector $\\nabla f$ point toward?',
         options: [
-          '$\\frac{\\partial L}{\\partial x} = \\frac{\\partial L}{\\partial y_1} \\times \\frac{\\partial L}{\\partial y_2}$',
-          '$\\frac{\\partial L}{\\partial x} = \\frac{\\partial L}{\\partial y_1}\\frac{\\partial y_1}{\\partial x} + \\frac{\\partial L}{\\partial y_2}\\frac{\\partial y_2}{\\partial x}$',
-          '$\\frac{\\partial L}{\\partial x} = \\max\\left(\\frac{\\partial y_1}{\\partial x}, \\frac{\\partial y_2}{\\partial x}\\right)$',
-          '$\\frac{\\partial L}{\\partial x} = \\frac{\\partial y_1}{\\partial x} + \\frac{\\partial y_2}{\\partial x}$'
+          'The direction of steepest decrease',
+          'The direction of steepest increase',
+          'Always the origin',
+          'A random direction'
         ],
         correct: 1,
-        explanation: 'By the multivariable chain rule, when variations in $x$ affect the final loss $L$ along multiple paths $y_1(x)$ and $y_2(x)$, the total derivative sums the contributions along all directed paths in the computational graph: $\\frac{\\partial L}{\\partial x} = \\sum_j \\frac{\\partial L}{\\partial y_j}\\frac{\\partial y_j}{\\partial x}$.'
+        explanation: 'The gradient points in the direction where the function increases most rapidly (steepest uphill slope). For a loss function, we want to decrease error, so gradient descent moves in the opposite direction: $-\\nabla L$.'
+      },
+      {
+        id: 'w2_s2_q6',
+        question: 'What is the gradient descent parameter update rule?',
+        options: [
+          '$\\theta_{\\text{new}} = \\theta + \\eta \\nabla L$',
+          '$\\theta_{\\text{new}} = \\theta - \\eta \\nabla L$',
+          '$\\theta_{\\text{new}} = \\nabla L - \\theta$',
+          '$\\theta_{\\text{new}} = \\theta \\eta \\nabla L$'
+        ],
+        correct: 1,
+        explanation: 'In the update rule $\\theta_{\\text{new}} = \\theta - \\eta \\nabla L$, $\\theta$ represents model parameters, $\\eta$ is the learning rate, and $\\nabla L$ is the gradient of the loss. We subtract $\\eta \\nabla L$ to step downhill against the direction of increasing loss.'
+      },
+      {
+        id: 'w2_s2_q7',
+        question: 'Suppose current parameter $\\theta = 5$, gradient is $2$, and learning rate $\\eta = 0.1$. What is the updated parameter?',
+        options: ['5.2', '4.8', '2.0', '0.5'],
+        correct: 1,
+        explanation: 'Using $\\theta_{\\text{new}} = \\theta - \\eta \\nabla L$: $\\theta_{\\text{new}} = 5 - (0.1)(2) = 5 - 0.2 = 4.8$. The parameter shifts downhill in the opposite direction of the positive slope.'
+      },
+      {
+        id: 'w2_s2_q8',
+        question: 'What happens if the learning rate $\\eta$ is set too large?',
+        options: [
+          'Training may overshoot the minimum and diverge',
+          'The gradient becomes zero automatically',
+          'The model always converges instantly to the global optimum',
+          'The loss function disappears'
+        ],
+        correct: 0,
+        explanation: 'The learning rate controls the descent step size. If it is too large, the optimizer can overshoot the valley minimum, oscillate erratically, or even diverge with escalating loss.'
+      },
+      {
+        id: 'w2_s2_q9',
+        question: 'Let $y = (3x + 1)^2$. What is $\\frac{dy}{dx}$ at $x = 1$?',
+        options: ['6', '8', '18', '24'],
+        correct: 3,
+        explanation: 'By the chain rule, $\\frac{dy}{dx} = \\frac{dy}{du}\\frac{du}{dx}$. For outer function $y = u^2$, derivative is $2u$. For inner function $u = 3x + 1$, derivative is $3$. Thus $\\frac{dy}{dx} = 2(3x + 1)(3) = 6(3x + 1)$. At $x = 1$: $6(3(1) + 1) = 6(4) = 24$.'
+      },
+      {
+        id: 'w2_s2_q10',
+        question: 'What is a directional derivative $D_{\\mathbf{u}} f$?',
+        options: [
+          'The rate of change of a function along one chosen direction',
+          'The derivative of every output with respect to every input',
+          'The average value of a function across the domain',
+          'The Euclidean length of a vector'
+        ],
+        correct: 0,
+        explanation: 'A directional derivative measures how rapidly a scalar function changes when moving along a specific direction vector: $D_{\\mathbf{u}} f = \\nabla f \\cdot \\mathbf{u}$, where $\\mathbf{u}$ is normalized to unit length ($\\|\\mathbf{u}\\| = 1$).'
+      },
+      {
+        id: 'w2_s2_q11',
+        question: 'Let $f(x, y) = x^2 + y^2$. What is the gradient $\\nabla f$ at $(1, 2)$?',
+        options: ['[1, 2]', '[2, 2]', '[2, 4]', '[1, 4]'],
+        correct: 2,
+        explanation: 'The partial derivatives are $\\frac{\\partial f}{\\partial x} = 2x$ and $\\frac{\\partial f}{\\partial y} = 2y$. Thus $\\nabla f = [2x, 2y]^T$. At $(1, 2)$: $\\nabla f(1, 2) = [2(1), 2(2)]^T = [2, 4]^T$.'
+      },
+      {
+        id: 'w2_s2_q12',
+        question: 'What is the primary difference between a directional derivative and a Jacobian matrix?',
+        options: [
+          'They are identical mathematical representations',
+          'A directional derivative gives rate of change in one chosen direction, while a Jacobian stores all partial derivatives of a vector-valued function',
+          'A Jacobian only applies to scalar input functions',
+          'A directional derivative always outputs a multi-row matrix'
+        ],
+        correct: 1,
+        explanation: 'A directional derivative evaluates scalar rate of change along one single trajectory vector ($D_{\\mathbf{u}} f = \\nabla f \\cdot \\mathbf{u}$). A Jacobian matrix $\\mathbf{J} \\in \\mathbb{R}^{m \\times n}$ organizes the partial derivatives of all $m$ outputs with respect to all $n$ inputs for a vector-valued map $\\mathbf{F}: \\mathbb{R}^n \\to \\mathbb{R}^m$.'
+      },
+      {
+        id: 'w2_s2_q13',
+        question: 'If a vector-valued function has 3 inputs and 2 outputs, what is the dimension (shape) of its Jacobian matrix?',
+        options: ['3 × 3', '2 × 2', '3 × 2', '2 × 3'],
+        correct: 3,
+        explanation: 'The Jacobian matrix has one row for each output and one column for each input: $\\text{Shape} = \\text{outputs} \\times \\text{inputs}$. With 2 outputs and 3 inputs, $\\mathbf{J}$ is a $2 \\times 3$ matrix.'
+      },
+      {
+        id: 'w2_s2_q14',
+        question: 'Consider the hyperbolic function $f(x, y) = x^2 - y^2$. What type of critical point is $(0, 0)$?',
+        options: ['A global minimum', 'A global maximum', 'A saddle point', 'A degenerate flat plateau only'],
+        correct: 2,
+        explanation: 'Along the $x$-axis, $f(x, 0) = x^2$ curves upward (local minimum). Along the $y$-axis, $f(0, y) = -y^2$ curves downward (local maximum). Because the surface curves up in one direction and down in another, $(0, 0)$ is a saddle point.'
+      },
+      {
+        id: 'w2_s2_q15',
+        question: 'What characterizes a flat plateau region on a loss surface?',
+        options: [
+          'A region where the gradient magnitude is extremely large',
+          'A region where the gradient is near zero (∇L ≈ 0), causing descent steps to stall',
+          'A region where loss values are strictly negative',
+          'A parameter space with no active weights'
+        ],
+        correct: 1,
+        explanation: 'In a flat plateau region, the slope is nearly zero: $\\nabla L \\approx 0$. Standard gradient descent steps $\\Delta \\theta = -\\eta \\nabla L$ become vanishingly small, causing optimization to stall or progress agonizingly slowly without necessarily being at a true minimum.'
       }
     ]
   },
