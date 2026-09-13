@@ -4,7 +4,8 @@ import {
   Award,
   ArrowRight,
   HelpCircle,
-  ListChecks
+  ListChecks,
+  FileText
 } from 'lucide-react';
 import { Course, SyllabusModule } from '../../../../../../types/course';
 import {
@@ -13,10 +14,12 @@ import {
   ModuleAndToolSidebar,
   Toast,
   UniversalFlashcardsModal,
+  DocumentsTemplate,
   curriculumNavStore
 } from '../../../../common';
 import { StepId, STEPS } from './types';
 import { AI_WEEK1_FLASHCARDS } from './flashcards';
+import { AI_WEEK1_DOCUMENTS } from './documentsData';
 import { Module1Foundations } from './modules/Module1Foundations';
 import { Module2Metrics } from './modules/Module2Metrics';
 import { Module3RegressionLoss } from './modules/Module3RegressionLoss';
@@ -40,8 +43,8 @@ export const Week01AI: React.FC<Week01AIProps> = ({ course, module }) => {
   const [activeQuizStepKey, setActiveQuizStepKeyState] = useState<string>(() =>
     curriculumNavStore.getModuleForWeek<string>(`${WEEK_KEY}_quiz`, 's1')
   );
-  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz'>(() =>
-    curriculumNavStore.getMainTabForWeek(WEEK_KEY, 'study')
+  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz' | 'documents'>(() =>
+    curriculumNavStore.getMainTabForWeek<'study' | 'quiz' | 'documents'>(WEEK_KEY, 'study')
   );
 
   const setActiveStep = useCallback((step: StepId) => {
@@ -54,7 +57,7 @@ export const Week01AI: React.FC<Week01AIProps> = ({ course, module }) => {
     setActiveQuizStepKeyState(key);
   }, []);
 
-  const setActiveMainTab = useCallback((tab: 'study' | 'quiz') => {
+  const setActiveMainTab = useCallback((tab: 'study' | 'quiz' | 'documents') => {
     curriculumNavStore.setMainTabForWeek(WEEK_KEY, tab);
     setActiveMainTabState(tab);
   }, []);
@@ -156,6 +159,16 @@ export const Week01AI: React.FC<Week01AIProps> = ({ course, module }) => {
             totalCount={STEPS.length}
             tools={[
               {
+                id: 'documents-tool',
+                title: 'Documents',
+                icon: FileText,
+                onClick: () => {
+                  setActiveMainTab('documents');
+                },
+                isActive: activeMainTab === 'documents',
+                badge: `${AI_WEEK1_DOCUMENTS.length} File${AI_WEEK1_DOCUMENTS.length === 1 ? '' : 's'}`
+              },
+              {
                 id: 'flashcards-tool',
                 title: 'Flashcards',
                 icon: Sparkles,
@@ -250,6 +263,13 @@ export const Week01AI: React.FC<Week01AIProps> = ({ course, module }) => {
                 setActiveMainTab('study');
                 setActiveStep(stepId as StepId);
               }}
+            />
+          )}
+
+          {activeMainTab === 'documents' && (
+            <DocumentsTemplate
+              documents={AI_WEEK1_DOCUMENTS}
+              onBackToStudy={() => setActiveMainTab('study')}
             />
           )}
         </main>
