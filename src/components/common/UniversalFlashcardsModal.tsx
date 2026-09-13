@@ -358,9 +358,11 @@ export const UniversalFlashcardsModal: React.FC<UniversalFlashcardsModalProps> =
                       <h4 className="text-base font-bold text-indigo-300">
                         <MathText text={activeCard.title} />
                       </h4>
-                      <div className="bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 text-slate-100 text-sm sm:text-base overflow-x-auto shadow-inner max-w-2xl mx-auto font-mono">
-                        <FlashcardFormula tex={activeCard.backFormula} />
-                      </div>
+                      {Boolean(activeCard.backFormula?.trim()) && (
+                        <div className="bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 text-slate-100 text-sm sm:text-base overflow-x-auto shadow-inner max-w-2xl mx-auto font-mono">
+                          <FlashcardFormula tex={activeCard.backFormula} />
+                        </div>
+                      )}
                       <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
                         <MathText text={activeCard.backExplanation} />
                       </p>
