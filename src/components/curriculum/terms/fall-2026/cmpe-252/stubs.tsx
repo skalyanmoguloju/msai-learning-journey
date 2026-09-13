@@ -14,13 +14,8 @@ interface WeekProps { course?: Course; module?: SyllabusModule; }
 
 // ── CMPE-252 syllabus topics per week (stub metadata) ───────────────────────
 
-export const Week02AI: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 02" topicHint="Search & Adversarial Games"
-    upcomingTopics={['Uninformed Search (BFS/DFS)', 'A* Heuristic Search', 'Minimax & Alpha-Beta Pruning', 'Game Trees']}
-  />
-);
+// Week 02 is now implemented:
+export { Week02AI } from './week-02';
 
 export const Week03AI: React.FC<WeekProps> = ({ course, module }) => (
   <UnderConstructionWeek

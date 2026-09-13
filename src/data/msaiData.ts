@@ -53,11 +53,17 @@ export const INITIAL_SEMESTERS: Semester[] = [
           {
             id: 'm252-2',
             week: 'Week 02',
-            title: 'Machine Learning or AI Basics Continued',
-            description: 'Deep dive into hypothesis spaces, loss functions, optimization, and probabilistic foundations.',
-            topics: ['Probability & Linear Algebra for AI', 'Model Evaluation', 'Overfitting & Generalization'],
+            title: 'Mathematics & Optimization for AI',
+            description: 'Linear algebra factorizations (LU, SVD), multivariable gradients (∇f), probability distributions, and 1st & 2nd order optimization algorithms.',
+            topics: [
+              'Linear Algebra & Matrix Factorizations (LU, SVD)',
+              'Multivariable Calculus & Gradients (∇f)',
+              'Probabilistic Foundations & Distributions',
+              'First-Order Optimization (SGD, Momentum, Adam)',
+              'Second-Order Optimization (Newton, Hessian, L-BFGS)'
+            ],
             status: 'in-progress',
-            reading: 'Mitchell Ch. 2'
+            reading: 'Mitchell Ch. 2 / Goodfellow Deep Learning Ch. 2–4'
           },
           {
             id: 'm252-3',

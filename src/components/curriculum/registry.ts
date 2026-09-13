@@ -4,11 +4,12 @@ import { UnderConstructionWeek } from './common';
 
 // ── Completed week implementations ──────────────────────────────────────────
 import { Week01AI } from './terms/fall-2026/cmpe-252/week-01';
+import { Week02AI } from './terms/fall-2026/cmpe-252/week-02';
 import { Week01ML } from './terms/fall-2026/cmpe-257/week-01';
 
-// ── CMPE-252 stub weeks (2–16) ───────────────────────────────────────────────
+// ── CMPE-252 stub weeks (3–16) ───────────────────────────────────────────────
 import {
-  Week02AI, Week03AI, Week04AI, Week05AI, Week06AI, Week07AI, Week08AI,
+  Week03AI, Week04AI, Week05AI, Week06AI, Week07AI, Week08AI,
   Week09AI, Week10AI, Week11AI, Week12AI, Week13AI, Week14AI, Week15AI, Week16AI,
 } from './terms/fall-2026/cmpe-252/stubs';
 
@@ -107,7 +108,7 @@ export function getWeekComponent(
  * Add a week number here once its curriculum package is complete.
  * Stubs (UnderConstructionWeek wrappers) must NOT appear here.
  */
-const CMPE252_AVAILABLE_WEEKS = new Set([1]);
+const CMPE252_AVAILABLE_WEEKS = new Set([1, 2]);
 const CMPE257_AVAILABLE_WEEKS = new Set([1]);
 
 /**

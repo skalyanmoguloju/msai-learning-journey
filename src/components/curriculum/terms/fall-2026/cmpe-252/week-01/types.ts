@@ -30,7 +30,7 @@ export const STEPS: StepMeta[] = [
     id: 2,
     title: 'Classification Metrics',
     badge: 'Evaluation',
-    subtitle: 'Confusion Matrix, Accuracy, Precision, Recall, F1-Score & Trade-offs',
+    subtitle: 'Confusion Matrix, Precision, Recall, F1-Score, ROC Curve & AUC',
     icon: Grid
   },
   {

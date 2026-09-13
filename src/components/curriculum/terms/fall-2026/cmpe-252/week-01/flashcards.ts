@@ -93,6 +93,16 @@ export const AI_WEEK1_FLASHCARDS: AIFlashcard[] = [
     useCase: 'Fraud detection and search engine query retrieval where both false alerts and missed positives are problematic.',
     remark: 'Generalizes to $F_\\beta = (1+\\beta^2) \\frac{P \\cdot R}{\\beta^2 P + R}$ where $\\beta=2$ weights recall higher, and $\\beta=0.5$ weights precision higher.'
   },
+  {
+    id: 'ai-fc-8b',
+    category: 'Module 2: Classification',
+    title: 'ROC Curve & AUC (Area Under the Curve)',
+    frontPrompt: 'What does the ROC Curve plot, what is AUC, and what do AUC = 1.0 and AUC = 0.5 represent?',
+    backFormula: '\\text{TPR} = \\frac{\\text{TP}}{\\text{TP} + \\text{FN}}, \\quad \\text{FPR} = \\frac{\\text{FP}}{\\text{TN} + \\text{FP}}, \\quad \\text{AUC} \\in [0, 1]',
+    backExplanation: 'The ROC Curve plots True Positive Rate (Recall) on the y-axis against False Positive Rate on the x-axis across every decision threshold. AUC measures the 2D area under the curve. AUC = 1.0 represents a perfect model with zero mistakes 🌟. AUC = 0.5 represents a model guessing completely at random (diagonal dashed line) 🎲.',
+    useCase: 'Threshold-independent evaluation of binary classifiers on balanced and imbalanced datasets (e.g. medical diagnosis, fraud detection).',
+    remark: 'AUC equals the probability that the classifier ranks a randomly chosen positive instance higher than a randomly chosen negative instance.'
+  },
 
   // Module 3: Regression
   {

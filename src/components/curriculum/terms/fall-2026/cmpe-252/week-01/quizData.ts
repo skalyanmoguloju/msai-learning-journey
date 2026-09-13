@@ -76,6 +76,18 @@ export const AI_WEEK1_QUIZ: Record<string, QuizModuleData> = {
         ],
         correct: 2,
         explanation: '$\\text{Precision} = \\frac{\\text{TP}}{\\text{TP} + \\text{FP}}$. In spam classification, mislabeling a crucial legitimate email as spam is a False Positive. Maximizing Precision directly suppresses False Positives toward zero, guaranteeing that flagged emails are genuine spam.'
+      },
+      {
+        id: 's2_q4_roc',
+        question: 'On an ROC Curve, what do the axes represent, and what does an AUC score of 0.5 signify?',
+        options: [
+          'Plots Precision vs Recall; AUC = 0.5 means 50% test accuracy.',
+          'Plots True Positive Rate (TPR) on the y-axis vs False Positive Rate (FPR) on the x-axis; AUC = 0.5 signifies performance equivalent to random guessing.',
+          'Plots False Positives vs False Negatives; AUC = 0.5 means zero Type I errors.',
+          'Plots Loss vs Epochs; AUC = 0.5 means the gradient descent has plateaued.'
+        ],
+        correct: 1,
+        explanation: 'The ROC Curve plots **True Positive Rate (TPR / Recall)** on the y-axis against **False Positive Rate (FPR)** on the x-axis across every threshold $\\tau \\in [0, 1]$. An **AUC of 0.5** represents the diagonal line, indicating performance no better than flipping a coin (random guessing 🎲), while **AUC = 1.0** indicates a perfect classifier 🌟.'
       }
     ]
   },
