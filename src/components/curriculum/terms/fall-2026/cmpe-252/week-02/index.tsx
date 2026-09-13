@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   Sparkles,
   Award,
@@ -17,6 +17,7 @@ import {
 } from '../../../../common';
 import { StepId, STEPS } from './types';
 import { AI_WEEK2_FLASHCARDS } from './flashcards';
+import { AI_WEEK2_QUIZ } from './quizData';
 import { Module1LinearAlgebra } from './modules/Module1LinearAlgebra';
 import { Module2MultivariableCalculus } from './modules/Module2MultivariableCalculus';
 import { Module3Probability } from './modules/Module3Probability';
@@ -113,7 +114,9 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
   const nextStep = activeStep < STEPS.length ? STEPS.find(s => s.id === (activeStep + 1) as StepId) : null;
   const progressPct = Math.round((completedSteps.length / STEPS.length) * 100);
 
-  const totalQuestions = 10; // 2 questions per module × 5 modules
+  const totalQuestions = useMemo(() => {
+    return Object.values(AI_WEEK2_QUIZ).reduce((acc, m) => acc + m.questions.length, 0);
+  }, []);
 
   return (
     <div className="space-y-6 animate-fade-in">

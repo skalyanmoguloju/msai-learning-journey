@@ -23,27 +23,122 @@ export const AI_WEEK2_QUIZ: Record<string, QuizModule> = {
     questions: [
       {
         id: 'w2_s1_q1',
-        question: 'Why is LU Decomposition preferred over direct matrix inversion when solving Ax = b for multiple different vectors b?',
-        options: [
-          'LU decomposition does not require the matrix to be square.',
-          'Once L and U are computed in O(n³), solving for each new b takes only O(n²) via forward and backward substitution, whereas multiplying by A⁻¹ introduces higher numerical instability.',
-          'LU decomposition converts all non-zero eigenvalues to 1.',
-          'LU decomposition eliminates the need for pivoting in all matrices.'
-        ],
-        correct: 1,
-        explanation: 'Factoring $A = LU$ costs $O(n^3)$ once. For any subsequent vector $b$, solving $Ly = b$ (forward substitution) and $Ux = y$ (backward substitution) requires only $O(n^2)$ triangular solves. Direct inversion is more computationally prone to rounding error and numerical instability.'
+        question: 'What is the length (norm) of the vector v = [3, 4]?',
+        options: ['3', '4', '5', '7'],
+        correct: 2,
+        explanation: 'The Euclidean length, or norm, of a vector is $\\|v\\| = \\sqrt{x_1^2 + x_2^2}$. Therefore: $\\|v\\| = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$.'
       },
       {
         id: 'w2_s1_q2',
-        question: 'According to the Eckart-Young-Mirsky Theorem, how do we construct the optimal rank-k approximation of a matrix A using SVD?',
+        question: 'What is the dot product of [1, 2] and [3, 4]?',
+        options: ['7', '10', '11', '24'],
+        correct: 2,
+        explanation: 'Multiply corresponding elements and add: $[1, 2] \\cdot [3, 4] = (1)(3) + (2)(4) = 3 + 8 = 11$.'
+      },
+      {
+        id: 'w2_s1_q3',
+        question: 'What does a dot product of zero (u · v = 0) usually indicate for non-zero vectors?',
         options: [
-          'By setting the bottom-left block of U to zero.',
-          'By retaining the top k singular values in Σ and truncating the remaining singular values to zero ($A_k = \\sum_{i=1}^k \\sigma_i u_i v_i^T$).',
-          'By computing the QR factorization of the right singular vectors V.',
-          'By dividing each singular value by the trace of matrix A.'
+          'The vectors have the same length',
+          'The vectors are parallel',
+          'The vectors are orthogonal (perpendicular)',
+          'The vectors are identical'
+        ],
+        correct: 2,
+        explanation: 'The dot product is related to the angle between two vectors: $u \\cdot v = \\|u\\|\\|v\\|\\cos(\\theta)$. For perpendicular vectors, the angle is $90^\\circ$, and $\\cos(90^\\circ) = 0$. Therefore: $u \\cdot v = 0$.'
+      },
+      {
+        id: 'w2_s1_q4',
+        question: 'What is the shape of the matrix product Ax if A is 3 × 2 and x is 2 × 1?',
+        options: ['3 × 1', '2 × 3', '3 × 2', '2 × 1'],
+        correct: 0,
+        explanation: 'For matrix multiplication, the inner dimensions must match: $(3 \\times 2)(2 \\times 1)$. The inner numbers are both 2, so multiplication is compatible. The outer dimensions determine the result shape: $3 \\times 1$.'
+      },
+      {
+        id: 'w2_s1_q5',
+        question: 'Calculate Ax for A = [[1, 2], [3, 4]] and x = [5, 6]^T. What is Ax?',
+        options: [
+          '[11, 39]^T',
+          '[17, 39]^T',
+          '[16, 24]^T',
+          '[5, 6]^T'
         ],
         correct: 1,
-        explanation: 'Truncating the SVD expansion to the first $k$ terms ($A_k = U_k \\Sigma_k V_k^T$) provides the closest rank-$k$ matrix to $A$ under both the Frobenius norm and spectral norm, forming the mathematical foundation for PCA and data compression.'
+        explanation: 'Multiply each row of $A$ by vector $x$:\nFirst row: $(1)(5) + (2)(6) = 5 + 12 = 17$.\nSecond row: $(3)(5) + (4)(6) = 15 + 24 = 39$.\nTherefore: $Ax = \\begin{bmatrix} 17 \\\\ 39 \\end{bmatrix}$.'
+      },
+      {
+        id: 'w2_s1_q6',
+        question: 'Let u = [1, 0] and v = [3, 4]. What is the orthogonal projection of v onto u?',
+        options: ['[0, 4]', '[3, 0]', '[1, 0]', '[3, 4]'],
+        correct: 1,
+        explanation: 'Vector $u = [1, 0]$ points horizontally. Projecting $v = [3, 4]$ onto $u$ preserves the horizontal component (3) and eliminates the vertical component (4), yielding $\\text{proj}_u(v) = [3, 0]$. Mathematically: $\\text{proj}_u(v) = \\left(\\frac{u \\cdot v}{u \\cdot u}\\right)u = \\left(\\frac{3}{1}\\right)[1, 0] = [3, 0]$. The projection is the "shadow" of one vector onto another direction.'
+      },
+      {
+        id: 'w2_s1_q7',
+        question: 'Which pair of vectors is orthogonal?',
+        options: [
+          '[1, 2] and [2, 4]',
+          '[1, 1] and [1, 1]',
+          '[2, -1] and [1, 2]',
+          '[3, 3] and [6, 6]'
+        ],
+        correct: 2,
+        explanation: 'Calculate the dot product: $[2, -1] \\cdot [1, 2] = (2)(1) + (-1)(2) = 2 - 2 = 0$. Because the dot product is exactly zero, the vectors are orthogonal.'
+      },
+      {
+        id: 'w2_s1_q8',
+        question: 'In the Gram–Schmidt process, what is the geometric purpose of subtracting a projection?',
+        options: [
+          'To make vectors longer',
+          'To remove the part pointing in an earlier vector’s direction',
+          'To turn every vector into zero',
+          'To change vectors into matrices'
+        ],
+        correct: 1,
+        explanation: 'Gram–Schmidt constructs an orthogonal basis. For the second vector, we compute $u_2 = v_2 - \\text{proj}_{u_1}(v_2)$, which removes the component of $v_2$ that aligns with $u_1$, leaving a remainder that is strictly perpendicular to $u_1$.'
+      },
+      {
+        id: 'w2_s1_q9',
+        question: 'Suppose v₁ = [1, 0] and v₂ = [1, 1]. After applying Gram–Schmidt, what is the second orthogonal vector u₂?',
+        options: ['[1, 1]', '[1, 0]', '[0, 1]', '[2, 1]'],
+        correct: 2,
+        explanation: 'The first orthogonal vector is $u_1 = v_1 = [1, 0]$. The projection of $v_2$ onto $u_1$ is $\\text{proj}_{u_1}(v_2) = [1, 0]$. Subtracting yields $u_2 = v_2 - \\text{proj}_{u_1}(v_2) = [1, 1] - [1, 0] = [0, 1]$. The vectors $[1, 0]$ and $[0, 1]$ are mutually orthogonal.'
+      },
+      {
+        id: 'w2_s1_q10',
+        question: 'In an LU decomposition (A = LU), what do L and U represent?',
+        options: [
+          'Left and right vectors',
+          'Lower-triangular and upper-triangular matrices',
+          'Length and unit matrices',
+          'Linear and uniform matrices'
+        ],
+        correct: 1,
+        explanation: 'LU decomposition factors a matrix as $A = LU$, where $L$ is a lower-triangular matrix (zeros above the main diagonal) and $U$ is an upper-triangular matrix (zeros below the main diagonal).'
+      },
+      {
+        id: 'w2_s1_q11',
+        question: 'Which equation represents Singular Value Decomposition (SVD)?',
+        options: [
+          'A = U + Σ + V',
+          'A = LU',
+          'A = UΣV^T',
+          'A = UV + Σ'
+        ],
+        correct: 2,
+        explanation: 'Singular value decomposition factors any real matrix into $A = U\\Sigma V^T$, where $U$ contains orthonormal left singular vectors (output directions), $\\Sigma$ is a diagonal matrix of non-negative singular values (scaling factors), and $V^T$ contains orthonormal right singular vectors (input directions).'
+      },
+      {
+        id: 'w2_s1_q12',
+        question: 'Where are the singular values stored in Singular Value Decomposition (SVD)?',
+        options: [
+          'In U',
+          'In V',
+          'In A^T',
+          'On the diagonal of Σ'
+        ],
+        correct: 3,
+        explanation: 'In $A = U\\Sigma V^T$, the matrix $\\Sigma$ is diagonal: $\\Sigma = \\begin{bmatrix} \\sigma_1 & 0 \\\\ 0 & \\sigma_2 \\end{bmatrix}$. The sorted diagonal entries $\\sigma_1 \\ge \\sigma_2 \\ge \\dots \\ge 0$ are the singular values, indicating the variance/energy along principal transformed directions.'
       }
     ]
   },
