@@ -18,8 +18,8 @@ const selectedWeekByCourse: Record<string, string> = {};
 // Per-week active module/step ID (e.g. { 'cmpe-252_week-01': 3, 'cmpe-257_week-01': 'm2' })
 const selectedModuleByWeek: Record<string, string | number> = {};
 
-// Per-week active main tab ('study' | 'quiz')
-const selectedTabByWeek: Record<string, 'study' | 'quiz'> = {};
+// Per-week active main tab ('study' | 'quiz' | 'documents')
+const selectedTabByWeek: Record<string, any> = {};
 
 // Per-week solutions mode ('true' for Full Solution Guide, 'false' for Practice Quizzes)
 const selectedSolutionsModeByWeek: Record<string, boolean> = {};
@@ -79,11 +79,11 @@ export const curriculumNavStore = {
     selectedModuleByWeek[weekKey] = moduleId;
   },
 
-  // Week -> Active Tab ('study' | 'quiz')
-  getMainTabForWeek: (weekKey: string, defaultTab: 'study' | 'quiz' = 'study'): 'study' | 'quiz' => {
-    return selectedTabByWeek[weekKey] || defaultTab;
+  // Week -> Active Tab ('study' | 'quiz' | 'documents')
+  getMainTabForWeek: <T extends string = 'study' | 'quiz' | 'documents'>(weekKey: string, defaultTab: T = 'study' as T): T => {
+    return (selectedTabByWeek[weekKey] as T) || defaultTab;
   },
-  setMainTabForWeek: (weekKey: string, tab: 'study' | 'quiz') => {
+  setMainTabForWeek: (weekKey: string, tab: string) => {
     selectedTabByWeek[weekKey] = tab;
   },
 

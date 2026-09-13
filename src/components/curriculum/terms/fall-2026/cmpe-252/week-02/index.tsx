@@ -4,7 +4,8 @@ import {
   Award,
   ArrowRight,
   HelpCircle,
-  ListChecks
+  ListChecks,
+  FileText
 } from 'lucide-react';
 import { Course, SyllabusModule } from '../../../../../../types/course';
 import {
@@ -13,11 +14,13 @@ import {
   ModuleAndToolSidebar,
   Toast,
   UniversalFlashcardsModal,
+  DocumentsTemplate,
   curriculumNavStore
 } from '../../../../common';
 import { StepId, STEPS } from './types';
 import { AI_WEEK2_FLASHCARDS } from './flashcards';
 import { AI_WEEK2_QUIZ } from './quizData';
+import { AI_WEEK2_DOCUMENTS } from './documentsData';
 import { Module1LinearAlgebra } from './modules/Module1LinearAlgebra';
 import { Module2MultivariableCalculus } from './modules/Module2MultivariableCalculus';
 import { Module3Probability } from './modules/Module3Probability';
@@ -40,8 +43,8 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
   const [activeQuizStepKey, setActiveQuizStepKeyState] = useState<string>(() =>
     curriculumNavStore.getModuleForWeek<string>(`${WEEK_KEY}_quiz`, 's1')
   );
-  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz'>(() =>
-    curriculumNavStore.getMainTabForWeek(WEEK_KEY, 'study')
+  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz' | 'documents'>(() =>
+    curriculumNavStore.getMainTabForWeek<'study' | 'quiz' | 'documents'>(WEEK_KEY, 'study')
   );
 
   const setActiveStep = useCallback((step: StepId) => {
@@ -54,7 +57,7 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
     setActiveQuizStepKeyState(key);
   }, []);
 
-  const setActiveMainTab = useCallback((tab: 'study' | 'quiz') => {
+  const setActiveMainTab = useCallback((tab: 'study' | 'quiz' | 'documents') => {
     curriculumNavStore.setMainTabForWeek(WEEK_KEY, tab);
     setActiveMainTabState(tab);
   }, []);
@@ -159,6 +162,16 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
           completedCount={completedSteps.length}
           totalCount={STEPS.length}
           tools={[
+            {
+              id: 'documents-tool',
+              title: 'Documents',
+              icon: FileText,
+              onClick: () => {
+                setActiveMainTab('documents');
+              },
+              isActive: activeMainTab === 'documents',
+              badge: `${AI_WEEK2_DOCUMENTS.length} Files`
+            },
             {
               id: 'flashcards-tool',
               title: 'Flashcards',
@@ -298,6 +311,15 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
                 setActiveMainTab('study');
                 setActiveStep(stepId as StepId);
               }}
+            />
+          )}
+
+          {activeMainTab === 'documents' && (
+            <DocumentsTemplate
+              title="CMPE-252 Week 02 — Study Documents & Lecture Slides"
+              subtitle="Master linear algebra factorizations, multivariable calculus, probabilistic foundations, and 1st & 2nd order optimization with official lecture slides"
+              documents={AI_WEEK2_DOCUMENTS}
+              onBackToStudy={() => setActiveMainTab('study')}
             />
           )}
         </main>

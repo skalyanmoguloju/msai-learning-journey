@@ -1,5 +1,4 @@
-import React from 'react';
-import { Brain, CheckCircle, Sparkles, HelpCircle } from 'lucide-react';
+import { Brain, CheckCircle, Sparkles, HelpCircle, FileText } from 'lucide-react';
 
 export interface ModuleSidebarItem {
   id: number | string;
@@ -33,6 +32,9 @@ export const resolveToolItem = (extra: ToolSidebarItem) => {
   } else if (idLower.includes('solution') || titleLower.includes('solution')) {
     resolvedIcon = HelpCircle; // Hardcoded same icon as quizzes
     resolvedTitle = 'Full Solution Guide';
+  } else if (idLower.includes('document') || titleLower.includes('document')) {
+    resolvedIcon = resolvedIcon || FileText;
+    resolvedTitle = extra.title || 'Documents';
   }
 
   return {

@@ -14,6 +14,8 @@ export { QuizTemplate } from '../../common/QuizTemplate';
 export type { QuizTemplateProps, QuizModuleItem, QuizQuestion } from '../../common/QuizTemplate';
 export { SolutionGuideTemplate } from '../../common/SolutionGuideTemplate';
 export type { SolutionGuideTemplateProps } from '../../common/SolutionGuideTemplate';
+export { DocumentsTemplate } from '../../common/DocumentsTemplate';
+export type { DocumentsTemplateProps, CourseDocumentItem } from '../../common/DocumentsTemplate';
 export { MathText } from './MathText';
 export { setupCanvas } from './canvas';
 export { curriculumNavStore } from '../navigationStore';
