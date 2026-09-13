@@ -110,75 +110,80 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
             return (
               <div
                 key={doc.id}
-                className="group relative flex flex-col md:flex-row md:items-center justify-between gap-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 p-5 sm:p-6 transition-all duration-300"
+                className="group relative rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 p-4 sm:p-5 transition-all duration-300 space-y-3"
               >
-                {/* Left / Info Section */}
-                <div className="flex items-start gap-4 min-w-0 flex-1">
-                  {/* PDF Icon */}
-                  <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shrink-0 group-hover:scale-105 transition-transform duration-300 mt-0.5">
-                    <FileText className="w-6 h-6" />
-                  </div>
-
-                  {/* Text Content */}
-                  <div className="space-y-1.5 min-w-0 flex-1">
-                    {/* Badges & Metadata */}
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20">
-                        PDF
-                      </span>
-                      {doc.category && (
-                        <span className="text-[10px] font-medium text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
-                          {doc.category}
-                        </span>
-                      )}
-                      {doc.badge && (
-                        <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                          {doc.badge}
-                        </span>
-                      )}
-                      {doc.pageCount && (
-                        <>
-                          <span className="text-slate-600">•</span>
-                          <span className="text-[11px] font-mono text-slate-400">
-                            {doc.pageCount} Pages
-                          </span>
-                        </>
-                      )}
-                      {doc.fileSize && (
-                        <>
-                          <span className="text-slate-600">•</span>
-                          <span className="text-[11px] font-mono text-slate-500">
-                            {doc.fileSize}
-                          </span>
-                        </>
-                      )}
+                {/* Row 1: Title + Action Buttons */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shrink-0 group-hover:scale-105 transition-transform duration-300">
+                      <FileText className="w-4 h-4" />
                     </div>
-
-                    {/* Title */}
                     <h3
                       onClick={() => setActiveViewerDoc(doc)}
-                      className="text-base font-bold text-slate-100 group-hover:text-indigo-300 transition-colors cursor-pointer"
+                      className="text-sm sm:text-base font-bold text-slate-100 group-hover:text-indigo-300 transition-colors cursor-pointer truncate"
+                      title={doc.title}
                     >
                       {doc.title}
                     </h3>
+                  </div>
 
-                    {/* Subtitle */}
-                    {doc.subtitle && (
-                      <p className="text-xs font-medium text-indigo-400/90">
-                        {doc.subtitle}
-                      </p>
-                    )}
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                    <button
+                      onClick={() => setActiveViewerDoc(doc)}
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition-all active:scale-[0.98] whitespace-nowrap"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>View Document</span>
+                    </button>
 
-                    {/* Description */}
-                    {doc.description && (
-                      <p className="text-xs text-slate-400 leading-relaxed max-w-3xl">
-                        {doc.description}
-                      </p>
-                    )}
+                    <a
+                      href={resolvedUrl}
+                      download={doc.fileName || `${doc.title}.pdf`}
+                      className="p-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all text-xs flex items-center justify-center shrink-0"
+                      title="Download PDF"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                    </a>
 
-                    {/* Topic Chips */}
-                    {doc.topics && doc.topics.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 pt-1">
+                    <a
+                      href={resolvedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all text-xs flex items-center justify-center shrink-0"
+                      title="Open in New Tab"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Row 2: Detail Badges & Topics */}
+                <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800/60 text-xs">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20">
+                    PDF
+                  </span>
+                  {doc.category && (
+                    <span className="text-[10px] font-medium text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                      {doc.category}
+                    </span>
+                  )}
+                  {doc.pageCount && (
+                    <span className="text-[11px] font-mono text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/40">
+                      {doc.pageCount} Pages
+                    </span>
+                  )}
+                  {doc.fileSize && (
+                    <span className="text-[11px] font-mono text-slate-500 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/40">
+                      {doc.fileSize}
+                    </span>
+                  )}
+
+                  {/* Topic Chips */}
+                  {doc.topics && doc.topics.length > 0 && (
+                    <>
+                      <span className="text-slate-600 hidden sm:inline">•</span>
+                      <div className="flex flex-wrap gap-1.5 items-center">
                         {doc.topics.map((topic, i) => (
                           <span
                             key={i}
@@ -188,38 +193,8 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
                           </span>
                         ))}
                       </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Right Action Toolbar */}
-                <div className="flex items-center gap-2 shrink-0 self-stretch md:self-center border-t md:border-t-0 md:border-l border-slate-800/80 pt-3 md:pt-0 md:pl-5">
-                  <button
-                    onClick={() => setActiveViewerDoc(doc)}
-                    className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition-all active:scale-[0.98] whitespace-nowrap"
-                  >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>View Document</span>
-                  </button>
-
-                  <a
-                    href={resolvedUrl}
-                    download={doc.fileName || `${doc.title}.pdf`}
-                    className="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all text-xs flex items-center justify-center shrink-0"
-                    title="Download PDF"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                  </a>
-
-                  <a
-                    href={resolvedUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all text-xs flex items-center justify-center shrink-0"
-                    title="Open in New Tab"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                    </>
+                  )}
                 </div>
               </div>
             );
@@ -252,12 +227,6 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
                     <>
                       <span>•</span>
                       <span>{activeViewerDoc.fileSize}</span>
-                    </>
-                  )}
-                  {activeViewerDoc.badge && (
-                    <>
-                      <span>•</span>
-                      <span className="text-indigo-400">{activeViewerDoc.badge}</span>
                     </>
                   )}
                 </div>
