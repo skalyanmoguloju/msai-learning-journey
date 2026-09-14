@@ -16,7 +16,18 @@ import {
 import { ML_WEEK2_MODULES } from './types';
 import { ML_WEEK2_FLASHCARDS } from './flashcards';
 import { ML_WEEK2_DOCUMENTS } from './documentsData';
-import { ModuleReadingView } from './modules/ModuleReadingView';
+import {
+  Module1WhyLogistic,
+  Module2Sigmoid,
+  Module3BernoulliLikelihood,
+  Module4DatasetLikelihood,
+  Module5GradientAscent,
+  Module6GLM,
+  Module7ExponentialFamily,
+  Module8ConstructingGLM,
+  Module9NaiveBayes,
+  Module10MLEvsMAP
+} from './modules';
 
 const STORAGE_KEY_COMPLETED = 'cmpe257_week02_completed_modules';
 const WEEK_KEY = 'cmpe-257_week-02';
@@ -70,8 +81,8 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
       const next = isDone ? prev.filter(x => x !== id) : [...prev, id];
       const targetMod = ML_WEEK2_MODULES.find(m => m.id === id);
       showToast(isDone
-        ? `Marked "${targetMod?.shortTitle || id}" as yet to complete reading`
-        : `Completed reading "${targetMod?.shortTitle || id}"! 🎉`
+        ? `Marked "${targetMod?.shortTitle || id}" as incomplete`
+        : `Completed "${targetMod?.shortTitle || id}"! 🎉`
       );
       return next;
     });
@@ -83,7 +94,7 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
       localStorage.removeItem(STORAGE_KEY_COMPLETED);
       localStorage.removeItem('cmpe257_week02_flashcards_mastered');
     } catch {}
-    showToast('All Week 02 modules marked as yet to complete reading.');
+    showToast('All Week 02 modules marked as yet to complete.');
   }, [showToast]);
 
   const currentMod = ML_WEEK2_MODULES.find(m => m.id === activeModuleId) || ML_WEEK2_MODULES[0];
@@ -125,8 +136,8 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
         <ModuleAndToolSidebar
           modules={ML_WEEK2_MODULES.map(mod => ({
             id: mod.id,
-            title: `${mod.stepNumber}. ${mod.shortTitle}`,
-            badge: completedModules.includes(mod.id) ? 'Completed' : 'Yet to Read',
+            title: mod.shortTitle,
+            badge: mod.category,
             icon: mod.icon,
             isDone: completedModules.includes(mod.id)
           }))}
@@ -163,7 +174,7 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               moduleId={currentMod.stepNumber}
               moduleIndex={currentMod.stepNumber}
               totalModules={ML_WEEK2_MODULES.length}
-              badge={`${currentMod.category} • Module ${currentMod.stepNumber} of ${ML_WEEK2_MODULES.length}`}
+              badge={currentMod.category}
               title={currentMod.title}
               subtitle={currentMod.description}
               isCompleted={completedModules.includes(currentMod.id)}
@@ -175,12 +186,17 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               prevLabel={prevMod ? `Module ${prevMod.stepNumber}` : undefined}
               nextLabel={nextMod ? `Module ${nextMod.stepNumber}` : undefined}
             >
-              <ModuleReadingView
-                module={currentMod}
-                isCompleted={completedModules.includes(currentMod.id)}
-                onToggleComplete={() => toggleModuleComplete(currentMod.id)}
-                onOpenFlashcards={() => setShowFlashcards(true)}
-              />
+              {/* Render specific module component */}
+              {activeModuleId === 'm1' && <Module1WhyLogistic />}
+              {activeModuleId === 'm2' && <Module2Sigmoid />}
+              {activeModuleId === 'm3' && <Module3BernoulliLikelihood />}
+              {activeModuleId === 'm4' && <Module4DatasetLikelihood />}
+              {activeModuleId === 'm5' && <Module5GradientAscent />}
+              {activeModuleId === 'm6' && <Module6GLM />}
+              {activeModuleId === 'm7' && <Module7ExponentialFamily />}
+              {activeModuleId === 'm8' && <Module8ConstructingGLM />}
+              {activeModuleId === 'm9' && <Module9NaiveBayes />}
+              {activeModuleId === 'm10' && <Module10MLEvsMAP />}
             </ModuleTemplate>
           )}
 
