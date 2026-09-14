@@ -12,24 +12,24 @@ import {
 import { MathText } from '../../../../../common';
 
 export const Module1WhyLogistic: React.FC = () => {
-  // Interactive A State: Move linear score
+  // Interactive A State: Move linear score (inside Section 4: Pipeline)
   const [zSlide, setZSlide] = useState<number>(0.0);
   const sigmoid = (z: number) => 1 / (1 + Math.exp(-z));
   const pA = sigmoid(zSlide);
   const classA = pA >= 0.5 ? 'Class 1' : 'Class 0';
 
-  // Interactive B State: Line vs Probability
+  // Interactive B State: Line vs Probability (inside Section 2: Why not linear)
   const [xSlide, setXSlide] = useState<number>(4.0);
   const linearOut = -0.5 + 0.2 * xSlide;
   const sigOut = sigmoid(-4.0 + xSlide);
   const isLinearInvalid = linearOut < 0 || linearOut > 1;
 
-  // Interactive C State: Threshold comparison
+  // Interactive C State: Threshold comparison (inside Section 3: Classification outputs & threshold)
   const [pSlide, setPSlide] = useState<number>(0.62);
   const [tSlide, setTSlide] = useState<number>(0.50);
   const predC = pSlide >= tSlide ? 'Class 1' : 'Class 0';
 
-  // Interactive D State: Odds & Logit
+  // Interactive D State: Odds & Logit (inside Section 6: Why the name logistic regression)
   const [oddsProb, setOddsProb] = useState<number>(0.75);
   const oddsVal = oddsProb / (1 - oddsProb);
   const logitVal = Math.log(oddsVal);
@@ -39,8 +39,8 @@ export const Module1WhyLogistic: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in text-slate-200">
-      {/* ── 1. Learning Goal Callout ──────────────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+      {/* ── Learning Goal Callout ─────────────────────────────────────────── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
         <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-cyan-400" />
           <span>Learning Goal</span>
@@ -53,8 +53,8 @@ export const Module1WhyLogistic: React.FC = () => {
         </div>
       </div>
 
-      {/* ── 2. What is Binary Classification? ─────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+      {/* ── 1. What is Binary Classification? ─────────────────────────────── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <h3 className="text-base font-bold text-slate-100">1. What is Binary Classification?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           In supervised learning, the model receives input features and learns to predict an answer. In <strong>binary classification</strong>, the answer has only two possible category outcomes.
@@ -82,8 +82,8 @@ export const Module1WhyLogistic: React.FC = () => {
         </p>
       </div>
 
-      {/* ── 3. Why Not Use Linear Regression? ─────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+      {/* ── 2. Why Not Use Linear Regression? (Merged with Interactive B) ─── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <h3 className="text-base font-bold text-slate-100">2. Why Not Use Linear Regression?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Linear regression creates a weighted sum:
@@ -116,10 +116,69 @@ export const Module1WhyLogistic: React.FC = () => {
         <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/25 text-xs text-rose-300">
           <strong>The Problem:</strong> If <MathText text="$\hat{y}$" /> is treated as a probability, <MathText text="$-0.1$" /> is a negative probability and <MathText text="$1.5$" /> is a 150% probability. Both are impossible. Linear regression is useful for numerical outputs like price or temperature, but its output is not automatically limited to the probability range.
         </div>
+
+        {/* ── Embedded Interactive B: See why a line is not a probability ── */}
+        <div className="mt-4 pt-4 border-t border-slate-800/80 space-y-3">
+          <div className="flex items-center gap-2 text-amber-400">
+            <Sliders className="w-4 h-4" />
+            <h4 className="text-xs font-bold uppercase tracking-wider">Try it Live: See Why a Line Fails as a Probability</h4>
+          </div>
+          <p className="text-xs text-slate-400">
+            Slide hours studied <MathText text="$(x)$" /> to compare the linear output with the sigmoid output:
+          </p>
+
+          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex justify-between text-xs font-semibold text-slate-300">
+              <span>Input hours studied <MathText text="$(x)$" />:</span>
+              <span className="text-amber-400 font-mono text-sm">{xSlide.toFixed(1)} hrs</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="12"
+              step="0.1"
+              value={xSlide}
+              onChange={e => setXSlide(parseFloat(e.target.value))}
+              className="w-full accent-amber-500 cursor-pointer"
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className={`p-3.5 rounded-lg border text-xs ${
+                isLinearInvalid ? 'bg-rose-950/20 border-rose-500/40' : 'bg-slate-900/90 border-slate-800'
+              }`}>
+                <span className="text-slate-400">Linear Regression Output <MathText text="$\hat{y} = -0.5 + 0.2x$" />:</span>
+                <div className={`text-xl font-mono font-bold mt-1 ${isLinearInvalid ? 'text-rose-400' : 'text-cyan-300'}`}>
+                  {linearOut.toFixed(2)}
+                </div>
+                {isLinearInvalid && (
+                  <span className="text-[10px] text-rose-400 font-medium">Invalid Probability (&lt;0 or &gt;1)</span>
+                )}
+              </div>
+
+              <div className="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs">
+                <span className="text-slate-400">Sigmoid Output <MathText text="$\sigma(-4 + x)$" />:</span>
+                <div className="text-xl font-mono font-bold text-emerald-400 mt-1">
+                  {sigOut.toFixed(3)}
+                </div>
+                <span className="text-[10px] text-emerald-400 font-medium">Always Bounded in (0, 1)</span>
+              </div>
+            </div>
+
+            <div className={`p-3 rounded-xl border text-xs ${
+              isLinearInvalid
+                ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+            }`}>
+              {isLinearInvalid
+                ? '⚠️ The linear output is outside the valid probability range. The sigmoid remains valid.'
+                : '✓ Both are currently inside the range, but linear regression can leave it as x changes.'}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* ── 4. What Should a Classification Model Output? ─────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+      {/* ── 3. What Should a Classification Model Output? (Merged with Interactive C) ── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <h3 className="text-base font-bold text-slate-100">3. What Should a Classification Model Output?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           A useful model should first report how confident it is as a continuous probability:
@@ -171,10 +230,69 @@ export const Module1WhyLogistic: React.FC = () => {
         <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-300">
           <strong>Threshold is a decision choice:</strong> The common threshold is 0.5, but a medical model might use a lower threshold (such as 0.2) to avoid missing sick patients (false negatives).
         </div>
+
+        {/* ── Embedded Interactive C: Change Classification Threshold ────── */}
+        <div className="mt-4 pt-4 border-t border-slate-800/80 space-y-3">
+          <div className="flex items-center gap-2 text-purple-400">
+            <Sliders className="w-4 h-4" />
+            <h4 className="text-xs font-bold uppercase tracking-wider">Try it Live: Change the Classification Threshold</h4>
+          </div>
+          <p className="text-xs text-slate-400">
+            The threshold converts a probability into a discrete class decision. A lower threshold makes the model more sensitive to predicting class 1:
+          </p>
+
+          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-semibold text-slate-300">
+                  <span>Probability <MathText text="$(p)$" />:</span>
+                  <span className="text-cyan-400 font-mono">{pSlide.toFixed(2)}</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={pSlide}
+                  onChange={e => setPSlide(parseFloat(e.target.value))}
+                  className="w-full accent-cyan-500 cursor-pointer"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-semibold text-slate-300">
+                  <span>Decision Threshold <MathText text="$(t)$" />:</span>
+                  <span className="text-purple-400 font-mono">{tSlide.toFixed(2)}</span>
+                </div>
+                <input
+                  type="range"
+                  min="0.1"
+                  max="0.9"
+                  step="0.01"
+                  value={tSlide}
+                  onChange={e => setTSlide(parseFloat(e.target.value))}
+                  className="w-full accent-purple-500 cursor-pointer"
+                />
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs flex items-center justify-between">
+              <div>
+                <span className="text-slate-400">Prediction:</span>
+                <div className="text-base font-bold text-slate-100">
+                  <span className={predC === 'Class 1' ? 'text-emerald-400' : 'text-amber-400'}>{predC}</span>
+                </div>
+              </div>
+              <div className="text-xs text-slate-400 text-right">
+                Because <MathText text={`$(p=${pSlide.toFixed(2)})$`} /> is {pSlide >= tSlide ? 'at least' : 'below'} the threshold <MathText text={`$(${tSlide.toFixed(2)})$`} />.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* ── 5. The Logistic-Regression Pipeline ────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+      {/* ── 4. The Logistic-Regression Pipeline (Merged with Interactive A) ─ */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <h3 className="text-base font-bold text-slate-100">4. The Logistic-Regression Pipeline</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Logistic regression keeps the weighted-sum idea from linear regression, but adds one conversion step:
@@ -208,55 +326,16 @@ export const Module1WhyLogistic: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
 
-      {/* ── 6. The Decision Boundary ───────────────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
-        <h3 className="text-base font-bold text-slate-100">5. The Decision Boundary</h3>
-        <p className="text-xs text-slate-300 leading-relaxed">
-          With a threshold of 0.5, the model predicts class 1 when:
-        </p>
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-center text-xs text-cyan-300">
-          <MathText text="$$h_\theta(x) \geq 0.5$$" displayMode={true} />
-        </div>
-        <p className="text-xs text-slate-300 leading-relaxed">
-          The sigmoid equals 0.5 when its input <MathText text="$z$" /> equals 0. Therefore the boundary is:
-        </p>
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-center text-xs text-amber-300">
-          <MathText text="$$\theta^T x = 0$$" displayMode={true} />
-        </div>
-        <p className="text-xs text-slate-300 leading-relaxed">
-          For one feature, suppose <MathText text="$z = -4 + x$" />. The boundary occurs when <MathText text="$-4 + x = 0 \implies x = 4$" />. So the model changes its decision around 4 hours studied.
-        </p>
-      </div>
-
-      {/* ── 7. Why the Name "Logistic Regression"? ─────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
-        <h3 className="text-base font-bold text-slate-100">6. Why the Name "Logistic Regression"?</h3>
-        <p className="text-xs text-slate-300 leading-relaxed">
-          It is used for classification, but it predicts a continuous probability before making the final class decision. The word “regression” refers to estimating that probability from the features.
-        </p>
-        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300 font-medium">
-          <strong>Do not memorize the name as a contradiction:</strong> It is a classification method whose internal output is a probability.
-        </div>
-      </div>
-
-      {/* ── 8. Interactive Sandboxes Section ──────────────────────────────── */}
-      <div className="space-y-4 pt-2">
-        <div className="flex items-center gap-2 text-indigo-400">
-          <Sliders className="w-5 h-5" />
-          <h3 className="text-base font-bold text-slate-100">Interactive Exploration Sandboxes</h3>
-        </div>
-
-        {/* Sandbox A: Move the Linear Score */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400">Interactive A</span>
-            <h4 className="text-sm font-bold text-slate-100">Move the Linear Score</h4>
-            <p className="text-xs text-slate-400 mt-1">
-              Use the slider to see how the raw score <MathText text="$(z)$" /> becomes a probability. Notice that <MathText text="$(z)$" /> can be negative or greater than 1, but the sigmoid output stays between 0 and 1.
-            </p>
+        {/* ── Embedded Interactive A: Move the Linear Score ─────────────── */}
+        <div className="mt-4 pt-4 border-t border-slate-800/80 space-y-3">
+          <div className="flex items-center gap-2 text-cyan-400">
+            <Sliders className="w-4 h-4" />
+            <h4 className="text-xs font-bold uppercase tracking-wider">Try it Live: Move the Linear Score</h4>
           </div>
+          <p className="text-xs text-slate-400">
+            Use the slider to see how the raw score <MathText text="$(z)$" /> maps smoothly into a valid probability:
+          </p>
 
           <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
             <div className="flex justify-between text-xs font-semibold text-slate-300">
@@ -303,134 +382,47 @@ export const Module1WhyLogistic: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Sandbox B: Line vs Probability */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400">Interactive B</span>
-            <h4 className="text-sm font-bold text-slate-100">See Why a Line is Not a Probability</h4>
-            <p className="text-xs text-slate-400 mt-1">
-              Compare a linear output with the sigmoid output. The linear output can leave the valid probability range.
-            </p>
-          </div>
+      {/* ── 5. The Decision Boundary ───────────────────────────────────────── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
+        <h3 className="text-base font-bold text-slate-100">5. The Decision Boundary</h3>
+        <p className="text-xs text-slate-300 leading-relaxed">
+          With a threshold of 0.5, the model predicts class 1 when:
+        </p>
+        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-center text-xs text-cyan-300">
+          <MathText text="$$h_\theta(x) \geq 0.5$$" displayMode={true} />
+        </div>
+        <p className="text-xs text-slate-300 leading-relaxed">
+          The sigmoid equals 0.5 when its input <MathText text="$z$" /> equals 0. Therefore the boundary is:
+        </p>
+        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-center text-xs text-amber-300">
+          <MathText text="$$\theta^T x = 0$$" displayMode={true} />
+        </div>
+        <p className="text-xs text-slate-300 leading-relaxed">
+          For one feature, suppose <MathText text="$z = -4 + x$" />. The boundary occurs when <MathText text="$-4 + x = 0 \implies x = 4$" />. So the model changes its decision around 4 hours studied.
+        </p>
+      </div>
 
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-            <div className="flex justify-between text-xs font-semibold text-slate-300">
-              <span>Input <MathText text="$(x)$" />:</span>
-              <span className="text-amber-400 font-mono text-sm">{xSlide.toFixed(1)}</span>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max="12"
-              step="0.1"
-              value={xSlide}
-              onChange={e => setXSlide(parseFloat(e.target.value))}
-              className="w-full accent-amber-500 cursor-pointer"
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div className={`p-3.5 rounded-lg border text-xs ${
-                isLinearInvalid ? 'bg-rose-950/20 border-rose-500/40' : 'bg-slate-900/90 border-slate-800'
-              }`}>
-                <span className="text-slate-400">Linear Regression Output <MathText text="$\hat{y} = -0.5 + 0.2x$" />:</span>
-                <div className={`text-xl font-mono font-bold mt-1 ${isLinearInvalid ? 'text-rose-400' : 'text-cyan-300'}`}>
-                  {linearOut.toFixed(2)}
-                </div>
-                {isLinearInvalid && (
-                  <span className="text-[10px] text-rose-400 font-medium">Invalid Probability (&lt;0 or &gt;1)</span>
-                )}
-              </div>
-
-              <div className="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs">
-                <span className="text-slate-400">Sigmoid Output <MathText text="$\sigma(-4 + x)$" />:</span>
-                <div className="text-xl font-mono font-bold text-emerald-400 mt-1">
-                  {sigOut.toFixed(3)}
-                </div>
-                <span className="text-[10px] text-emerald-400 font-medium">Always Bounded in (0, 1)</span>
-              </div>
-            </div>
-
-            <div className={`p-3 rounded-xl border text-xs ${
-              isLinearInvalid
-                ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
-                : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-            }`}>
-              {isLinearInvalid
-                ? '⚠️ The linear output is outside the valid probability range. The sigmoid remains valid.'
-                : '✓ Both are currently inside the range, but linear regression can leave it as x changes.'}
-            </div>
-          </div>
+      {/* ── 6. Why the Name "Logistic Regression"? (Merged with Interactive D) ── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
+        <h3 className="text-base font-bold text-slate-100">6. Why the Name "Logistic Regression"?</h3>
+        <p className="text-xs text-slate-300 leading-relaxed">
+          It is used for classification, but it predicts a continuous probability before making the final class decision. The word “regression” refers to estimating that probability from the features.
+        </p>
+        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300 font-medium">
+          <strong>Do not memorize the name as a contradiction:</strong> It is a classification method whose internal output is a probability.
         </div>
 
-        {/* Sandbox C: Change Classification Threshold */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400">Interactive C</span>
-            <h4 className="text-sm font-bold text-slate-100">Change the Classification Threshold</h4>
-            <p className="text-xs text-slate-400 mt-1">
-              The threshold converts a probability into a class. A lower threshold makes the model more willing to predict class 1.
-            </p>
+        {/* ── Embedded Interactive D: Probability vs Odds vs Logit ───────── */}
+        <div className="mt-4 pt-4 border-t border-slate-800/80 space-y-3">
+          <div className="flex items-center gap-2 text-emerald-400">
+            <Sliders className="w-4 h-4" />
+            <h4 className="text-xs font-bold uppercase tracking-wider">Try it Live: Probability &harr; Odds &harr; Log-Odds (Logit) Converter</h4>
           </div>
-
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-semibold text-slate-300">
-                  <span>Probability <MathText text="$(p)$" />:</span>
-                  <span className="text-cyan-400 font-mono">{pSlide.toFixed(2)}</span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={pSlide}
-                  onChange={e => setPSlide(parseFloat(e.target.value))}
-                  className="w-full accent-cyan-500 cursor-pointer"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-semibold text-slate-300">
-                  <span>Threshold:</span>
-                  <span className="text-purple-400 font-mono">{tSlide.toFixed(2)}</span>
-                </div>
-                <input
-                  type="range"
-                  min="0.1"
-                  max="0.9"
-                  step="0.01"
-                  value={tSlide}
-                  onChange={e => setTSlide(parseFloat(e.target.value))}
-                  className="w-full accent-purple-500 cursor-pointer"
-                />
-              </div>
-            </div>
-
-            <div className="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs flex items-center justify-between">
-              <div>
-                <span className="text-slate-400">Prediction:</span>
-                <div className="text-base font-bold text-slate-100">
-                  <span className={predC === 'Class 1' ? 'text-emerald-400' : 'text-amber-400'}>{predC}</span>
-                </div>
-              </div>
-              <div className="text-xs text-slate-400 text-right">
-                Because <MathText text={`$(p=${pSlide.toFixed(2)})$`} /> is {pSlide >= tSlide ? 'at least' : 'below'} the threshold <MathText text={`$(${tSlide.toFixed(2)})$`} />.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Sandbox D: Odds and Logit */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Interactive D</span>
-            <h4 className="text-sm font-bold text-slate-100">Probability &harr; Odds &harr; Log-Odds (Logit) Converter</h4>
-            <p className="text-xs text-slate-400 mt-1">
-              See how bounded probabilities in (0, 1) map into unbounded log-odds in <MathText text="$(-\infty, +\infty)$" />.
-            </p>
-          </div>
+          <p className="text-xs text-slate-400">
+            The name comes from the <em>logit</em> function. See how bounded probabilities in (0, 1) map into unbounded log-odds in <MathText text="$(-\infty, +\infty)$" />:
+          </p>
 
           <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
             <div className="flex justify-between text-xs font-semibold text-slate-300">
@@ -472,7 +464,7 @@ export const Module1WhyLogistic: React.FC = () => {
         </div>
       </div>
 
-      {/* ── 9. Worked Examples Section ───────────────────────────────────── */}
+      {/* ── 7. Step-by-Step Worked Examples ───────────────────────────────── */}
       <div className="space-y-4 pt-2">
         <div className="flex items-center gap-2 text-cyan-400">
           <Calculator className="w-5 h-5" />
@@ -480,7 +472,7 @@ export const Module1WhyLogistic: React.FC = () => {
         </div>
 
         {/* Worked Example 1 */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
           <h4 className="text-sm font-bold text-slate-100">Worked Example 1: One Feature</h4>
           <p className="text-xs text-slate-300 leading-relaxed">
             Suppose the model uses hours studied <MathText text="$(x)$" /> and has:
@@ -503,7 +495,7 @@ export const Module1WhyLogistic: React.FC = () => {
         </div>
 
         {/* Worked Example 2 */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
           <h4 className="text-sm font-bold text-slate-100">Worked Example 2: Two Features</h4>
           <p className="text-xs text-slate-300 leading-relaxed">
             Suppose <MathText text="$(x_1)$" /> is hours studied and <MathText text="$(x_2)$" /> is attendance percentage:
@@ -530,7 +522,7 @@ export const Module1WhyLogistic: React.FC = () => {
         </div>
 
         {/* Check Your Understanding */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
           <h4 className="text-sm font-bold text-slate-100">Check Your Understanding</h4>
           <p className="text-xs text-slate-300">
             If <MathText text="$(p = 0.25)$" />, what is the probability of class 0?
@@ -554,8 +546,8 @@ export const Module1WhyLogistic: React.FC = () => {
         </div>
       </div>
 
-      {/* ── 10. Glossary Table Section ───────────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+      {/* ── 8. Glossary Table Section ─────────────────────────────────────── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
         <h3 className="text-base font-bold text-slate-100">Glossary of Key Terms</h3>
 
         <div className="overflow-x-auto">
