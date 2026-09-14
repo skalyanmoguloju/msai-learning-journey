@@ -3,8 +3,8 @@ import { Check, GitBranch, Split } from 'lucide-react';
 import { MathText } from '../../../../../common';
 import { ML_WEEK2_MODULES } from '../types';
 
-export const Module9NaiveBayes: React.FC = () => {
-  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm9')!;
+export const Module8NaiveBayes: React.FC = () => {
+  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm8')!;
 
   return (
     <div className="space-y-6">

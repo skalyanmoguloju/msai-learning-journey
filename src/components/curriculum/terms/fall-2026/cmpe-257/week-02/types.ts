@@ -192,7 +192,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     ]
   },
   {
-    id: 'm5',
+    id: 'm4',
     stepNumber: 4,
     shortTitle: 'Gradient Ascent Derivation',
     title: 'Gradient derivation and gradient ascent',
@@ -233,7 +233,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     ]
   },
   {
-    id: 'm6',
+    id: 'm5',
     stepNumber: 5,
     shortTitle: 'Generalized Linear Models',
     title: 'Generalized Linear Models',
@@ -268,7 +268,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     ]
   },
   {
-    id: 'm7',
+    id: 'm6',
     stepNumber: 6,
     shortTitle: 'Exponential Family',
     title: 'Exponential family',
@@ -321,7 +321,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     ]
   },
   {
-    id: 'm8',
+    id: 'm7',
     stepNumber: 7,
     shortTitle: 'Constructing GLMs',
     title: 'Constructing GLMs',
@@ -372,7 +372,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     ]
   },
   {
-    id: 'm9',
+    id: 'm8',
     stepNumber: 8,
     shortTitle: 'Naive Bayes',
     title: 'Naive Bayes',
@@ -425,7 +425,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     ]
   },
   {
-    id: 'm10',
+    id: 'm9',
     stepNumber: 9,
     shortTitle: 'MLE vs MAP',
     title: 'MLE versus MAP',

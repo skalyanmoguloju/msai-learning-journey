@@ -24,13 +24,13 @@ import { Week2QuizView } from './modules/Week2QuizView';
 import {
   Module1WhyLogistic,
   Module2Sigmoid,
-  Module3BernoulliLikelihood,
-  Module5GradientAscent,
-  Module6GLM,
-  Module7ExponentialFamily,
-  Module8ConstructingGLM,
-  Module9NaiveBayes,
-  Module10MLEvsMAP
+  Module3MaximumLikelihood,
+  Module4GradientAscent,
+  Module5GLM,
+  Module6ExponentialFamily,
+  Module7ConstructingGLM,
+  Module8NaiveBayes,
+  Module9MLEvsMAP
 } from './modules';
 
 const STORAGE_KEY_COMPLETED = 'cmpe257_week02_completed_modules';
@@ -231,13 +231,13 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               {/* Render specific module component */}
               {activeModuleId === 'm1' && <Module1WhyLogistic />}
               {activeModuleId === 'm2' && <Module2Sigmoid />}
-              {activeModuleId === 'm3' && <Module3BernoulliLikelihood />}
-              {activeModuleId === 'm5' && <Module5GradientAscent />}
-              {activeModuleId === 'm6' && <Module6GLM />}
-              {activeModuleId === 'm7' && <Module7ExponentialFamily />}
-              {activeModuleId === 'm8' && <Module8ConstructingGLM />}
-              {activeModuleId === 'm9' && <Module9NaiveBayes />}
-              {activeModuleId === 'm10' && <Module10MLEvsMAP />}
+              {activeModuleId === 'm3' && <Module3MaximumLikelihood />}
+              {activeModuleId === 'm4' && <Module4GradientAscent />}
+              {activeModuleId === 'm5' && <Module5GLM />}
+              {activeModuleId === 'm6' && <Module6ExponentialFamily />}
+              {activeModuleId === 'm7' && <Module7ConstructingGLM />}
+              {activeModuleId === 'm8' && <Module8NaiveBayes />}
+              {activeModuleId === 'm9' && <Module9MLEvsMAP />}
 
               {/* Knowledge Check Banner */}
               <div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md mt-6">

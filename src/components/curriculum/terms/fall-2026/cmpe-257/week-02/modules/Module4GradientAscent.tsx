@@ -3,8 +3,8 @@ import { Check, TrendingUp, GitCommit } from 'lucide-react';
 import { MathText } from '../../../../../common';
 import { ML_WEEK2_MODULES } from '../types';
 
-export const Module5GradientAscent: React.FC = () => {
-  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm5')!;
+export const Module4GradientAscent: React.FC = () => {
+  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm4')!;
 
   return (
     <div className="space-y-6">

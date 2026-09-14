@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { MathText } from '../../../../../common';
 
-export const Module3BernoulliLikelihood: React.FC = () => {
+export const Module3MaximumLikelihood: React.FC = () => {
   // Interactive A State: Bernoulli Selector
   const [probA, setProbA] = useState<number>(0.80);
   const [actualYA, setActualYA] = useState<0 | 1>(1);

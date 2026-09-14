@@ -3,8 +3,8 @@ import { Check, Layers } from 'lucide-react';
 import { MathText } from '../../../../../common';
 import { ML_WEEK2_MODULES } from '../types';
 
-export const Module6GLM: React.FC = () => {
-  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm6')!;
+export const Module5GLM: React.FC = () => {
+  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm5')!;
 
   return (
     <div className="space-y-6">

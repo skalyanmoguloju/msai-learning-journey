@@ -3,8 +3,8 @@ import { Check, Wrench, ShieldCheck } from 'lucide-react';
 import { MathText } from '../../../../../common';
 import { ML_WEEK2_MODULES } from '../types';
 
-export const Module8ConstructingGLM: React.FC = () => {
-  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm8')!;
+export const Module7ConstructingGLM: React.FC = () => {
+  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm7')!;
 
   return (
     <div className="space-y-6">

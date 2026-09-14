@@ -93,7 +93,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-7',
-    category: 'Module 5: Gradient Ascent Derivation',
+    category: 'Module 4: Gradient Ascent Derivation',
     title: 'Gradient Ascent Parameter Update',
     frontPrompt: 'What is the gradient of the log-likelihood with respect to parameter weight theta_j?',
     backFormula: '\\frac{\\partial \\ell(\\theta)}{\\partial \\theta_j} = \\sum_{i=1}^m \\left( y^{(i)} - h_\\theta(x^{(i)}) \\right) x_j^{(i)}',
@@ -103,7 +103,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-8',
-    category: 'Module 6: Generalized Linear Models',
+    category: 'Module 5: Generalized Linear Models',
     title: 'The Three Components of a GLM',
     frontPrompt: 'What are the 3 structural components that define every Generalized Linear Model?',
     backFormula: '1) \\; y \\sim \\text{ExpFamily}(\\eta), \\quad 2) \\; \\eta = \\theta^T x, \\quad 3) \\; g(\\mu) = \\eta',
@@ -113,7 +113,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-9',
-    category: 'Module 7: Exponential Family',
+    category: 'Module 6: Exponential Family',
     title: 'Canonical Exponential Family Formulation',
     frontPrompt: 'What is the canonical representation of an Exponential Family distribution?',
     backFormula: 'p(y; \\eta) = b(y) \\exp\\left( \\eta^T T(y) - a(\\eta) \\right)',
@@ -123,7 +123,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-10',
-    category: 'Module 8: Constructing GLMs',
+    category: 'Module 7: Constructing GLMs',
     title: 'GLM Derivation of Logistic Regression',
     frontPrompt: 'Why does Logistic Regression naturally use the sigmoid function?',
     backFormula: '\\eta = \\ln\\left(\\frac{\\phi}{1-\\phi}\\right) \\implies \\phi = \\frac{1}{1 + e^{-\\eta}} = \\frac{1}{1 + e^{-\\theta^T x}}',
@@ -133,7 +133,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-11',
-    category: 'Module 9: Naive Bayes',
+    category: 'Module 8: Naive Bayes',
     title: 'Naive Conditional Independence Assumption',
     frontPrompt: 'What assumption does Naive Bayes make, and how does it reduce model complexity?',
     backFormula: 'P(x_1, \\dots, x_n | y) = \\prod_{j=1}^n P(x_j | y)',
@@ -143,7 +143,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-12',
-    category: 'Module 10: MLE versus MAP',
+    category: 'Module 9: MLE vs MAP',
     title: 'MLE vs MAP & Regularization Equivalence',
     frontPrompt: 'How are MAP estimation and Ridge/Lasso regularization mathematically equivalent?',
     backFormula: '\\theta_{\\text{MAP}} = \\arg\\max_\\theta \\left[ \\ln P(\\mathcal{D}|\\theta) + \\ln P(\\theta) \\right]',

@@ -1,41 +1,44 @@
 import React from 'react';
-import { Check, Scale, ShieldAlert } from 'lucide-react';
+import { Check, Sigma, Sparkles } from 'lucide-react';
 import { MathText } from '../../../../../common';
 import { ML_WEEK2_MODULES } from '../types';
 
-export const Module10MLEvsMAP: React.FC = () => {
-  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm10')!;
+export const Module6ExponentialFamily: React.FC = () => {
+  const mod = ML_WEEK2_MODULES.find(m => m.id === 'm6')!;
 
   return (
     <div className="space-y-6">
-      {/* ── Regularization Equivalence Callout ────────────────────────────── */}
+      {/* ── Canonical Formulation Card ────────────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <div className="flex items-center gap-2 text-cyan-400">
-          <Scale className="w-4 h-4" />
-          <h4 className="text-sm font-bold text-slate-100">MAP Prior &amp; Regularization Duality</h4>
+          <Sigma className="w-4 h-4" />
+          <h4 className="text-sm font-bold text-slate-100">Standard Canonical Exponential Family Representation</h4>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-            <span className="font-bold text-indigo-300">Gaussian Prior $\iff$ L2 Ridge Regularization</span>
-            <p className="text-slate-400">
-              Assuming zero-mean Gaussian prior <MathText text="$P(\theta) \sim \mathcal{N}(0, \sigma^2 I)$" />:
-            </p>
-            <div className="font-mono text-cyan-300 bg-slate-900/80 p-2.5 rounded border border-slate-800 text-[11px]">
-              <MathText text="$\ln P(\theta) = -\frac{1}{2\sigma^2} \|\theta\|_2^2 + \text{const} \implies \text{Ridge Penalty}$" />
-            </div>
-            <p className="text-[11px] text-slate-500">Shrinks weights toward zero continuously.</p>
-          </div>
+        <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center font-mono text-sm text-cyan-300">
+          <MathText text="$$p(y; \eta) = b(y) \exp\left( \eta^T T(y) - a(\eta) \right)$$" displayMode={true} />
+        </div>
 
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-            <span className="font-bold text-amber-300">Laplace Prior $\iff$ L1 Lasso Regularization</span>
-            <p className="text-slate-400">
-              Assuming zero-mean Laplace prior <MathText text="$P(\theta) \sim \text{Laplace}(0, b)$" />:
-            </p>
-            <div className="font-mono text-amber-300 bg-slate-900/80 p-2.5 rounded border border-slate-800 text-[11px]">
-              <MathText text="$\ln P(\theta) = -\frac{1}{b} \|\theta\|_1 + \text{const} \implies \text{Lasso Penalty}$" />
-            </div>
-            <p className="text-[11px] text-slate-500">Drives irrelevant feature coefficients exactly to zero (sparsity).</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1">
+          <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+            <span className="text-[10px] uppercase font-bold text-cyan-400 block mb-1">Natural Parameter</span>
+            <div className="font-mono text-slate-200"><MathText text="$\eta$" /></div>
+            <p className="text-[11px] text-slate-500 mt-1">Connects to linear features <MathText text="$\theta^T x$" />.</p>
+          </div>
+          <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+            <span className="text-[10px] uppercase font-bold text-amber-400 block mb-1">Sufficient Statistic</span>
+            <div className="font-mono text-slate-200"><MathText text="$T(y)$" /></div>
+            <p className="text-[11px] text-slate-500 mt-1">Typically identity <MathText text="$T(y) = y$" />.</p>
+          </div>
+          <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+            <span className="text-[10px] uppercase font-bold text-emerald-400 block mb-1">Log-Partition</span>
+            <div className="font-mono text-slate-200"><MathText text="$a(\eta)$" /></div>
+            <p className="text-[11px] text-slate-500 mt-1">Normalizer: <MathText text="$\nabla_\eta a(\eta) = \mathbb{E}[y]$" />.</p>
+          </div>
+          <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+            <span className="text-[10px] uppercase font-bold text-purple-400 block mb-1">Base Measure</span>
+            <div className="font-mono text-slate-200"><MathText text="$b(y)$" /></div>
+            <p className="text-[11px] text-slate-500 mt-1">Scaling factor independent of <MathText text="$\eta$" />.</p>
           </div>
         </div>
       </div>

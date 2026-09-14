@@ -1,9 +1,9 @@
 export { Module1WhyLogistic } from './Module1WhyLogistic';
 export { Module2Sigmoid } from './Module2Sigmoid';
-export { Module3BernoulliLikelihood } from './Module3BernoulliLikelihood';
-export { Module5GradientAscent } from './Module5GradientAscent';
-export { Module6GLM } from './Module6GLM';
-export { Module7ExponentialFamily } from './Module7ExponentialFamily';
-export { Module8ConstructingGLM } from './Module8ConstructingGLM';
-export { Module9NaiveBayes } from './Module9NaiveBayes';
-export { Module10MLEvsMAP } from './Module10MLEvsMAP';
+export { Module3MaximumLikelihood } from './Module3MaximumLikelihood';
+export { Module4GradientAscent } from './Module4GradientAscent';
+export { Module5GLM } from './Module5GLM';
+export { Module6ExponentialFamily } from './Module6ExponentialFamily';
+export { Module7ConstructingGLM } from './Module7ConstructingGLM';
+export { Module8NaiveBayes } from './Module8NaiveBayes';
+export { Module9MLEvsMAP } from './Module9MLEvsMAP';

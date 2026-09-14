@@ -158,9 +158,9 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "Multiplying thousands of probabilities in (0, 1) causes numerical underflow to zero. Monotonic log transform turns products to sums and preserves the optimal parameter vector."
   },
 
-  // Module 5: Gradient derivation and gradient ascent
+  // Module 4: Gradient derivation and gradient ascent
   {
-    moduleId: 'm5',
+    moduleId: 'm4',
     question: "In logistic regression, why do we use gradient ascent rather than gradient descent on the log-likelihood ℓ(θ)?",
     options: [
       "Because we want to maximize likelihood, so we move in the direction of positive gradient.",
@@ -172,9 +172,9 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "We seek to maximize the log-likelihood objective function ℓ(θ), so parameters are updated by adding α * ∇ℓ(θ) (gradient ascent)."
   },
 
-  // Module 6: Generalized Linear Models
+  // Module 5: Generalized Linear Models
   {
-    moduleId: 'm6',
+    moduleId: 'm5',
     question: "Which distribution from the exponential family corresponds to ordinary linear regression in the GLM framework?",
     options: [
       "Bernoulli distribution",
@@ -186,9 +186,9 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "Ordinary linear regression is a GLM where the target y is assumed to follow a Gaussian distribution with identity link function."
   },
 
-  // Module 7: Exponential family
+  // Module 6: Exponential family
   {
-    moduleId: 'm7',
+    moduleId: 'm6',
     question: "In the canonical exponential family form p(y; η) = b(y) exp(η^T T(y) - a(η)), what does a(η) represent?",
     options: [
       "The base measure",
@@ -200,9 +200,9 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "a(η) is the log-partition function that ensures the distribution integrates to 1. Its derivative ∇a(η) equals the expected value E[T(y)]."
   },
 
-  // Module 8: Constructing GLMs
+  // Module 7: Constructing GLMs
   {
-    moduleId: 'm8',
+    moduleId: 'm7',
     question: "Why does Logistic Regression specifically use the sigmoid link function according to GLM derivation?",
     options: [
       "It is an arbitrary empirical choice that happened to work well.",
@@ -214,9 +214,9 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "For Bernoulli(ϕ), the natural parameter is η = ln(ϕ / (1 - ϕ)). Solving for E[y|x] = ϕ gives ϕ = 1 / (1 + e^(-η)) = 1 / (1 + e^(-θ^T x)), which is precisely the sigmoid function."
   },
 
-  // Module 9: Naive Bayes
+  // Module 8: Naive Bayes
   {
-    moduleId: 'm9',
+    moduleId: 'm8',
     question: "What is the core 'naive' assumption in the Naive Bayes classifier?",
     options: [
       "That class priors P(y) are always equal to 0.5.",
@@ -228,9 +228,9 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "Naive Bayes assumes P(x_1, ..., x_n | y) = ∏ P(x_j | y), meaning features are conditionally independent given class y."
   },
 
-  // Module 10: MLE versus MAP
+  // Module 9: MLE versus MAP
   {
-    moduleId: 'm10',
+    moduleId: 'm9',
     question: "Assuming a zero-mean Gaussian prior P(θ) ~ N(0, σ^2 I) in MAP estimation is mathematically equivalent to which regularizer?",
     options: [
       "L1 (Lasso) Regularization",
