@@ -102,6 +102,16 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
     remark: 'Notice it shares the exact algebraic form as LMS linear regression, but with nonlinear sigmoid h.'
   },
   {
+    id: 'w2-fc-7b',
+    category: 'Module 4: Gradient Ascent Derivation',
+    title: 'Chain Rule Decomposition & Bias Update',
+    frontPrompt: 'How does the chain rule decompose the derivative of log-likelihood, and how is the bias term b updated?',
+    backFormula: '\\frac{\\partial \\ell}{\\partial \\theta_j} = \\left(\\frac{\\partial \\ell}{\\partial h}\\right) \\left(\\frac{\\partial h}{\\partial z}\\right) \\left(\\frac{\\partial z}{\\partial \\theta_j}\\right) = (y - h)x_j, \\quad b \\gets b + \\alpha(y - h)',
+    backExplanation: 'The factor h(1-h) in the denominator of d(ell)/dh cancels identically with dh/dz = h(1-h) from the sigmoid. Because bias b has an implicit input feature of 1 (dz/db = 1), its update rule is simply b + alpha*(y - h).',
+    useCase: 'Step-by-step calculus derivation and implementation of bias update.',
+    remark: 'Prevents numerical instability and reveals the error-driven learning dynamics.'
+  },
+  {
     id: 'w2-fc-8',
     category: 'Module 5: Generalized Linear Models',
     title: 'The Three Components of a GLM',

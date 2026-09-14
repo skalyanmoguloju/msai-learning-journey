@@ -161,15 +161,51 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
   // Module 4: Gradient derivation and gradient ascent
   {
     moduleId: 'm4',
-    question: "In logistic regression, why do we use gradient ascent rather than gradient descent on the log-likelihood ℓ(θ)?",
+    question: "What does a positive gradient mean during gradient ascent in logistic regression?",
     options: [
-      "Because we want to maximize likelihood, so we move in the direction of positive gradient.",
-      "Gradient descent does not converge on linear models.",
-      "Gradient ascent is always faster than descent by a factor of 2.",
-      "Because the Hessian matrix is positive definite."
+      "Increasing the parameter weight will locally increase the log-likelihood objective.",
+      "The model must decrease the parameter weight.",
+      "The training feature value is missing or zero.",
+      "The optimization has reached a global minimum."
     ],
     correct: 0,
-    explanation: "We seek to maximize the log-likelihood objective function ℓ(θ), so parameters are updated by adding α * ∇ℓ(θ) (gradient ascent)."
+    explanation: "In gradient ascent we seek to maximize the objective function. A positive gradient indicates that increasing the parameter moves the model uphill toward higher likelihood."
+  },
+  {
+    moduleId: 'm4',
+    question: "In the logistic regression gradient formula (y - h) * x_j, what does the factor (y - h) represent?",
+    options: [
+      "The probability prediction error direction and magnitude.",
+      "The learning rate hyperparameter.",
+      "The intercept bias term.",
+      "The variance of the training dataset."
+    ],
+    correct: 0,
+    explanation: "(y - h) compares the actual ground-truth label (1 or 0) with the model's predicted probability h. Its sign determines whether to increase or decrease the weight."
+  },
+  {
+    moduleId: 'm4',
+    question: "If true label y = 0 and predicted probability h = 0.8, should the weight update increase or decrease when feature x_j > 0?",
+    options: [
+      "Increase the weight",
+      "Decrease the weight",
+      "The weight cannot be updated",
+      "Set the weight to 0"
+    ],
+    correct: 1,
+    explanation: "The error y - h = 0 - 0.8 = -0.8 is negative. Because x_j is positive, the gradient (y - h)x_j is negative. In gradient ascent, adding a negative quantity decreases the weight."
+  },
+  {
+    moduleId: 'm4',
+    question: "What does the learning rate hyperparameter α control in gradient ascent?",
+    options: [
+      "The step size taken in the direction of the gradient at each parameter update.",
+      "Whether the target label is 0 or 1.",
+      "The number of feature dimensions in the dataset.",
+      "The threshold cutoff for final class prediction."
+    ],
+    correct: 0,
+    explanation: "The learning rate α scales the gradient vector, controlling how far parameter weights move in parameter space during each iteration."
   },
 
   // Module 5: Generalized Linear Models
