@@ -122,6 +122,16 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
     remark: 'Introduced by Nelder & Wedderburn (1972).'
   },
   {
+    id: 'w2-fc-8b',
+    category: 'Module 5: Generalized Linear Models',
+    title: 'Link Functions and Inverse Links (Identity vs. Logit)',
+    frontPrompt: 'What link functions connect the mean μ to the linear predictor η in Linear and Logistic regression?',
+    backFormula: '\\text{Linear: } g(\\mu) = \\mu = \\eta \\implies \\mu = \\eta; \\quad \\text{Logistic: } g(\\mu) = \\ln\\left(\\frac{\\mu}{1-\\mu}\\right) = \\eta \\implies \\mu = \\sigma(\\eta)',
+    backExplanation: 'The link function g(mu) = eta maps the conditional expectation to the unbounded linear predictor. The inverse link (mean function) mu = g^{-1}(eta) maps scores back to valid predictions: identity leaves values unchanged, while sigmoid restricts outputs to (0, 1).',
+    useCase: 'Understanding the architectural difference between Gaussian squared error and Bernoulli cross-entropy training.',
+    remark: 'The loss function is dictated by the assumed exponential family distribution.'
+  },
+  {
     id: 'w2-fc-9',
     category: 'Module 6: Exponential Family',
     title: 'Canonical Exponential Family Formulation',

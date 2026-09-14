@@ -211,15 +211,51 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
   // Module 5: Generalized Linear Models
   {
     moduleId: 'm5',
-    question: "Which distribution from the exponential family corresponds to ordinary linear regression in the GLM framework?",
+    question: "What is the linear predictor in a Generalized Linear Model (GLM)?",
     options: [
-      "Bernoulli distribution",
-      "Gaussian (Normal) distribution",
-      "Poisson distribution",
-      "Multinomial distribution"
+      "The weighted linear score combining features and parameters: θ^T x + b.",
+      "Always the final discrete class label.",
+      "The variance parameter of the Gaussian distribution.",
+      "The inverse of the link function."
     ],
-    correct: 1,
-    explanation: "Ordinary linear regression is a GLM where the target y is assumed to follow a Gaussian distribution with identity link function."
+    correct: 0,
+    explanation: "The linear predictor η is the raw score formed by linearly combining the input features with parameter weights and bias: η = θ^T x + b."
+  },
+  {
+    moduleId: 'm5',
+    question: "What does the conditional mean μ represent for a binary target in logistic regression?",
+    options: [
+      "The probability of class 1: P(y = 1 | x).",
+      "The raw unbounded score before applying sigmoid.",
+      "The variance of the error residuals.",
+      "The learning rate step size."
+    ],
+    correct: 0,
+    explanation: "For a Bernoulli binary target y ∈ {0, 1}, the expectation μ = E[y | x] equals the probability of the positive class P(y = 1 | x)."
+  },
+  {
+    moduleId: 'm5',
+    question: "What does the identity link function g(μ) = μ do in linear regression?",
+    options: [
+      "It leaves the value unchanged, directly equating expected output μ to the linear predictor η.",
+      "It compresses the score into the range (0, 1).",
+      "It calculates the derivative of the log-likelihood.",
+      "It standardizes the feature inputs to mean 0 and variance 1."
+    ],
+    correct: 0,
+    explanation: "The identity link performs no transformation, allowing linear regression to map the unconstrained linear predictor directly to continuous output values."
+  },
+  {
+    moduleId: 'm5',
+    question: "Why does logistic regression use the sigmoid function as its inverse link?",
+    options: [
+      "To map an unrestricted real-valued linear score into a valid probability between 0 and 1.",
+      "To convert a discrete distribution into a Gaussian distribution.",
+      "To force all parameter weights to be strictly positive.",
+      "To eliminate the need for an intercept bias term."
+    ],
+    correct: 0,
+    explanation: "Because the linear predictor can take any real value in (-∞, ∞) but a probability must lie in (0, 1), the sigmoid compresses the score into a mathematically valid probability."
   },
 
   // Module 6: Exponential family
