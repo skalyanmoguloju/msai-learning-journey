@@ -138,16 +138,18 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
   {
     id: 'm3',
     stepNumber: 3,
-    shortTitle: 'Bernoulli Likelihood',
-    title: 'Bernoulli probability and one-example likelihood',
+    shortTitle: 'Maximum Likelihood',
+    title: 'Logistic Regression & Maximum Likelihood',
     category: 'Likelihood Modeling',
     icon: Binary,
     readingStatus: 'yet_to_complete',
-    description: 'Modeling binary random outcomes as Bernoulli trials and combining conditional class probabilities into a single compact likelihood formula.',
+    description: 'Learn what likelihood means, why logistic regression uses the Bernoulli distribution, how p^y(1-p)^(1-y) works, dataset likelihood, and why we maximize the log-likelihood.',
     keyQuestions: [
       'How does binary classification map to a conditional Bernoulli distribution?',
       'How can P(y=1|x) and P(y=0|x) be written as a single unified algebraic expression?',
-      'Why does the exponentiation trick y and (1-y) act as a mathematical conditional switch?'
+      'Why does the exponentiation trick y and (1-y) act as a mathematical conditional switch?',
+      'Why is maximizing log-likelihood preferred over raw likelihood products?',
+      'How does Maximum Likelihood Estimation select optimal parameter weights?'
     ],
     coreTheorems: [
       {
@@ -159,6 +161,11 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
         name: 'Single-Example Likelihood (Compact Form)',
         formula: 'p(y | x; \\theta) = \\left(h_\\theta(x)\\right)^y \\left(1 - h_\\theta(x)\\right)^{1 - y}',
         explanation: 'When y = 1, the second term evaluates to 1; when y = 0, the first term evaluates to 1.'
+      },
+      {
+        name: 'Dataset Likelihood & Log-Likelihood',
+        formula: 'L(\\theta) = \\prod_{i=1}^m p(y^{(i)} | x^{(i)}; \\theta), \\quad \\ell(\\theta) = \\sum_{i=1}^m \\left[ y^{(i)} \\ln h_\\theta(x^{(i)}) + (1 - y^{(i)}) \\ln(1 - h_\\theta(x^{(i)})) \\right]',
+        explanation: 'Joint probability of observed labels assuming samples are independent and identically distributed, converted to summations via logarithm.'
       }
     ],
     concepts: [
@@ -171,61 +178,22 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
           'If y = 0: p(0 | x; theta) = (h_theta(x))^0 * (1 - h_theta(x))^1 = 1 - h_theta(x).',
           'This single expression is continuous and differentiable with respect to theta, enabling gradient calculus.'
         ]
-      }
-    ]
-  },
-  {
-    id: 'm4',
-    stepNumber: 4,
-    shortTitle: 'Dataset Log-Likelihood',
-    title: 'Dataset likelihood and log-likelihood',
-    category: 'Objective Formulation',
-    icon: Database,
-    readingStatus: 'yet_to_complete',
-    description: 'Formulating the joint likelihood over m independent training observations, applying the monotonic log transformation, and relating to Cross-Entropy.',
-    keyQuestions: [
-      'Under what assumption can we express the full dataset likelihood as a product of individual sample likelihoods?',
-      'Why is maximizing the log-likelihood mathematically and computationally superior to maximizing likelihood directly?',
-      'What is the connection between Maximum Log-Likelihood and empirical Cross-Entropy loss minimization?'
-    ],
-    coreTheorems: [
-      {
-        name: 'Dataset Likelihood (I.I.D. Assumption)',
-        formula: 'L(\\theta) = \\prod_{i=1}^m p(y^{(i)} | x^{(i)}; \\theta) = \\prod_{i=1}^m \\left(h_\\theta(x^{(i)})\\right)^{y^{(i)}} \\left(1 - h_\\theta(x^{(i)})\\right)^{1 - y^{(i)}}',
-        explanation: 'Joint probability of observed labels assuming samples are independent and identically distributed.'
       },
       {
-        name: 'Dataset Log-Likelihood Function',
-        formula: '\\ell(\\theta) = \\ln L(\\theta) = \\sum_{i=1}^m \\left[ y^{(i)} \\ln h_\\theta(x^{(i)}) + (1 - y^{(i)}) \\ln(1 - h_\\theta(x^{(i)})) \\right]',
-        explanation: 'Logarithm turns products into summations, preventing underflow of small probabilities.'
-      }
-    ],
-    concepts: [
-      {
-        title: 'Why Take the Natural Logarithm?',
-        badge: 'Numerical Stability',
-        summary: 'The log transform is strictly monotonic, preserving the location of the optimal parameter vector.',
+        title: 'Maximum Likelihood Estimation & Log Transform',
+        badge: 'Optimization Objective',
+        summary: 'Choosing weights theta that maximize the probability assigned to actually observed outcomes.',
         bullets: [
           'Monotonicity: argmax L(theta) = argmax ln L(theta).',
-          'Numerical Underflow: Multiplying thousands of probabilities in (0, 1) rapidly underflows IEEE 754 floating point numbers to 0.',
-          'Derivatives of Sums: Differentiating a summation of log terms is far simpler than differentiating an m-ary product rule.'
-        ]
-      },
-      {
-        title: 'Connection to Binary Cross-Entropy Loss',
-        badge: 'Loss Equivalence',
-        summary: 'Maximizing log-likelihood is identical to minimizing negative log-likelihood (Cross-Entropy).',
-        formula: 'J(\\theta) = -\\frac{1}{m}\\ell(\\theta) = -\\frac{1}{m}\\sum_{i=1}^m \\left[ y^{(i)} \\ln(h_\\theta(x^{(i)})) + (1 - y^{(i)}) \\ln(1 - h_\\theta(x^{(i)})) \\right]',
-        bullets: [
-          'In machine learning libraries (PyTorch, TensorFlow), this loss is known as BCELoss (Binary Cross-Entropy).',
-          'Penalizes confident wrong predictions with asymptotic infinity.'
+          'Numerical Stability: Avoids multiplying thousands of probabilities < 1 which cause floating point underflow.',
+          'Loss Equivalence: Maximizing log-likelihood is mathematically identical to minimizing Binary Cross-Entropy loss.'
         ]
       }
     ]
   },
   {
     id: 'm5',
-    stepNumber: 5,
+    stepNumber: 4,
     shortTitle: 'Gradient Ascent Derivation',
     title: 'Gradient derivation and gradient ascent',
     category: 'Optimization & Calculus',
@@ -266,7 +234,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
   },
   {
     id: 'm6',
-    stepNumber: 6,
+    stepNumber: 5,
     shortTitle: 'Generalized Linear Models',
     title: 'Generalized Linear Models',
     category: 'Unified Statistical Framework',
@@ -301,7 +269,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
   },
   {
     id: 'm7',
-    stepNumber: 7,
+    stepNumber: 6,
     shortTitle: 'Exponential Family',
     title: 'Exponential family',
     category: 'Distribution Theory',
@@ -354,7 +322,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
   },
   {
     id: 'm8',
-    stepNumber: 8,
+    stepNumber: 7,
     shortTitle: 'Constructing GLMs',
     title: 'Constructing GLMs',
     category: 'Design & Link Functions',
@@ -405,7 +373,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
   },
   {
     id: 'm9',
-    stepNumber: 9,
+    stepNumber: 8,
     shortTitle: 'Naive Bayes',
     title: 'Naive Bayes',
     category: 'Generative Classifiers',
@@ -458,7 +426,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
   },
   {
     id: 'm10',
-    stepNumber: 10,
+    stepNumber: 9,
     shortTitle: 'MLE vs MAP',
     title: 'MLE versus MAP',
     category: 'Statistical Estimation',

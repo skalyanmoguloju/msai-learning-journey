@@ -145,9 +145,8 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "MLE chooses parameter values θ̂ that maximize the joint probability (likelihood) assigned to the labels that actually occurred in the dataset."
   },
 
-  // Module 4: Dataset likelihood and log-likelihood
   {
-    moduleId: 'm4',
+    moduleId: 'm3',
     question: "Why is log-likelihood used instead of raw likelihood when training logistic regression?",
     options: [
       "Taking the log prevents floating-point underflow and converts products into sums without altering the argmax.",

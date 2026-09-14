@@ -25,7 +25,6 @@ import {
   Module1WhyLogistic,
   Module2Sigmoid,
   Module3BernoulliLikelihood,
-  Module4DatasetLikelihood,
   Module5GradientAscent,
   Module6GLM,
   Module7ExponentialFamily,
@@ -141,8 +140,7 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
         topics={[
           'Why logistic regression is needed',
           'Sigmoid function',
-          'Bernoulli probability and one-example likelihood',
-          'Dataset likelihood and log-likelihood',
+          'Logistic Regression & Maximum Likelihood',
           'Gradient derivation and gradient ascent',
           'Generalized Linear Models',
           'Exponential family',
@@ -234,7 +232,6 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               {activeModuleId === 'm1' && <Module1WhyLogistic />}
               {activeModuleId === 'm2' && <Module2Sigmoid />}
               {activeModuleId === 'm3' && <Module3BernoulliLikelihood />}
-              {activeModuleId === 'm4' && <Module4DatasetLikelihood />}
               {activeModuleId === 'm5' && <Module5GradientAscent />}
               {activeModuleId === 'm6' && <Module6GLM />}
               {activeModuleId === 'm7' && <Module7ExponentialFamily />}

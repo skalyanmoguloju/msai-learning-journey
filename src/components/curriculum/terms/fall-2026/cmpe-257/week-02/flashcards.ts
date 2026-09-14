@@ -83,7 +83,7 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
   },
   {
     id: 'w2-fc-6',
-    category: 'Module 4: Dataset Log-Likelihood',
+    category: 'Module 3: Maximum Likelihood',
     title: 'Dataset Log-Likelihood & Cross-Entropy',
     frontPrompt: 'Why do we maximize log-likelihood ln L(theta) rather than the raw likelihood product L(theta)?',
     backFormula: '\\ell(\\theta) = \\sum_{i=1}^m \\left[ y^{(i)} \\ln h_\\theta(x^{(i)}) + (1 - y^{(i)}) \\ln(1 - h_\\theta(x^{(i)})) \\right]',
