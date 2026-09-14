@@ -22,6 +22,26 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
     remark: 'A unit increase in x_j multiplies odds by e^(theta_j).'
   },
   {
+    id: 'w2-fc-2b',
+    category: 'Module 1: Why Logistic Regression',
+    title: 'Logistic Regression Pipeline & Hypothesis',
+    frontPrompt: 'What is the full logistic regression pipeline and hypothesis formula h_theta(x)?',
+    backFormula: 'h_\\theta(x) = \\sigma(\\theta^T x) = \\frac{1}{1 + e^{-\\theta^T x}} = P(y=1 \\mid x; \\theta)',
+    backExplanation: 'Features x are first multiplied by weights into linear score z = theta^T x, then passed into the sigmoid function to produce a valid calibrated probability for class 1.',
+    useCase: 'Core predictive model for binary classification.',
+    remark: 'Linear score z in (-inf, +inf) is mapped to bounded probability in (0, 1).'
+  },
+  {
+    id: 'w2-fc-2c',
+    category: 'Module 1: Why Logistic Regression',
+    title: 'Decision Boundary Condition',
+    frontPrompt: 'What is the mathematical condition for the logistic regression decision boundary with threshold 0.5?',
+    backFormula: '\\hat{y} = 1 \\iff h_\\theta(x) \\geq 0.5 \\iff \\theta^T x \\geq 0',
+    backExplanation: 'Since sigma(z) = 0.5 when z = 0, the decision boundary separating class 1 and class 0 is the linear hyperplane theta^T x = 0.',
+    useCase: 'Plotting decision hyperplanes and determining class separation.',
+    remark: 'For one feature with z = -4 + x, the boundary is at x = 4.'
+  },
+  {
     id: 'w2-fc-3',
     category: 'Module 2: Sigmoid Function',
     title: 'Logistic Sigmoid Definition & Symmetry',

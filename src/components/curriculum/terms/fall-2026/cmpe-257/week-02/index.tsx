@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Sparkles,
-  FileText
+  FileText,
+  HelpCircle,
+  Award,
+  ArrowRight
 } from 'lucide-react';
 import { Course, SyllabusModule } from '../../../../../../types/course';
 import {
@@ -16,6 +19,8 @@ import {
 import { ML_WEEK2_MODULES } from './types';
 import { ML_WEEK2_FLASHCARDS } from './flashcards';
 import { ML_WEEK2_DOCUMENTS } from './documentsData';
+import { ML_WEEK2_QUIZ_QUESTIONS } from './quizData';
+import { Week2QuizView } from './modules/Week2QuizView';
 import {
   Module1WhyLogistic,
   Module2Sigmoid,
@@ -41,8 +46,11 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
   const [activeModuleId, setActiveModuleIdState] = useState<string>(() =>
     curriculumNavStore.getModuleForWeek<string>(WEEK_KEY, 'm1')
   );
-  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'documents'>(() =>
-    curriculumNavStore.getMainTabForWeek<'study' | 'documents'>(WEEK_KEY, 'study')
+  const [activeQuizModuleId, setActiveQuizModuleIdState] = useState<string>(() =>
+    curriculumNavStore.getModuleForWeek<string>(`${WEEK_KEY}_quiz`, 'm1')
+  );
+  const [activeMainTab, setActiveMainTabState] = useState<'study' | 'quiz' | 'documents'>(() =>
+    curriculumNavStore.getMainTabForWeek<'study' | 'quiz' | 'documents'>(WEEK_KEY, 'study')
   );
 
   const setActiveModuleId = useCallback((id: string) => {
@@ -50,12 +58,25 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
     setActiveModuleIdState(id);
   }, []);
 
-  const setActiveMainTab = useCallback((tab: 'study' | 'documents') => {
+  const setActiveQuizModuleId = useCallback((id: string) => {
+    curriculumNavStore.setModuleForWeek(`${WEEK_KEY}_quiz`, id);
+    setActiveQuizModuleIdState(id);
+  }, []);
+
+  const setActiveMainTab = useCallback((tab: 'study' | 'quiz' | 'documents') => {
     curriculumNavStore.setMainTabForWeek(WEEK_KEY, tab);
     setActiveMainTabState(tab);
   }, []);
 
   const [showFlashcards, setShowFlashcards] = useState(false);
+  const [showQuizSolutions, setShowQuizSolutionsState] = useState<boolean>(() =>
+    curriculumNavStore.getSolutionsModeForWeek(WEEK_KEY)
+  );
+  const setShowQuizSolutions = useCallback((show: boolean) => {
+    curriculumNavStore.setSolutionsModeForWeek(WEEK_KEY, show);
+    setShowQuizSolutionsState(show);
+  }, []);
+
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // All 10 modules start as "yet to complete reading" (empty completed array)
@@ -92,6 +113,7 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
     setCompletedModules([]);
     try {
       localStorage.removeItem(STORAGE_KEY_COMPLETED);
+      localStorage.removeItem('cmpe257_week02_quiz_answers');
       localStorage.removeItem('cmpe257_week02_flashcards_mastered');
     } catch {}
     showToast('All Week 02 modules marked as yet to complete.');
@@ -163,6 +185,28 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               icon: Sparkles,
               onClick: () => setShowFlashcards(true),
               badge: `${ML_WEEK2_FLASHCARDS.length} Cards`
+            },
+            {
+              id: 'quiz-hub',
+              title: 'Practice Quizzes',
+              icon: HelpCircle,
+              onClick: () => {
+                setActiveMainTab('quiz');
+                setShowQuizSolutions(false);
+              },
+              isActive: activeMainTab === 'quiz' && !showQuizSolutions,
+              badge: `${ML_WEEK2_QUIZ_QUESTIONS.length} Questions`
+            },
+            {
+              id: 'solutions-tool',
+              title: 'Full Solution Guide',
+              icon: HelpCircle,
+              onClick: () => {
+                setActiveMainTab('quiz');
+                setShowQuizSolutions(true);
+              },
+              isActive: activeMainTab === 'quiz' && showQuizSolutions,
+              badge: 'All Steps'
             }
           ]}
         />
@@ -197,7 +241,44 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               {activeModuleId === 'm8' && <Module8ConstructingGLM />}
               {activeModuleId === 'm9' && <Module9NaiveBayes />}
               {activeModuleId === 'm10' && <Module10MLEvsMAP />}
+
+              {/* Knowledge Check Banner */}
+              <div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md mt-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                    <Award className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-100">Module {currentMod.stepNumber} Knowledge Check</h4>
+                    <p className="text-xs text-slate-400">Ready to test mastery of this module's concepts?</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setActiveQuizModuleId(currentMod.id);
+                    setActiveMainTab('quiz');
+                    setShowQuizSolutions(false);
+                  }}
+                  className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-indigo-600/30 transition shrink-0"
+                >
+                  <span>Take Module Quiz</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </ModuleTemplate>
+          )}
+
+          {activeMainTab === 'quiz' && (
+            <Week2QuizView
+              initialModuleId={activeQuizModuleId}
+              onSelectModule={setActiveQuizModuleId}
+              showSolutions={showQuizSolutions}
+              onToggleSolutions={setShowQuizSolutions}
+              onBackToStudy={(moduleId) => {
+                setActiveMainTab('study');
+                setActiveModuleId(moduleId);
+              }}
+            />
           )}
 
           {activeMainTab === 'documents' && (
