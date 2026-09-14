@@ -6,6 +6,7 @@ import { UnderConstructionWeek } from './common';
 import { Week01AI } from './terms/fall-2026/cmpe-252/week-01';
 import { Week02AI } from './terms/fall-2026/cmpe-252/week-02';
 import { Week01ML } from './terms/fall-2026/cmpe-257/week-01';
+import { Week02ML } from './terms/fall-2026/cmpe-257/week-02';
 
 // ── CMPE-252 stub weeks (3–16) ───────────────────────────────────────────────
 import {
@@ -13,9 +14,9 @@ import {
   Week09AI, Week10AI, Week11AI, Week12AI, Week13AI, Week14AI, Week15AI, Week16AI,
 } from './terms/fall-2026/cmpe-252/stubs';
 
-// ── CMPE-257 stub weeks (2–16) ───────────────────────────────────────────────
+// ── CMPE-257 stub weeks (3–16) ───────────────────────────────────────────────
 import {
-  Week02ML, Week03ML, Week04ML, Week05ML, Week06ML, Week07ML, Week08ML,
+  Week03ML, Week04ML, Week05ML, Week06ML, Week07ML, Week08ML,
   Week09ML, Week10ML, Week11ML, Week12ML, Week13ML, Week14ML, Week15ML, Week16ML,
 } from './terms/fall-2026/cmpe-257/stubs';
 

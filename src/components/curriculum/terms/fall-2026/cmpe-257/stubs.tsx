@@ -14,13 +14,7 @@ interface WeekProps { course?: Course; module?: SyllabusModule; }
 
 // ── CMPE-257 syllabus topics per week (stub metadata) ───────────────────────
 
-export const Week02ML: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 02" topicHint="Probabilistic Models & Naive Bayes"
-    upcomingTopics={['Generative vs Discriminative', 'Naive Bayes Classifier', 'Gaussian Discriminant Analysis', 'MLE & MAP Estimation']}
-  />
-);
+export { Week02ML } from './week-02';
 
 export const Week03ML: React.FC<WeekProps> = ({ course, module }) => (
   <UnderConstructionWeek

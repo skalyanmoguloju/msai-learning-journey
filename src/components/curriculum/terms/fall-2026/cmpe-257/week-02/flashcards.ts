@@ -1,0 +1,124 @@
+import { UniversalFlashcard } from '../../../../common';
+
+export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
+  {
+    id: 'w2-fc-1',
+    category: 'Module 1: Why Logistic Regression',
+    title: 'OLS Failure for Binary Classification',
+    frontPrompt: 'Why is Ordinary Least Squares (OLS) linear regression unsuitable for binary classification?',
+    backFormula: 'h_\\theta(x) = \\theta^T x \\implies h_\\theta(x) \\in (-\\infty, +\\infty)',
+    backExplanation: 'Linear regression predictions can produce values < 0 or > 1, which cannot represent probabilities. Furthermore, extreme positive outliers drastically tilt the linear decision line, causing valid positive samples to be misclassified.',
+    useCase: 'Distinguishing binary classification from continuous regression.',
+    remark: 'Also violates homoscedasticity because error variance Var(y|x) = p(1-p) depends on x.'
+  },
+  {
+    id: 'w2-fc-2',
+    category: 'Module 1: Why Logistic Regression',
+    title: 'Odds and Logit Transformation',
+    frontPrompt: 'What are odds and log-odds (logit), and why are they used in logistic regression?',
+    backFormula: '\\text{Odds} = \\frac{p}{1-p} \\in [0, \\infty), \\quad \\text{Logit}(p) = \\ln\\left(\\frac{p}{1-p}\\right) = \\theta^T x',
+    backExplanation: 'The logit link function maps a bounded probability p in (0, 1) onto the unbounded real line (-inf, +inf) matched by the linear combination theta^T x.',
+    useCase: 'Interpreting logistic regression coefficients as changes in log-odds.',
+    remark: 'A unit increase in x_j multiplies odds by e^(theta_j).'
+  },
+  {
+    id: 'w2-fc-3',
+    category: 'Module 2: Sigmoid Function',
+    title: 'Logistic Sigmoid Definition & Symmetry',
+    frontPrompt: 'What is the formula and symmetry property of the logistic sigmoid function?',
+    backFormula: '\\sigma(z) = \\frac{1}{1 + e^{-z}} = \\frac{e^z}{1 + e^z}, \\quad 1 - \\sigma(z) = \\sigma(-z)',
+    backExplanation: 'The sigmoid smoothly squashes any real value z into (0, 1), with sigma(0) = 0.5. Its reflection symmetry ensures complementary probability calculation.',
+    useCase: 'Converting unbounded linear scores into calibrated probability estimates.',
+    remark: 'Commonly used as the output activation for binary classification neural nets.'
+  },
+  {
+    id: 'w2-fc-4',
+    category: 'Module 2: Sigmoid Function',
+    title: 'Derivative of the Sigmoid Function',
+    frontPrompt: 'What is the first derivative of the sigmoid function with respect to z?',
+    backFormula: '\\frac{d}{dz}\\sigma(z) = \\sigma(z)(1 - \\sigma(z))',
+    backExplanation: 'The derivative can be computed directly from the function output itself without re-evaluating exp(-z), dramatically accelerating gradient computations.',
+    useCase: 'Backpropagation and gradient ascent optimization.',
+    remark: 'Maximum derivative is 0.25 at z = 0, which can lead to vanishing gradients in deep networks.'
+  },
+  {
+    id: 'w2-fc-5',
+    category: 'Module 3: Bernoulli Likelihood',
+    title: 'Compact Single-Example Likelihood',
+    frontPrompt: 'How is the likelihood of a single binary training observation written in compact algebraic form?',
+    backFormula: 'p(y | x; \\theta) = \\left(h_\\theta(x)\\right)^y \\left(1 - h_\\theta(x)\\right)^{1-y}',
+    backExplanation: 'When y = 1, the (1-h)^0 term becomes 1 and yields h_theta(x). When y = 0, the (h)^0 term becomes 1 and yields 1 - h_theta(x).',
+    useCase: 'Unified mathematical formulation of the Bernoulli probability mass function.',
+    remark: 'Continuous and differentiable with respect to theta.'
+  },
+  {
+    id: 'w2-fc-6',
+    category: 'Module 4: Dataset Log-Likelihood',
+    title: 'Dataset Log-Likelihood & Cross-Entropy',
+    frontPrompt: 'Why do we maximize log-likelihood ln L(theta) rather than the raw likelihood product L(theta)?',
+    backFormula: '\\ell(\\theta) = \\sum_{i=1}^m \\left[ y^{(i)} \\ln h_\\theta(x^{(i)}) + (1 - y^{(i)}) \\ln(1 - h_\\theta(x^{(i)})) \\right]',
+    backExplanation: 'Monotonicity guarantees the maximum is identical. Converting products to sums prevents numerical underflow of probabilities and simplifies differentiation.',
+    useCase: 'Equivalent to minimizing Binary Cross-Entropy loss J(theta) = -(1/m) * ell(theta).',
+    remark: 'Core objective function optimized by logistic regression.'
+  },
+  {
+    id: 'w2-fc-7',
+    category: 'Module 5: Gradient Ascent Derivation',
+    title: 'Gradient Ascent Parameter Update',
+    frontPrompt: 'What is the gradient of the log-likelihood with respect to parameter weight theta_j?',
+    backFormula: '\\frac{\\partial \\ell(\\theta)}{\\partial \\theta_j} = \\sum_{i=1}^m \\left( y^{(i)} - h_\\theta(x^{(i)}) \\right) x_j^{(i)}',
+    backExplanation: 'The gradient direction is simply the prediction error (y - prediction) multiplied by feature x_j. In gradient ascent we add the gradient to maximize likelihood.',
+    useCase: 'Updating weights in batch or stochastic gradient ascent.',
+    remark: 'Notice it shares the exact algebraic form as LMS linear regression, but with nonlinear sigmoid h.'
+  },
+  {
+    id: 'w2-fc-8',
+    category: 'Module 6: Generalized Linear Models',
+    title: 'The Three Components of a GLM',
+    frontPrompt: 'What are the 3 structural components that define every Generalized Linear Model?',
+    backFormula: '1) \\; y \\sim \\text{ExpFamily}(\\eta), \\quad 2) \\; \\eta = \\theta^T x, \\quad 3) \\; g(\\mu) = \\eta',
+    backExplanation: '1) Random component: target y follows an exponential family distribution. 2) Systematic component: linear predictor eta = theta^T x. 3) Link function g: connects mean mu = E[y|x] to eta.',
+    useCase: 'Unifying linear regression (Gaussian), logistic regression (Bernoulli), and Poisson count models.',
+    remark: 'Introduced by Nelder & Wedderburn (1972).'
+  },
+  {
+    id: 'w2-fc-9',
+    category: 'Module 7: Exponential Family',
+    title: 'Canonical Exponential Family Formulation',
+    frontPrompt: 'What is the canonical representation of an Exponential Family distribution?',
+    backFormula: 'p(y; \\eta) = b(y) \\exp\\left( \\eta^T T(y) - a(\\eta) \\right)',
+    backExplanation: 'eta is the natural parameter; T(y) is the sufficient statistic; a(eta) is the log-partition function; and b(y) is the base measure.',
+    useCase: 'Characterizing probability distributions in GLM modeling.',
+    remark: 'The gradient of a(eta) gives the expected value E[T(y)].'
+  },
+  {
+    id: 'w2-fc-10',
+    category: 'Module 8: Constructing GLMs',
+    title: 'GLM Derivation of Logistic Regression',
+    frontPrompt: 'Why does Logistic Regression naturally use the sigmoid function?',
+    backFormula: '\\eta = \\ln\\left(\\frac{\\phi}{1-\\phi}\\right) \\implies \\phi = \\frac{1}{1 + e^{-\\eta}} = \\frac{1}{1 + e^{-\\theta^T x}}',
+    backExplanation: 'Setting up Bernoulli as an exponential family sets eta = log-odds. Since GLMs postulate h(x) = E[y|x] = phi and eta = theta^T x, the sigmoid response function is mathematically required.',
+    useCase: 'Formal justification that sigmoid is not an arbitrary heuristic.',
+    remark: 'Extending to Multinomial distributions similarly derives the Softmax activation.'
+  },
+  {
+    id: 'w2-fc-11',
+    category: 'Module 9: Naive Bayes',
+    title: 'Naive Conditional Independence Assumption',
+    frontPrompt: 'What assumption does Naive Bayes make, and how does it reduce model complexity?',
+    backFormula: 'P(x_1, \\dots, x_n | y) = \\prod_{j=1}^n P(x_j | y)',
+    backExplanation: 'Assumes all input features are conditionally independent given the class label y. This collapses parameter requirements from 2^n down to 2n for binary features.',
+    useCase: 'Fast text classification, spam filtering, and sentiment analysis.',
+    remark: 'Laplace smoothing (add-1) is used to avoid zero probabilities on unseen words.'
+  },
+  {
+    id: 'w2-fc-12',
+    category: 'Module 10: MLE versus MAP',
+    title: 'MLE vs MAP & Regularization Equivalence',
+    frontPrompt: 'How are MAP estimation and Ridge/Lasso regularization mathematically equivalent?',
+    backFormula: '\\theta_{\\text{MAP}} = \\arg\\max_\\theta \\left[ \\ln P(\\mathcal{D}|\\theta) + \\ln P(\\theta) \\right]',
+    backExplanation: 'MAP adds a prior distribution over weights. A Gaussian prior P(theta) ~ N(0, sigma^2 I) corresponds exactly to L2 Ridge penalty ||theta||_2^2. A Laplace prior corresponds to L1 Lasso penalty ||theta||_1.',
+    useCase: 'Bayesian interpretation of weight decay and feature selection.',
+    remark: 'MLE is a special case of MAP with a uniform flat prior P(theta) = constant.'
+  }
+];

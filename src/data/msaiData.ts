@@ -378,11 +378,22 @@ export const INITIAL_SEMESTERS: Semester[] = [
           {
             id: 'm257-2',
             week: 'Week 02',
-            title: 'Supervised Learning',
-            description: 'Linear models for regression and classification, loss functions, empirical risk minimization, and optimization.',
-            topics: ['Linear Regression', 'Logistic Regression', 'Cost Functions (MSE, Binary Cross-Entropy)', 'Gradient Descent'],
+            title: 'Logistic Regression, GLMs & Probabilistic Models',
+            description: 'Why logistic regression is needed, sigmoid activation, Bernoulli likelihood, dataset log-likelihood, gradient ascent, GLMs, exponential family, Naive Bayes, and MLE vs MAP.',
+            topics: [
+              'Why logistic regression is needed',
+              'Sigmoid function',
+              'Bernoulli probability and one-example likelihood',
+              'Dataset likelihood and log-likelihood',
+              'Gradient derivation and gradient ascent',
+              'Generalized Linear Models',
+              'Exponential family',
+              'Constructing GLMs',
+              'Naive Bayes',
+              'MLE versus MAP'
+            ],
             status: 'in-progress',
-            reading: 'CS229 Notes Chapter 1'
+            reading: 'CS229 Notes Chapter 1 & Chapter 2'
           },
           {
             id: 'm257-3',
