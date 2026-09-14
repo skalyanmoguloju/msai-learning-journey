@@ -144,7 +144,7 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
               icon: FileText,
               onClick: () => setActiveMainTab('documents'),
               isActive: activeMainTab === 'documents',
-              badge: `${ML_WEEK2_DOCUMENTS.length} Files`
+              badge: `${ML_WEEK2_DOCUMENTS.length} File${ML_WEEK2_DOCUMENTS.length === 1 ? '' : 's'}`
             },
             {
               id: 'flashcards-tool',
