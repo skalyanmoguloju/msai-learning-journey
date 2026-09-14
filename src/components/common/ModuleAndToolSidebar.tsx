@@ -1,4 +1,5 @@
-import { Brain, CheckCircle, Sparkles, HelpCircle, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { Brain, CheckCircle, Sparkles, HelpCircle, FileText, LayoutGrid, StretchHorizontal } from 'lucide-react';
 
 export interface ModuleSidebarItem {
   id: number | string;
@@ -39,8 +40,8 @@ export const resolveToolItem = (extra: ToolSidebarItem) => {
 
   return {
     ...extra,
-    icon: resolvedIcon || Sparkles,
-    title: resolvedTitle || extra.title || extra.id,
+    icon: resolvedIcon || FileText,
+    title: resolvedTitle
   };
 };
 
@@ -49,9 +50,8 @@ export type WeeklySidebarModuleItem = ModuleSidebarItem;
 export type WeeklySidebarToolItem = ToolSidebarItem;
 
 export interface ModuleAndToolSidebarProps {
-  // Modules configuration
   modules: ModuleSidebarItem[];
-  activeModuleId: number | string;
+  activeModuleId?: number | string;
   onSelectModule: (id: any) => void;
   completedCount?: number;
   totalCount?: number;
@@ -82,6 +82,7 @@ export const ModuleAndToolSidebar: React.FC<ModuleAndToolSidebarProps> = ({
   totalModulesCount,
   className = '',
 }) => {
+  const [mobileLayoutMode, setMobileLayoutMode] = useState<'tiles' | 'pills'>('tiles');
   const resolvedTotal = totalCount ?? modules.length;
   const resolvedDone = completedCount ?? modules.filter((m) => m.isDone).length;
 
@@ -102,54 +103,154 @@ export const ModuleAndToolSidebar: React.FC<ModuleAndToolSidebarProps> = ({
 
   return (
     <>
-      {/* Mobile Horizontal Navigation (lg:hidden) */}
-      <div className={`lg:hidden w-full space-y-2.5 ${className}`}>
-        {/* Horizontal scrollable module pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
-          {modules.map((m, idx) => {
-            const Icon = m.icon || Brain;
-            const isActive = activeModuleId === m.id;
-            const isDone = m.isDone;
-            const displayNum = typeof m.id === 'number' ? m.id : idx + 1;
-            return (
-              <button
-                key={m.id}
-                onClick={() => onSelectModule(m.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-all ${
-                  isActive
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400/40'
-                    : 'bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>Mod {displayNum}</span>
-                {isDone && <CheckCircle className="w-3 h-3 text-emerald-400" />}
-              </button>
-            );
-          })}
+      {/* Mobile / Foldable Navigation (lg:hidden) */}
+      <div className={`lg:hidden w-full space-y-3 ${className}`}>
+        {/* Mobile Header: Curriculum count & view toggle */}
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              Curriculum Modules
+            </span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800">
+              {resolvedDone}/{resolvedTotal} Done
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg p-0.5">
+            <button
+              onClick={() => setMobileLayoutMode('tiles')}
+              className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-medium transition ${
+                mobileLayoutMode === 'tiles'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="Tiles View (Optimized for Pixel Fold & Mobile)"
+            >
+              <LayoutGrid className="w-3 h-3" />
+              <span>Tiles</span>
+            </button>
+            <button
+              onClick={() => setMobileLayoutMode('pills')}
+              className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-medium transition ${
+                mobileLayoutMode === 'pills'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="Compact Horizontal Tabs"
+            >
+              <StretchHorizontal className="w-3 h-3" />
+              <span>Tabs</span>
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Interactive Tools */}
-        {tools && tools.length > 0 && (
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
-            {tools.map((rawTool) => {
-              const extra = resolveToolItem(rawTool);
-              const Icon = extra.icon;
+        {/* 1. Tiles Layout (Default for Pixel Fold and Mobile Touch) */}
+        {mobileLayoutMode === 'tiles' ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {modules.map((m, idx) => {
+              const Icon = m.icon || Brain;
+              const isActive = activeModuleId === m.id;
+              const isDone = m.isDone;
+              const displayNum = typeof m.id === 'number' ? m.id : idx + 1;
               return (
                 <button
-                  key={extra.id}
-                  onClick={extra.onClick}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition text-xs font-medium shrink-0 border active:scale-95 ${
-                    extra.isActive
-                      ? 'bg-indigo-600/30 border-indigo-500 text-indigo-200'
-                      : 'bg-slate-900/90 hover:bg-slate-800 border-slate-800 text-slate-300'
+                  key={m.id}
+                  onClick={() => onSelectModule(m.id)}
+                  className={`flex flex-col justify-between p-2.5 rounded-xl text-left transition-all border relative overflow-hidden group active:scale-[0.98] ${
+                    isActive
+                      ? 'bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950 text-white border-indigo-500 shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400/50'
+                      : 'bg-slate-900/90 hover:bg-slate-850 text-slate-300 border-slate-800 hover:border-slate-700'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>{extra.title}</span>
+                  <div className="flex items-center justify-between w-full mb-1.5">
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold tracking-tight ${
+                        isActive
+                          ? 'bg-indigo-500/40 text-indigo-200 border border-indigo-400/40'
+                          : 'bg-slate-800 text-slate-400'
+                      }`}
+                    >
+                      Mod {displayNum}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      {isDone && <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />}
+                      <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-indigo-300' : 'text-slate-400'}`} />
+                    </div>
+                  </div>
+
+                  <div className={`text-xs font-bold leading-snug line-clamp-2 ${isActive ? 'text-white' : 'text-slate-200'}`}>
+                    {m.title}
+                  </div>
+
+                  {m.badge && (
+                    <span className="text-[9px] uppercase tracking-wider text-slate-400 mt-1.5 font-mono truncate">
+                      {m.badge}
+                    </span>
+                  )}
                 </button>
               );
             })}
+          </div>
+        ) : (
+          /* 2. Compact Horizontal Tab Pills Layout */
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+            {modules.map((m, idx) => {
+              const Icon = m.icon || Brain;
+              const isActive = activeModuleId === m.id;
+              const isDone = m.isDone;
+              const displayNum = typeof m.id === 'number' ? m.id : idx + 1;
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => onSelectModule(m.id)}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-all ${
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400/40'
+                      : 'bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>Mod {displayNum}</span>
+                  {isDone && <CheckCircle className="w-3 h-3 text-emerald-400" />}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Mobile Interactive Tools Tiles */}
+        {tools && tools.length > 0 && (
+          <div className="pt-1 space-y-1.5">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">
+              Interactive Tools &amp; Labs
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {tools.map((rawTool) => {
+                const extra = resolveToolItem(rawTool);
+                const Icon = extra.icon;
+                return (
+                  <button
+                    key={extra.id}
+                    onClick={extra.onClick}
+                    className={`flex items-center justify-between p-2 rounded-xl transition text-xs font-medium border active:scale-95 ${
+                      extra.isActive
+                        ? 'bg-indigo-600/30 border-indigo-500 text-indigo-100 font-semibold shadow-sm'
+                        : 'bg-slate-900/90 hover:bg-slate-800 border-slate-800 text-slate-300'
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Icon className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                      <span className="truncate">{extra.title}</span>
+                    </div>
+                    {extra.badge && (
+                      <span className="text-[9px] text-slate-400 font-mono px-1 py-0.5 rounded bg-slate-800 shrink-0">
+                        {extra.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
