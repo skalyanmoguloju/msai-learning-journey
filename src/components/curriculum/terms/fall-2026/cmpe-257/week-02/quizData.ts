@@ -48,15 +48,51 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
   // Module 2: Sigmoid function
   {
     moduleId: 'm2',
-    question: "What is the first derivative of the sigmoid function σ(z) with respect to z?",
+    question: "What is the primary purpose of the sigmoid function in logistic regression?",
     options: [
-      "σ'(z) = 1 - σ(z)",
-      "σ'(z) = σ(z) * (1 - σ(z))",
-      "σ'(z) = e^(-z) / (1 + e^(-z))",
-      "σ'(z) = 2 * σ(z)"
+      "To calculate the linear dot product between weights and features.",
+      "To convert any unrestricted real-valued score into a valid probability between 0 and 1.",
+      "To make discrete target labels continuous.",
+      "To regularize parameters and prevent overfitting."
     ],
     correct: 1,
-    explanation: "Using the quotient rule, d/dz [σ(z)] = σ(z)(1 - σ(z)), which allows the derivative to be computed directly from the function output."
+    explanation: "The sigmoid converts the unrestricted score z ∈ (-∞, +∞) into a calibrated probability value between 0 and 1."
+  },
+  {
+    moduleId: 'm2',
+    question: "If the linear score is z = 0, what is the output of the sigmoid function σ(0)?",
+    options: [
+      "0",
+      "0.5",
+      "1",
+      "-1"
+    ],
+    correct: 1,
+    explanation: "σ(0) = 1 / (1 + e^0) = 1 / (1 + 1) = 0.5. This represents maximum uncertainty and the exact decision boundary."
+  },
+  {
+    moduleId: 'm2',
+    question: "What does the quantity z represent in logistic regression?",
+    options: [
+      "The final discrete class label (0 or 1).",
+      "The raw weighted linear score (θ^T x) before sigmoid probability conversion.",
+      "The derivative of the loss function.",
+      "The classification threshold cutoff."
+    ],
+    correct: 1,
+    explanation: "z = θ^T x is the raw weighted sum of features. The sigmoid transforms this score into an estimated probability."
+  },
+  {
+    moduleId: 'm2',
+    question: "What is the derivative of the sigmoid function σ(z), and at what point is it at its maximum?",
+    options: [
+      "σ'(z) = σ(z)(1 - σ(z)), and it reaches its maximum (0.25) at z = 0 (probability 0.5).",
+      "σ'(z) = 1 - σ(z), and it reaches its maximum at z = -∞.",
+      "σ'(z) = e^(-z) / (1 + e^(-z)), and it reaches its maximum at z = +∞.",
+      "σ'(z) = 2 * σ(z), and it is constant everywhere."
+    ],
+    correct: 0,
+    explanation: "Using the quotient rule, σ'(z) = σ(z)(1 - σ(z)). At p = 0.5 (z = 0), the derivative evaluates to 0.5 * (1 - 0.5) = 0.25, which is its peak rate of change."
   },
 
   // Module 3: Bernoulli probability and one-example likelihood
