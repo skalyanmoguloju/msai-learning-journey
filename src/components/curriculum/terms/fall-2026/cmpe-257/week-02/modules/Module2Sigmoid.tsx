@@ -194,7 +194,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 1. The Raw Score is Not a Probability ─────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">1. The Raw Score is Not a Probability</h3>
+        <h3 className="text-base font-bold text-slate-100">The Raw Score is Not a Probability</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Logistic regression first calculates a weighted linear score:
         </p>
@@ -250,7 +250,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 2. The Sigmoid Formula ────────────────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">2. The Sigmoid Formula</h3>
+        <h3 className="text-base font-bold text-slate-100">The Sigmoid Formula</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           The sigmoid function (also known as the <em>logistic function</em>) is defined as:
         </p>
@@ -294,7 +294,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 3. Why the Output is Always Between 0 and 1 (Merged with Interactive A) ── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">3. Why the Output is Always Between 0 and 1</h3>
+        <h3 className="text-base font-bold text-slate-100">Why the Output is Always Between 0 and 1</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Examine the denominator of the sigmoid:
         </p>
@@ -394,7 +394,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 4. Calculating the Sigmoid Step by Step ───────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">4. Calculating the Sigmoid Step by Step</h3>
+        <h3 className="text-base font-bold text-slate-100">Calculating the Sigmoid Step by Step</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Let’s walk through the exact numerical arithmetic for evaluating the sigmoid function manually.
         </p>
@@ -490,7 +490,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 5. What the S-Shape Means ─────────────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">5. What the S-Shape Means</h3>
+        <h3 className="text-base font-bold text-slate-100">What the S-Shape Means</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           The sigmoid is <strong>not a parabola</strong>. A parabola is bowl-shaped, such as <MathText text="$y = x^2$" />. The sigmoid is S-shaped (sigmoidal) because it exhibits three distinct operational regions:
         </p>
@@ -533,7 +533,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 6. The Derivative of the Sigmoid (Merged with Interactive B) ──── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">6. The Derivative of the Sigmoid</h3>
+        <h3 className="text-base font-bold text-slate-100">The Derivative of the Sigmoid</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           The derivative tells us how quickly the sigmoid output changes when the score <MathText text="$(z)$" /> changes:
         </p>
@@ -641,7 +641,7 @@ export const Module2Sigmoid: React.FC = () => {
 
       {/* ── 7. From Probability to Class (Merged with Interactive C) ─────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">7. From Probability to Class</h3>
+        <h3 className="text-base font-bold text-slate-100">From Probability to Class</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           After calculating <MathText text="$p = \sigma(z)$" />, we apply a decision threshold to yield the discrete prediction:
         </p>

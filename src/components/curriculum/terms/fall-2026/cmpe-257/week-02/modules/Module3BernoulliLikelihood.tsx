@@ -59,7 +59,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 1. What Does Logistic Regression Output? ──────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">1. What Does Logistic Regression Output?</h3>
+        <h3 className="text-base font-bold text-slate-100">What Does Logistic Regression Output?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           For a single input feature vector <MathText text="$(x)$" />, logistic regression first computes a raw linear score:
         </p>
@@ -88,7 +88,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 2. Bernoulli: The Probability Model for One 0/1 Outcome ──────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">2. Bernoulli: The Probability Model for One 0/1 Outcome</h3>
+        <h3 className="text-base font-bold text-slate-100">Bernoulli: The Probability Model for One 0/1 Outcome</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           The <strong>Bernoulli distribution</strong> is not a derivative and not the sigmoid. It is a fundamental probability distribution describing a single trial with exactly two possible outcomes (success/failure, 1/0).
         </p>
@@ -135,7 +135,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 3. Where Does p^y (1-p)^(1-y) Come From? ─────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">3. Where Does <MathText text="$p^y(1-p)^{1-y}$" /> Come From?</h3>
+        <h3 className="text-base font-bold text-slate-100">Where Does <MathText text="$p^y(1-p)^{1-y}$" /> Come From?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Instead of using piecewise if-else branches, mathematicians combine both outcomes into one elegant algebraic expression that gives the correct probability whether the actual label <MathText text="$(y)$" /> is 1 or 0:
         </p>
@@ -172,7 +172,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 4. Likelihood for One Example (Merged with Interactive A) ────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">4. Likelihood for One Example</h3>
+        <h3 className="text-base font-bold text-slate-100">Likelihood for One Example</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           The concept of <strong>likelihood</strong> answers a simple question:
         </p>
@@ -295,7 +295,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 5. Likelihood for the Whole Dataset (Merged with Interactive B) ── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">5. Likelihood for the Whole Dataset</h3>
+        <h3 className="text-base font-bold text-slate-100">Likelihood for the Whole Dataset</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Suppose we have a dataset of <MathText text="$(n)$" /> training examples:
         </p>
@@ -426,7 +426,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 6. Maximum Likelihood Estimation (MLE) ────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">6. Maximum Likelihood Estimation (MLE)</h3>
+        <h3 className="text-base font-bold text-slate-100">Maximum Likelihood Estimation (MLE)</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Different parameter weight choices <MathText text="$\theta$" /> produce different probabilities <MathText text="$p^{(i)}$" />, and therefore produce different dataset likelihoods <MathText text="$L(\theta)$" />.
         </p>
@@ -458,7 +458,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 7. Why Use Log-Likelihood? ─────────────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">7. Why Use Log-Likelihood?</h3>
+        <h3 className="text-base font-bold text-slate-100">Why Use Log-Likelihood?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           The raw likelihood <MathText text="$L(\theta)$" /> is a product of probabilities. When we multiply thousands of numbers strictly less than 1, the result quickly plunges below computer floating-point precision (arithmetic underflow, e.g., <MathText text="$10^{-300} \to 0$" />).
         </p>
@@ -491,7 +491,7 @@ export const Module3BernoulliLikelihood: React.FC = () => {
 
       {/* ── 8. Why Confident Mistakes are Punished (Merged with Interactive C) ── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">8. Why Confident Mistakes are Punished</h3>
+        <h3 className="text-base font-bold text-slate-100">Why Confident Mistakes are Punished</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Suppose the true observed label is positive (<MathText text="$y = 1$" />):
         </p>

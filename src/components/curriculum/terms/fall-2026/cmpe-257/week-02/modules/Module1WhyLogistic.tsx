@@ -55,7 +55,7 @@ export const Module1WhyLogistic: React.FC = () => {
 
       {/* ── 1. What is Binary Classification? ─────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">1. What is Binary Classification?</h3>
+        <h3 className="text-base font-bold text-slate-100">What is Binary Classification?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           In supervised learning, the model receives input features and learns to predict an answer. In <strong>binary classification</strong>, the answer has only two possible category outcomes.
         </p>
@@ -84,7 +84,7 @@ export const Module1WhyLogistic: React.FC = () => {
 
       {/* ── 2. Why Not Use Linear Regression? (Merged with Interactive B) ─── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">2. Why Not Use Linear Regression?</h3>
+        <h3 className="text-base font-bold text-slate-100">Why Not Use Linear Regression?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Linear regression creates a weighted sum:
         </p>
@@ -179,7 +179,7 @@ export const Module1WhyLogistic: React.FC = () => {
 
       {/* ── 3. What Should a Classification Model Output? (Merged with Interactive C) ── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">3. What Should a Classification Model Output?</h3>
+        <h3 className="text-base font-bold text-slate-100">What Should a Classification Model Output?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           A useful model should first report how confident it is as a continuous probability:
         </p>
@@ -293,7 +293,7 @@ export const Module1WhyLogistic: React.FC = () => {
 
       {/* ── 4. The Logistic-Regression Pipeline (Merged with Interactive A) ─ */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">4. The Logistic-Regression Pipeline</h3>
+        <h3 className="text-base font-bold text-slate-100">The Logistic-Regression Pipeline</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           Logistic regression keeps the weighted-sum idea from linear regression, but adds one conversion step:
         </p>
@@ -386,7 +386,7 @@ export const Module1WhyLogistic: React.FC = () => {
 
       {/* ── 5. The Decision Boundary ───────────────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">5. The Decision Boundary</h3>
+        <h3 className="text-base font-bold text-slate-100">The Decision Boundary</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           With a threshold of 0.5, the model predicts class 1 when:
         </p>
@@ -406,7 +406,7 @@ export const Module1WhyLogistic: React.FC = () => {
 
       {/* ── 6. Why the Name "Logistic Regression"? (Merged with Interactive D) ── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100">6. Why the Name "Logistic Regression"?</h3>
+        <h3 className="text-base font-bold text-slate-100">Why the Name "Logistic Regression"?</h3>
         <p className="text-xs text-slate-300 leading-relaxed">
           It is used for classification, but it predicts a continuous probability before making the final class decision. The word “regression” refers to estimating that probability from the features.
         </p>
