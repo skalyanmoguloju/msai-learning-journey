@@ -98,15 +98,51 @@ export const ML_WEEK2_QUIZ_QUESTIONS: QuizQuestion[] = [
   // Module 3: Bernoulli probability and one-example likelihood
   {
     moduleId: 'm3',
-    question: "Why can the single-example Bernoulli likelihood be written as p(y|x; θ) = (h)^y * (1 - h)^(1 - y)?",
+    question: "What does the Bernoulli distribution describe in the context of logistic regression?",
     options: [
-      "Because y and (1-y) act as mathematical exponent switches for y ∈ {0, 1}.",
-      "Because probabilities must always be multiplied by y.",
+      "The derivative of the sigmoid function with respect to weights.",
+      "A probability model for one trial with a single binary outcome that is either 0 or 1.",
+      "The dot product between feature vectors.",
+      "A technique for inverting non-singular matrices."
+    ],
+    correct: 1,
+    explanation: "Bernoulli models a single binary outcome (0 or 1). It assigns probability p to outcome 1 and (1-p) to outcome 0. It is a probability distribution, not a derivative."
+  },
+  {
+    moduleId: 'm3',
+    question: "If a logistic regression model predicts probability p = 0.8 for class 1, but the ground-truth label is y = 0, what likelihood value does the model assign to the actual outcome?",
+    options: [
+      "0.8",
+      "0.2",
+      "1.8",
+      "-0.8"
+    ],
+    correct: 1,
+    explanation: "Because the actual label is y = 0, the probability assigned to what really occurred is 1 - p = 1 - 0.8 = 0.2."
+  },
+  {
+    moduleId: 'm3',
+    question: "Why can the single-example Bernoulli likelihood be written compactly as P(y | x; θ) = p^y * (1 - p)^(1 - y)?",
+    options: [
+      "Because y and (1 - y) act as exponent switches: y = 1 selects p, and y = 0 selects (1 - p).",
+      "Because probabilities must always be multiplied by the label value.",
       "Because it forces the likelihood to be negative.",
-      "Because it cancels out the sigmoid function."
+      "Because it eliminates the need for calculating weights."
     ],
     correct: 0,
-    explanation: "When y=1, (1-h)^0 = 1 yielding h. When y=0, (h)^0 = 1 yielding 1-h. This provides a single, differentiable formula."
+    explanation: "When y = 1, p^1 * (1 - p)^0 = p * 1 = p. When y = 0, p^0 * (1 - p)^1 = 1 * (1 - p) = 1 - p. This provides a single unified algebraic expression."
+  },
+  {
+    moduleId: 'm3',
+    question: "What is the primary objective of Maximum Likelihood Estimation (MLE)?",
+    options: [
+      "To select parameters θ that make the actually observed training data labels most probable.",
+      "To find the smallest possible number of training examples.",
+      "To force the gradient to zero without changing parameter values.",
+      "To set all feature weights to 1."
+    ],
+    correct: 0,
+    explanation: "MLE chooses parameter values θ̂ that maximize the joint probability (likelihood) assigned to the labels that actually occurred in the dataset."
   },
 
   // Module 4: Dataset likelihood and log-likelihood

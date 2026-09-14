@@ -66,10 +66,20 @@ export const ML_WEEK2_FLASHCARDS: UniversalFlashcard[] = [
     category: 'Module 3: Bernoulli Likelihood',
     title: 'Compact Single-Example Likelihood',
     frontPrompt: 'How is the likelihood of a single binary training observation written in compact algebraic form?',
-    backFormula: 'p(y | x; \\theta) = \\left(h_\\theta(x)\\right)^y \\left(1 - h_\\theta(x)\\right)^{1-y}',
+    backFormula: 'P(y \\mid x; \\theta) = p^y (1 - p)^{1-y} = \\left(h_\\theta(x)\\right)^y \\left(1 - h_\\theta(x)\\right)^{1-y}',
     backExplanation: 'When y = 1, the (1-h)^0 term becomes 1 and yields h_theta(x). When y = 0, the (h)^0 term becomes 1 and yields 1 - h_theta(x).',
     useCase: 'Unified mathematical formulation of the Bernoulli probability mass function.',
     remark: 'Continuous and differentiable with respect to theta.'
+  },
+  {
+    id: 'w2-fc-5b',
+    category: 'Module 3: Bernoulli Likelihood',
+    title: 'Maximum Likelihood Estimation (MLE) Principle',
+    frontPrompt: 'What is the objective of Maximum Likelihood Estimation (MLE) for a dataset of independent observations?',
+    backFormula: 'L(\\theta) = \\prod_{i=1}^n P(y^{(i)} \\mid x^{(i)}; \\theta), \\quad \\hat{\\theta} = \\arg\\max_\\theta L(\\theta)',
+    backExplanation: 'MLE searches for parameters theta that maximize the joint probability assigned to the actually observed outcomes across the entire training dataset.',
+    useCase: 'Standard parameter estimation technique for statistical learning models.',
+    remark: 'Assumes observations are independent and identically distributed (i.i.d.).'
   },
   {
     id: 'w2-fc-6',
