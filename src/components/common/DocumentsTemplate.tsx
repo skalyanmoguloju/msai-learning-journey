@@ -10,11 +10,9 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCcw,
-  Layers,
-  Sparkles,
   AlertCircle,
   Loader2,
-  Monitor
+  MousePointerClick
 } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
 
@@ -68,24 +66,24 @@ try {
 }
 
 // ============================================================================
-// PDF Canvas Viewer Component (Mobile & Pixel Fold Optimized)
+// PDF Canvas Viewer Component (Mobile, Pixel Fold, & Fullscreen Optimized)
 // ============================================================================
 interface PdfCanvasViewerProps {
   fileUrl: string;
   title: string;
-  pageCountHint?: number;
+  isFullscreen: boolean;
 }
 
-const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => {
+const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, isFullscreen }) => {
   const [pdfDoc, setPdfDoc] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [zoomLevel, setZoomLevel] = useState<number>(1.0);
-  const [viewMode, setViewMode] = useState<'single' | 'continuous'>('single');
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const renderTaskRef = useRef<any>(null);
 
@@ -109,7 +107,7 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
       .catch((err: any) => {
         if (!isMounted) return;
         console.error('Failed to load PDF via pdfjs:', err);
-        setErrorMsg('Could not render document canvas. You can switch to Google Docs Viewer or download the PDF.');
+        setErrorMsg('Could not render document canvas. Please download the PDF directly.');
         setLoading(false);
       });
 
@@ -121,10 +119,10 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
     };
   }, [fileUrl]);
 
-  // Render single page onto canvas
+  // Render current slide onto canvas (fits both width & height dynamically)
   const renderPage = useCallback(
     async (pageNum: number) => {
-      if (!pdfDoc || !canvasRef.current || !containerRef.current) return;
+      if (!pdfDoc || !canvasRef.current || !stageRef.current) return;
 
       try {
         if (renderTaskRef.current) {
@@ -139,20 +137,26 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Container width measurement
-        const containerWidth = containerRef.current.clientWidth || 800;
+        const stageWidth = stageRef.current.clientWidth || 800;
+        const stageHeight = stageRef.current.clientHeight || (isFullscreen ? window.innerHeight - 120 : 600);
         const baseViewport = page.getViewport({ scale: 1.0 });
 
-        // Calculate fit-to-width scale (with padding allowance)
-        const padding = containerWidth < 500 ? 16 : 32;
-        const availableWidth = Math.max(280, containerWidth - padding);
-        const fitScale = availableWidth / baseViewport.width;
+        // Available area with responsive margins
+        const paddingX = stageWidth < 500 ? 12 : 24;
+        const paddingY = isFullscreen ? 16 : 24;
+        const availableWidth = Math.max(260, stageWidth - paddingX);
+        const availableHeight = Math.max(260, stageHeight - paddingY);
+
+        // Fit both width and height so the slide is fully visible without clipping
+        const scaleX = availableWidth / baseViewport.width;
+        const scaleY = availableHeight / baseViewport.height;
+        const fitScale = Math.min(scaleX, scaleY > 0 ? scaleY : scaleX);
         const scale = fitScale * zoomLevel;
 
         const viewport = page.getViewport({ scale });
         const pixelRatio = window.devicePixelRatio || 1;
 
-        // High-DPI canvas sizing
+        // High-DPI canvas resolution
         canvas.width = Math.floor(viewport.width * pixelRatio);
         canvas.height = Math.floor(viewport.height * pixelRatio);
         canvas.style.width = `${Math.floor(viewport.width)}px`;
@@ -176,30 +180,30 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
         }
       }
     },
-    [pdfDoc, zoomLevel]
+    [pdfDoc, zoomLevel, isFullscreen]
   );
 
   useEffect(() => {
-    if (pdfDoc && viewMode === 'single') {
+    if (pdfDoc) {
       renderPage(currentPage);
     }
-  }, [pdfDoc, currentPage, zoomLevel, viewMode, renderPage]);
+  }, [pdfDoc, currentPage, zoomLevel, isFullscreen, renderPage]);
 
-  // Re-render on window resize (e.g. folding/unfolding Pixel Fold)
+  // Re-render when window or fullscreen state changes (e.g. Pixel Fold fold/unfold)
   useEffect(() => {
     const handleResize = () => {
-      if (pdfDoc && viewMode === 'single') {
+      if (pdfDoc) {
         renderPage(currentPage);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [pdfDoc, currentPage, viewMode, renderPage]);
+  }, [pdfDoc, currentPage, renderPage]);
 
-  // Keyboard navigation
+  // Keyboard navigation (Arrow keys / PageUp / PageDown)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
         setCurrentPage((prev) => Math.min(totalPages, prev + 1));
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
         setCurrentPage((prev) => Math.max(1, prev - 1));
@@ -209,17 +213,23 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [totalPages]);
 
+  const goToPrev = () => setCurrentPage((p) => Math.max(1, p - 1));
+  const goToNext = () => setCurrentPage((p) => Math.min(totalPages, p + 1));
+
   return (
-    <div className="space-y-3" ref={containerRef}>
-      {/* Viewer Navigation & Controls Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-900/95 border border-slate-800 rounded-xl">
-        {/* Left: Page Navigator */}
+    <div
+      className={`flex flex-col ${isFullscreen ? 'h-full w-full flex-1 min-h-0' : 'space-y-3'}`}
+      ref={containerRef}
+    >
+      {/* Navigation Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-900/95 border border-slate-800 rounded-xl shrink-0 shadow-sm">
+        {/* Left: Previous / Next Slide Controls */}
         <div className="flex items-center gap-1.5">
           <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            onClick={goToPrev}
             disabled={currentPage <= 1 || loading}
             className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-slate-800 text-slate-200 transition"
-            title="Previous Page (Left Arrow)"
+            title="Previous Slide (Left Arrow / Click Left Half)"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -231,16 +241,16 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
           </div>
 
           <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            onClick={goToNext}
             disabled={currentPage >= totalPages || loading}
             className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-slate-800 text-slate-200 transition"
-            title="Next Page (Right Arrow)"
+            title="Next Slide (Right Arrow / Click Right Half)"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Center: Slide Quick Slider for Pixel Fold Scrubbing */}
+        {/* Center: Slide Quick Slider for Pixel Fold scrubbing */}
         <div className="flex items-center gap-2 flex-1 max-w-xs min-w-[120px] px-2">
           <input
             type="range"
@@ -250,12 +260,17 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
             onChange={(e) => setCurrentPage(Number(e.target.value))}
             disabled={loading}
             className="w-full accent-indigo-500 bg-slate-800 h-1.5 rounded-lg cursor-pointer"
-            title="Scrub slides"
+            title="Slide scrubber"
           />
         </div>
 
-        {/* Right: Zoom & Mode Controls */}
+        {/* Right: Zoom & Quick Click Hint */}
         <div className="flex items-center gap-1.5">
+          <div className="hidden md:flex items-center gap-1 text-[10px] text-slate-400 font-medium px-2 py-1 bg-slate-950 rounded-lg border border-slate-800 mr-1">
+            <MousePointerClick className="w-3 h-3 text-indigo-400" />
+            <span>Click left/right on slide to navigate</span>
+          </div>
+
           <button
             onClick={() => setZoomLevel((z) => Math.max(0.6, z - 0.15))}
             className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
@@ -263,7 +278,7 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
           >
             <ZoomOut className="w-3.5 h-3.5" />
           </button>
-          <span className="text-[11px] font-mono text-slate-400 px-1 min-w-[42px] text-center">
+          <span className="text-[11px] font-mono text-slate-400 px-1 min-w-[40px] text-center">
             {Math.round(zoomLevel * 100)}%
           </span>
           <button
@@ -276,18 +291,25 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
           <button
             onClick={() => setZoomLevel(1.0)}
             className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
-            title="Reset Zoom to Fit Width"
+            title="Reset Zoom to Fit Screen"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
-      {/* Main Canvas Document Stage */}
-      <div className="relative min-h-[420px] sm:min-h-[580px] bg-slate-950 border border-slate-800/80 rounded-2xl overflow-auto flex items-center justify-center p-2 sm:p-4 shadow-inner">
+      {/* Main Document Canvas Stage (Full Height when Fullscreen) */}
+      <div
+        ref={stageRef}
+        className={`relative select-none overflow-hidden flex items-center justify-center ${
+          isFullscreen
+            ? 'flex-1 w-full h-full min-h-0 bg-slate-950 rounded-xl border border-slate-800/80 p-2 sm:p-4 shadow-2xl'
+            : 'min-h-[460px] sm:min-h-[620px] max-h-[85vh] bg-slate-950 border border-slate-800/80 rounded-2xl p-2 sm:p-4 shadow-inner'
+        }`}
+      >
         {loading && (
           <div className="flex flex-col items-center justify-center gap-3 p-12 text-slate-400">
-            <Loader2 className="w-7 h-7 text-indigo-400 animate-spin" />
+            <Loader2 className="w-8 h-8 text-indigo-400 animate-spin" />
             <p className="text-xs font-medium">Rendering document slides...</p>
           </div>
         )}
@@ -308,11 +330,52 @@ const PdfCanvasViewer: React.FC<PdfCanvasViewerProps> = ({ fileUrl, title }) => 
         )}
 
         {!loading && !errorMsg && (
-          <div className="flex justify-center w-full">
+          <div className="relative inline-block max-w-full max-h-full">
+            {/* The rendered High-DPI Canvas */}
             <canvas
               ref={canvasRef}
-              className="rounded-lg shadow-2xl border border-slate-800 max-w-full bg-white"
+              className="rounded-lg shadow-2xl border border-slate-800/80 max-w-full max-h-full bg-white object-contain block mx-auto"
             />
+
+            {/* Interactive Left Click Zone: Navigate to Previous Slide */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToPrev();
+              }}
+              disabled={currentPage <= 1}
+              className={`absolute left-0 top-0 bottom-0 w-1/2 flex items-center justify-start pl-3 sm:pl-6 group transition-opacity z-20 ${
+                currentPage <= 1
+                  ? 'cursor-default opacity-0'
+                  : 'cursor-w-resize opacity-0 hover:opacity-100 active:opacity-95'
+              }`}
+              title="Click left side: Previous Slide"
+              aria-label="Previous Slide"
+            >
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-900/90 text-white border border-slate-700 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform ring-1 ring-white/10">
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-300" />
+              </div>
+            </button>
+
+            {/* Interactive Right Click Zone: Navigate to Next Slide */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToNext();
+              }}
+              disabled={currentPage >= totalPages}
+              className={`absolute right-0 top-0 bottom-0 w-1/2 flex items-center justify-end pr-3 sm:pr-6 group transition-opacity z-20 ${
+                currentPage >= totalPages
+                  ? 'cursor-default opacity-0'
+                  : 'cursor-e-resize opacity-0 hover:opacity-100 active:opacity-95'
+              }`}
+              title="Click right side: Next Slide"
+              aria-label="Next Slide"
+            >
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-900/90 text-white border border-slate-700 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform ring-1 ring-white/10">
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-300" />
+              </div>
+            </button>
           </div>
         )}
       </div>
@@ -330,19 +393,18 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
   const [selectedDocId, setSelectedDocId] = useState<string>(
     () => documents[0]?.id || ''
   );
-  const [viewerEngine, setViewerEngine] = useState<'canvas' | 'google' | 'native'>('canvas');
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const fullscreenContainerRef = useRef<HTMLDivElement>(null);
 
-  // Synchronize active doc
+  // Synchronize active document
   const activeDoc = documents.find((d) => d.id === selectedDocId) || documents[0] || null;
 
-  // Toggle fullscreen
+  // Toggle Fullscreen using standard Fullscreen API with full viewport scaling
   const toggleFullscreen = async () => {
-    if (!containerRef.current) return;
+    if (!fullscreenContainerRef.current) return;
     try {
       if (!document.fullscreenElement) {
-        await containerRef.current.requestFullscreen();
+        await fullscreenContainerRef.current.requestFullscreen();
         setIsFullscreen(true);
       } else {
         await document.exitFullscreen();
@@ -376,17 +438,21 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
   }
 
   const resolvedUrl = activeDoc ? resolveAssetUrl(activeDoc.fileUrl) : '';
-  const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(
-    window.location.origin + resolvedUrl
-  )}&embedded=true`;
 
   return (
-    <div className={`space-y-4 animate-fade-in ${className}`} ref={containerRef}>
+    <div
+      ref={fullscreenContainerRef}
+      className={
+        isFullscreen
+          ? 'fixed inset-0 z-50 bg-slate-950 flex flex-col h-screen w-screen p-3 sm:p-4 overflow-hidden'
+          : `space-y-4 animate-fade-in ${className}`
+      }
+    >
       {/* Document Selector & Action Header */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm">
-        {/* Row 1: Multiple Document Tabs if > 1 */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm shrink-0">
+        {/* Document Switcher Tabs if multiple documents exist */}
         {documents.length > 1 && (
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 border-b border-slate-800/60 pb-3">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 border-b border-slate-800/60">
             {documents.map((doc) => (
               <button
                 key={doc.id}
@@ -404,7 +470,7 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
           </div>
         )}
 
-        {/* Row 2: Document Info & Quick Action Buttons */}
+        {/* Document Metadata & Controls */}
         {activeDoc && (
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
@@ -416,7 +482,7 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
                   {activeDoc.title}
                 </h3>
                 <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono mt-0.5">
-                  {activeDoc.pageCount && <span>{activeDoc.pageCount} Pages</span>}
+                  {activeDoc.pageCount && <span>{activeDoc.pageCount} Slides</span>}
                   {activeDoc.fileSize && (
                     <>
                       <span>•</span>
@@ -433,45 +499,8 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
               </div>
             </div>
 
-            {/* Quick Actions: Engine Selector, Download, External Tab, Fullscreen */}
+            {/* Action Buttons: Download, New Tab, Fullscreen */}
             <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-              {/* Viewer Engine Switcher */}
-              <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 rounded-xl p-0.5 text-[11px]">
-                <button
-                  onClick={() => setViewerEngine('canvas')}
-                  className={`px-2.5 py-1 rounded-lg font-medium transition ${
-                    viewerEngine === 'canvas'
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                  title="Mobile & Pixel Fold Optimized Canvas Reader"
-                >
-                  Slides
-                </button>
-                <button
-                  onClick={() => setViewerEngine('google')}
-                  className={`px-2.5 py-1 rounded-lg font-medium transition ${
-                    viewerEngine === 'google'
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                  title="Google Docs Cloud Viewer"
-                >
-                  Cloud
-                </button>
-                <button
-                  onClick={() => setViewerEngine('native')}
-                  className={`px-2.5 py-1 rounded-lg font-medium transition ${
-                    viewerEngine === 'native'
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                  title="Native Browser Frame"
-                >
-                  Native
-                </button>
-              </div>
-
               <a
                 href={resolvedUrl}
                 download={activeDoc.fileName || `${activeDoc.title}.pdf`}
@@ -493,8 +522,12 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
 
               <button
                 onClick={toggleFullscreen}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition"
-                title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+                className={`p-2 rounded-xl border transition ${
+                  isFullscreen
+                    ? 'bg-indigo-600 text-white border-indigo-400 shadow-md shadow-indigo-600/30'
+                    : 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border-slate-700/80'
+                }`}
+                title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen (Full Height)'}
               >
                 {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </button>
@@ -505,34 +538,16 @@ export const DocumentsTemplate: React.FC<DocumentsTemplateProps> = ({
 
       {/* Embedded Document Stage */}
       {activeDoc && (
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-4 shadow-md">
-          {viewerEngine === 'canvas' && (
-            <PdfCanvasViewer
-              fileUrl={activeDoc.fileUrl}
-              title={activeDoc.title}
-              pageCountHint={activeDoc.pageCount}
-            />
-          )}
-
-          {viewerEngine === 'google' && (
-            <div className="w-full h-[650px] rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
-              <iframe
-                src={googleViewerUrl}
-                title={activeDoc.title}
-                className="w-full h-full border-0"
-              />
-            </div>
-          )}
-
-          {viewerEngine === 'native' && (
-            <div className="w-full h-[650px] rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
-              <iframe
-                src={`${resolvedUrl}#toolbar=1&navpanes=1`}
-                title={activeDoc.title}
-                className="w-full h-full border-0"
-              />
-            </div>
-          )}
+        <div
+          className={`bg-slate-900/90 border border-slate-800 rounded-2xl shadow-md ${
+            isFullscreen ? 'flex-1 h-full min-h-0 p-2 sm:p-3 flex flex-col' : 'p-3 sm:p-4'
+          }`}
+        >
+          <PdfCanvasViewer
+            fileUrl={activeDoc.fileUrl}
+            title={activeDoc.title}
+            isFullscreen={isFullscreen}
+          />
         </div>
       )}
     </div>
