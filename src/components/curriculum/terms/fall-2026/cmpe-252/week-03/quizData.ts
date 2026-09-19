@@ -76,7 +76,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 2,
     badge: 'Learning Rule',
     sub: 'Rosenblatt Convergence & Update Rules',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m2_q1',
+        question: 'When a true positive example (y = +1) is incorrectly predicted as negative (ŷ = -1), how must the perceptron score z change to fix this error?',
+        options: [
+          'The score z must increase, shifting the point toward or into the positive decision region.',
+          'The score z must decrease, making the prediction more firmly negative.',
+          'The score z must remain exactly 0 to satisfy the convergence criterion.',
+          'The score z must invert its sign without changing the decision boundary.'
+        ],
+        correct: 0,
+        explanation: 'For a positive mistake (y = +1, ŷ = -1), the error term is y - ŷ = 1 - (-1) = +2. The updates Δw = α(+2)x and Δb = α(+2) raise the score z_new = z_old + α(+2)(||x||^2 + 1) > z_old, pushing the point toward the positive side of the boundary.'
+      },
+      {
+        id: 'w3_m2_q2',
+        question: 'What is the primary role of the learning rate hyperparameter α in the perceptron update rule?',
+        options: [
+          'It scales the magnitude (step size) of the parameter corrections made upon encountering an error.',
+          'It dictates whether the true label y is treated as -1 or +1.',
+          'It sets the maximum allowable number of features in the input vector x.',
+          'It automatically eliminates non-linearly separable outliers from the training set.'
+        ],
+        correct: 0,
+        explanation: 'The learning rate α directly scales the correction vector: w_new = w_old + α(y - ŷ)x and b_new = b_old + α(y - ŷ). A small α makes conservative adjustments, while a larger α takes more aggressive steps.'
+      },
+      {
+        id: 'w3_m2_q3',
+        question: 'What happens to the perceptron weights w and bias b when an incoming training example is classified correctly (ŷ = y)?',
+        options: [
+          'No update occurs: the error term (y - ŷ) is 0, leaving weights and bias completely unchanged.',
+          'The weights are halved to prevent numerical overflow.',
+          'The bias is increased by α while the weights stay constant.',
+          'The weights rotate 90 degrees to search for alternative margins.'
+        ],
+        correct: 0,
+        explanation: 'The perceptron is an error-driven algorithm. When ŷ = y, the error factor (y - ŷ) equals 0, resulting in Δw = 0 and Δb = 0.'
+      },
+      {
+        id: 'w3_m2_q4',
+        question: 'What is the behavior of the perceptron learning algorithm when trained on data that is NOT linearly separable (such as the XOR problem)?',
+        options: [
+          'The algorithm fails to converge and oscillates indefinitely, repeatedly fixing one mistake while creating others.',
+          'The algorithm automatically converges to a non-linear quadratic decision boundary.',
+          'The algorithm terminates after exactly one epoch with an error exception.',
+          'The algorithm shrinks all weights to zero to minimize total loss.'
+        ],
+        correct: 0,
+        explanation: 'By Novikoff’s Convergence Theorem, convergence is guaranteed if and only if the data is linearly separable. On non-separable datasets like XOR, the boundary continuously shifts and oscillates, requiring practical stopping rules (max epochs or patience).'
+      }
+    ]
   },
   s3: {
     title: 'Module 3: From perceptrons to neural networks',
