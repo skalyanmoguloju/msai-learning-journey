@@ -70,7 +70,20 @@ export const INITIAL_SEMESTERS: Semester[] = [
             week: 'Week 03',
             title: 'Neural Networks & Back-propagation',
             description: 'Perceptrons, activation functions, dynamic gradient computation, and loss surface traversal.',
-            topics: ['Perceptrons', 'Multilayer Perceptrons (MLPs)', 'Back-propagation Derivation', 'Gradient Descent'],
+            topics: [
+              'Perceptrons and linear classifiers',
+              'Perceptron training',
+              'From perceptrons to neural networks',
+              'Activation functions',
+              'Training a multilayer neural network',
+              'Forward propagation and backpropagation',
+              'Universal approximation',
+              'Weight initialization',
+              'Monitoring neural-network training',
+              'Learning settings beyond ordinary supervised learning',
+              'Few-shot and transfer learning',
+              'Contrastive learning and SimCLR'
+            ],
             status: 'in-progress',
             reading: 'Goodfellow Ch. 6'
           },

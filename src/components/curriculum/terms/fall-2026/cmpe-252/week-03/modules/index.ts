@@ -1,0 +1,13 @@
+export { Module1Perceptrons } from './Module1Perceptrons';
+export { Module2PerceptronTraining } from './Module2PerceptronTraining';
+export { Module3PerceptronsToNN } from './Module3PerceptronsToNN';
+export { Module4ActivationFunctions } from './Module4ActivationFunctions';
+export { Module5TrainingMultilayerNN } from './Module5TrainingMultilayerNN';
+export { Module6ForwardBackprop } from './Module6ForwardBackprop';
+export { Module7UniversalApproximation } from './Module7UniversalApproximation';
+export { Module8WeightInit } from './Module8WeightInit';
+export { Module9MonitoringTraining } from './Module9MonitoringTraining';
+export { Module10BeyondSupervised } from './Module10BeyondSupervised';
+export { Module11FewShotTransfer } from './Module11FewShotTransfer';
+export { Module12ContrastiveSimCLR } from './Module12ContrastiveSimCLR';
+export { Week3QuizView } from './Week3QuizView';

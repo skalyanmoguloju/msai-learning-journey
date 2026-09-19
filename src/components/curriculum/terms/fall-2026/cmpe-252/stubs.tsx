@@ -14,16 +14,9 @@ interface WeekProps { course?: Course; module?: SyllabusModule; }
 
 // ── CMPE-252 syllabus topics per week (stub metadata) ───────────────────────
 
-// Week 02 is now implemented:
+// Week 02 & Week 03 are now implemented:
 export { Week02AI } from './week-02';
-
-export const Week03AI: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 03" topicHint="Constraint Satisfaction & Logic"
-    upcomingTopics={['CSP Backtracking', 'Arc Consistency (AC-3)', 'Propositional Logic', 'Resolution Inference']}
-  />
-);
+export { Week03AI } from './week-03';
 
 export const Week04AI: React.FC<WeekProps> = ({ course, module }) => (
   <UnderConstructionWeek
