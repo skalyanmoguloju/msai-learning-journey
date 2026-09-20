@@ -132,7 +132,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 3,
     badge: 'Architectures',
     sub: 'MLPs & Non-linear Decision Boundaries',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m3_q1',
+        question: 'What is the primary computational function of a hidden neuron in a multilayer neural network?',
+        options: [
+          'It extracts and constructs an intermediate feature representation from previous layer outputs.',
+          'It always directly outputs the final model classification prediction.',
+          'It resets all weights to zero when errors occur.',
+          'It enforces that all training data points are strictly positive.'
+        ],
+        correct: 0,
+        explanation: 'Hidden neurons transform the input into an internal latent representation, projecting data into a new feature space where non-linear boundaries can be decomposed into linearly separable regions.'
+      },
+      {
+        id: 'w3_m3_q2',
+        question: 'Why are non-linear activation functions strictly required between successive layers of a deep neural network?',
+        options: [
+          'Without non-linearities, any stack of linear layers collapses algebraically into a single equivalent affine linear layer: W\'x + b\'.',
+          'Non-linearities guarantee that the loss function is convex with a single global minimum.',
+          'Non-linearities eliminate the need for training biases in each neuron.',
+          'They prevent the learning rate from decaying over training epochs.'
+        ],
+        correct: 0,
+        explanation: 'Because the composition of linear functions is itself purely linear: W_2(W_1 x + b_1) + b_2 = (W_2 W_1)x + (W_2 b_1 + b_2). Non-linear activations break this affine collapse, allowing networks to compute curved decision boundaries.'
+      },
+      {
+        id: 'w3_m3_q3',
+        question: 'Geometrically, why is a single Rosenblatt perceptron fundamentally incapable of classifying the XOR logic function?',
+        options: [
+          'The positive and negative classes lie on opposing diagonals of the unit square, making them linearly non-separable by any single straight line.',
+          'XOR has more input dimensions than the perceptron weight vector can accommodate.',
+          'Perceptrons can only process continuous real numbers and cannot accept binary 0/1 inputs.',
+          'The learning rate α converges to zero before the XOR truth table can be evaluated.'
+        ],
+        correct: 0,
+        explanation: 'In 2D space, XOR positive points (0,1) and (1,0) and negative points (0,0) and (1,1) cross diagonally. No single linear hyperplane (straight line) can isolate one pair from the other.'
+      },
+      {
+        id: 'w3_m3_q4',
+        question: 'How does an MLP solve XOR using a two-neuron hidden layer?',
+        options: [
+          'Neuron 1 computes an OR gate, Neuron 2 computes an AND gate, and the output neuron evaluates OR AND NOT(AND).',
+          'Both hidden neurons compute identical linear averages of the input features.',
+          'Neuron 1 inverts the input signs while Neuron 2 scales the inputs to infinity.',
+          'It bypasses the hidden layer using skip connections directly to a quadratic kernel.'
+        ],
+        correct: 0,
+        explanation: 'By decomposing XOR into XOR(x_1, x_2) = (x_1 OR x_2) AND NOT(x_1 AND x_2), the hidden units compute the linearly separable OR and AND primitives, which the output neuron cleanly combines.'
+      }
+    ]
   },
   s4: {
     title: 'Module 4: Activation functions',

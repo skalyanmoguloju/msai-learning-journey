@@ -89,5 +89,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'A large initial alpha_0 allows rapid progress and coarse boundary alignment during early epochs, while gradual hyperbolic decay as t -> infinity prevents late-stage boundary oscillation near decision borders.',
     useCase: 'Stabilizing stochastic gradient updates and perceptron training over thousands of steps.',
     remark: 'Common setting: tau = 1000, causing alpha to drop from 1.0 to 0.5 at step 1000, and 0.1 at step 9000.'
+  },
+  {
+    id: 'ai-w3-m3-fc-1',
+    category: 'Module 3: From perceptrons to neural networks',
+    title: 'XOR Boolean Decomposition & Linear Inseparability',
+    frontPrompt: 'Why does a single perceptron fail on XOR, and how does a 2-neuron hidden layer resolve it?',
+    backFormula: '\\text{XOR}(x_1, x_2) = (x_1 \\lor x_2) \\land \\neg(x_1 \\land x_2) = h_{\\text{OR}} \\land \\neg h_{\\text{AND}}',
+    backExplanation: 'XOR outputs +1 on opposing diagonals (0,1) and (1,0) and 0 on (0,0) and (1,1), which cannot be separated by a single straight line in R^2. A hidden layer maps inputs to [h_OR, h_AND]^T, where the classes become linearly separable.',
+    useCase: 'Foundational motivation for multilayer neural network architectures.',
+    remark: 'Proven by Marvin Minsky and Seymour Papert in their seminal 1969 monograph Perceptrons.'
+  },
+  {
+    id: 'ai-w3-m3-fc-2',
+    category: 'Module 3: From perceptrons to neural networks',
+    title: 'The Linear Collapse Theorem',
+    frontPrompt: 'What happens mathematically when deep neural networks are built without non-linear activation functions?',
+    backFormula: '\\mathbf{y} = \\mathbf{W}^{(2)}(\\mathbf{W}^{(1)}\\mathbf{x} + \\mathbf{b}^{(1)}) + \\mathbf{b}^{(2)} = (\\mathbf{W}^{(2)}\\mathbf{W}^{(1)})\\mathbf{x} + (\\mathbf{W}^{(2)}\\mathbf{b}^{(1)} + \\mathbf{b}^{(2)}) = \\mathbf{W}\'\\mathbf{x} + \\mathbf{b}\'',
+    backExplanation: 'Any sequence of matrix-vector affine transformations is closed under composition. Without non-linear activations g(z), a 100-layer network computes only a single flat hyperplane and cannot model non-linear boundaries.',
+    useCase: 'Theoretical justification for inserting activation functions between consecutive neural network layers.',
+    remark: 'Depth alone is futile without non-linearity.'
+  },
+  {
+    id: 'ai-w3-m3-fc-3',
+    category: 'Module 3: From perceptrons to neural networks',
+    title: 'Forward Propagation Layer Vectorization',
+    frontPrompt: 'What are the canonical vectorized matrix equations for forward propagation through layer l?',
+    backFormula: '\\mathbf{z}^{(l)} = \\mathbf{W}^{(l)} \\mathbf{a}^{(l-1)} + \\mathbf{b}^{(l)}, \\qquad \\mathbf{a}^{(l)} = g\\left(\\mathbf{z}^{(l)}\\right)',
+    backExplanation: 'Pre-activation vector z^(l) is computed by multiplying weight matrix W^(l) with the previous layer activations a^(l-1) and adding bias vector b^(l). The activation function g(.) is then applied elementwise.',
+    useCase: 'Efficient batch computation and tensor operations in modern deep learning accelerators (GPUs/TPUs).',
+    remark: 'Convention: a^(0) = x represents the input feature vector.'
+  },
+  {
+    id: 'ai-w3-m3-fc-4',
+    category: 'Module 3: From perceptrons to neural networks',
+    title: 'Rectified Linear Unit (ReLU)',
+    frontPrompt: 'How is the Rectified Linear Unit (ReLU) activation defined, and why is it preferred over Sigmoid in hidden layers?',
+    backFormula: 'g(z) = \\text{ReLU}(z) = \\max(0, z) = \\begin{cases} z & \\text{if } z \\ge 0 \\\\ 0 & \\text{if } z < 0 \\end{cases}',
+    backExplanation: 'ReLU provides non-linear piecewise rectification while maintaining a constant derivative of 1 for all positive inputs. This solves the vanishing gradient saturation problem that plagues sigmoid and tanh activations.',
+    useCase: 'Standard default activation function for hidden layers in modern deep feedforward and convolutional networks.',
+    remark: 'Derivative is 1 for z > 0, 0 for z < 0, and non-differentiable at z = 0 (subgradient 0 or 1 is used).'
   }
 ];
