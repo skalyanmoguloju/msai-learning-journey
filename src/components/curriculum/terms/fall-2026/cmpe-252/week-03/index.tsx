@@ -37,7 +37,7 @@ import {
   Week3QuizView
 } from './modules';
 
-const STORAGE_KEY_COMPLETED = 'cmpe252_week03_completed';
+const STORAGE_KEY_COMPLETED = 'cmpe252_week03_completed_v2';
 const WEEK_KEY = 'cmpe-252_week-03';
 
 export interface Week03AIProps {
@@ -87,7 +87,20 @@ export const Week03AI: React.FC<Week03AIProps> = ({ course, module }) => {
 
   const [completedSteps, setCompletedSteps] = useState<StepId[]>(() => {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY_COMPLETED) || '[]');
+      const savedV2 = localStorage.getItem(STORAGE_KEY_COMPLETED);
+      if (savedV2) return JSON.parse(savedV2);
+
+      // Clean up legacy storage if it only has the accidentally injected [3]
+      const legacy = localStorage.getItem('cmpe252_week03_completed');
+      if (legacy) {
+        localStorage.removeItem('cmpe252_week03_completed');
+        const parsed = JSON.parse(legacy);
+        if (Array.isArray(parsed)) {
+          // Exclude the injected 3
+          return parsed.filter((s: number) => s !== 3) as StepId[];
+        }
+      }
+      return [];
     } catch {
       return [];
     }
