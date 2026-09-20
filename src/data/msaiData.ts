@@ -91,9 +91,20 @@ export const INITIAL_SEMESTERS: Semester[] = [
             id: 'm252-4',
             week: 'Week 04',
             title: 'Deep Neural Networks, Sequence & Spatial Models',
-            description: 'Advanced deep learning architectures for structured spatial and sequential signal data.',
-            topics: ['Convolutional Neural Networks (CNNs)', 'Recurrent Neural Networks (RNNs)', 'Transformers & Conformers'],
-            status: 'upcoming',
+            description: 'Advanced deep learning architectures for structured spatial and sequential signal data: CNNs, Transformers, and Recurrent Networks.',
+            topics: [
+              'Deep learning and feature learning',
+              'Why convolutional neural networks?',
+              'CNN building blocks',
+              'Important CNN architectures',
+              'Transformers and self-attention',
+              'Basic recurrent neural networks',
+              'RNN loss and training',
+              'GRU',
+              'LSTM',
+              'Bidirectional RNNs'
+            ],
+            status: 'in-progress',
             reading: 'Goodfellow Ch. 9 & 10'
           },
           {
