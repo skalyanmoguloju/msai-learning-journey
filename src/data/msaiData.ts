@@ -84,7 +84,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
               'Few-shot and transfer learning',
               'Contrastive learning and SimCLR'
             ],
-            status: 'in-progress',
+            status: 'completed',
             reading: 'Goodfellow Ch. 6'
           },
           {

@@ -21,6 +21,7 @@ function normalizeSemesters(sems: Semester[]): Semester[] {
       ...course,
       modules: course.modules.map(mod => ({
         ...mod,
+        status: mod.id === 'm252-3' ? 'completed' : mod.status,
         week: mod.week ? mod.week.replace(/^Session\s*/i, 'Week ') : mod.week,
         description: mod.description ? mod.description.replace(/Session\s*/gi, 'Week ') : mod.description,
         reading: mod.reading ? mod.reading.replace(/Session\s*/gi, 'Week ') : mod.reading
