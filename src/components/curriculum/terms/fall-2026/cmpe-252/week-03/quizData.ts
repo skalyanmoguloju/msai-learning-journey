@@ -524,7 +524,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 10,
     badge: 'Paradigms',
     sub: 'Self-Supervised & Semi-Supervised Learning',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m10_q1',
+        question: 'How does Self-Supervised Learning (SSL) fundamentally differ from traditional Supervised Learning and Unsupervised Clustering?',
+        options: [
+          'Self-supervised learning autonomously creates explicit pseudo-supervisory pretext prediction targets from unannotated raw data without human labeling.',
+          'Self-supervised learning requires human annotators to verify every feature coordinate.',
+          'Self-supervised learning only works on one-dimensional scalar data.',
+          'Self-supervised learning completely deletes the neural network loss function.'
+        ],
+        correct: 0,
+        explanation: 'Unlike supervised learning (which relies on human labels) or traditional clustering, self-supervised learning defines an auxiliary pretext task (e.g. masked token prediction, next-word prediction, image rotation/jigsaw) where the ground-truth target is derived directly from the unannotated input.'
+      },
+      {
+        id: 'w3_m10_q2',
+        question: 'In Positive-Unlabeled (PU) learning, why is it mathematically invalid to treat all unlabeled observations as negative class samples?',
+        options: [
+          'Unlabeled examples comprise a mixture of both true positives (e.g. undetected fraud) and true negatives; assuming all are negative introduces massive label bias.',
+          'Unlabeled examples have missing input features that prevent dot product calculation.',
+          'Gradient descent cannot evaluate loss on negative numbers.',
+          'PU learning only supports binary weights with zero bias.'
+        ],
+        correct: 0,
+        explanation: 'In PU learning, the unlabeled set U is a mixture of unobserved positives and genuine negatives. Assuming U = negative induces severe label contamination and distorts the classification boundary.'
+      },
+      {
+        id: 'w3_m10_q3',
+        question: 'What is the primary distinction between Multi-Task Learning and Meta-Learning (\'Learning to Learn\')?',
+        options: [
+          'Multi-task learning trains a single model to concurrently master several predetermined tasks; meta-learning trains a generalizable prior to rapidly adapt to brand-new unseen tasks with minimal support data.',
+          'Multi-task learning is unsupervised, whereas meta-learning is purely rule-based.',
+          'Meta-learning requires infinite training data, while multi-task requires zero data.',
+          'Multi-task learning only updates biases, while meta-learning only updates weights.'
+        ],
+        correct: 0,
+        explanation: 'Multi-task learning optimizes shared representations to solve multiple fixed tasks simultaneously. Meta-learning (e.g., MAML) optimizes the model\'s initialization or adaptation algorithm across a distribution of tasks so it can adapt to entirely novel tasks from a small support set.'
+      },
+      {
+        id: 'w3_m10_q4',
+        question: 'What is \'Catastrophic Forgetting\' in Continual Learning, and how do rehearsal or regularization techniques combat it?',
+        options: [
+          'When sequential training on new tasks drastically degrades performance on previously learned tasks; rehearsal replays exemplar memory while regularization penalizes altering parameters vital to past tasks.',
+          'When GPU memory runs out during the backward pass.',
+          'When the learning rate decays to zero after epoch 1.',
+          'When the model cannot predict inputs greater than 1.0.'
+        ],
+        correct: 0,
+        explanation: 'Continual learning suffers from catastrophic forgetting when gradient updates for Task t overwrite the weights critical for Tasks 1 to t-1. Rehearsal buffers preserve past exemplars, while regularization (e.g. EWC) penalizes shifts to weights important for earlier tasks.'
+      }
+    ]
   },
   s11: {
     title: 'Module 11: Few-shot and transfer learning',

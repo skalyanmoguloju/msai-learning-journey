@@ -409,5 +409,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'Excessively large learning rates cause gradient updates to overshoot valleys, resulting in wild loss oscillations, sudden spikes, or numerical overflow (NaN). Excessively small learning rates lead to agonizingly slow linear descent that may prematurely halt before finding shallow minima.',
     useCase: 'Tuning learning rates with learning rate finders (Smith 2017) or cosine decay schedules.',
     remark: 'Adam and modern adaptive optimizers scale updates per-parameter, reducing sensitivity to initial eta.'
+  },
+  {
+    id: 'ai-w3-m10-fc-1',
+    category: 'Module 10: Learning settings beyond ordinary supervised learning',
+    title: 'Self-Supervised Learning & Pretext Tasks',
+    frontPrompt: 'What defines Self-Supervised Learning (SSL), and how does it generate supervision from unlabeled data?',
+    backFormula: '\\mathcal{L}_{\\text{SSL}} = \\mathcal{L}\\left(y_{\\text{pseudo}}, f_\\theta(\\tilde{\\mathbf{x}})\\right) \\quad \\text{where } y_{\\text{pseudo}} = h(\\mathbf{x})',
+    backExplanation: 'Self-supervised learning converts raw unannotated data into supervised prediction tasks by corrupting or masking an input (e.g. masking words in text, masking patches in Vision Transformers, random image cropping) and training the network to predict the omitted or original component. No human annotators are needed.',
+    useCase: 'Foundational pretraining for modern LLMs (GPT next-token prediction, BERT masked LM) and self-supervised computer vision (MAE, DINO).',
+    remark: 'Often grouped under unsupervised learning, but it formulates explicit objective functions using internal data targets.'
+  },
+  {
+    id: 'ai-w3-m10-fc-2',
+    category: 'Module 10: Learning settings beyond ordinary supervised learning',
+    title: 'Positive-Unlabeled (PU) & PNU Learning',
+    frontPrompt: 'Why does Positive-Unlabeled (PU) learning forbid treating the unlabeled set U as negative samples?',
+    backFormula: '\\mathcal{D}_U = \\mathcal{D}_{P,\\text{unobserved}} \\cup \\mathcal{D}_N \\implies \\text{Unlabeled} \\neq \\text{Negative}',
+    backExplanation: 'In real-world settings (e.g. fraudulent transactions, medical diagnoses), we only verify a subset of positives. The unlabeled pool U contains both unobserved positives and genuine negatives. Assuming U = negative contaminates the data with false negatives, distorting decision boundaries.',
+    useCase: 'Fraud detection, gene discovery, recommendation systems (implicit feedback where unclicked != disliked).',
+    remark: 'PU learning estimates the class prior p(y=1) to reweight the empirical risk.'
+  },
+  {
+    id: 'ai-w3-m10-fc-3',
+    category: 'Module 10: Learning settings beyond ordinary supervised learning',
+    title: 'Domain Adaptation vs. Domain Generalization',
+    frontPrompt: 'What is the key operational distinction between Domain Adaptation and Domain Generalization under distribution shift?',
+    backFormula: 'P_S(\\mathbf{x}, y) \\neq P_T(\\mathbf{x}, y) \\qquad (\\text{Target data in training: Adaptation: Yes; Generalization: No})',
+    backExplanation: 'Domain shift occurs when source domain S and target domain T have different joint distributions. Domain Adaptation accesses (often unlabeled) target-domain data during training to align feature representations. Domain Generalization must perform well on completely unseen target domains without observing any target data beforehand.',
+    useCase: 'Deploying autonomous driving models trained in sunny California to rainy Seattle or night driving.',
+    remark: 'Adversarial domain adaptation (DANN) trains a domain discriminator to ensure features are domain-invariant.'
+  },
+  {
+    id: 'ai-w3-m10-fc-4',
+    category: 'Module 10: Learning settings beyond ordinary supervised learning',
+    title: 'Continual Learning & Catastrophic Forgetting',
+    frontPrompt: 'What is Catastrophic Forgetting in Continual Learning, and what are the main mitigation paradigms?',
+    backFormula: '\\text{Plasticity vs. Stability}: \\quad \\mathcal{L}_{\\text{total}} = \\mathcal{L}_{\\text{new}} + \\lambda \\sum_i F_i (\\theta_i - \\theta_{i,\\text{old}})^2',
+    backExplanation: 'When neural networks sequentially learn new tasks, gradient descent overwrites parameters critical for past tasks, causing performance on earlier tasks to collapse catastrophically. Mitigation strategies include Rehearsal (memory replay buffers), Architectural modularity (dynamic parameter expansion), and Regularization (Elastic Weight Consolidation / EWC using Fisher information F).',
+    useCase: 'Lifelong autonomous agents, streaming robotics, on-device personalized model updating.',
+    remark: 'Balancing plasticity (learning new concepts) with stability (retaining old knowledge) is the central dilemma.'
   }
 ];
