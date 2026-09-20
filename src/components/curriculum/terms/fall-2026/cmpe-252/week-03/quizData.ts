@@ -468,7 +468,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 9,
     badge: 'Diagnostics',
     sub: 'Learning Curves, Generalization & Early Stopping',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m9_q1',
+        question: 'What does the Generalization Gap represent when monitoring neural network learning curves?',
+        options: [
+          'The difference between validation loss and training loss: Generalization Gap = L_val - L_train, indicating how much worse the model performs on unseen data.',
+          'The physical distance between the input layer and the output layer in deep architectures.',
+          'The elapsed time between the start of training and the final convergence epoch.',
+          'The difference between the initial learning rate and the minimum learning rate.'
+        ],
+        correct: 0,
+        explanation: 'The generalization gap is defined as L_val - L_train. A small, stable gap indicates healthy generalization, whereas an expanding gap (L_train falling while L_val rises) is the canonical hallmark of overfitting.'
+      },
+      {
+        id: 'w3_m9_q2',
+        question: 'Which learning curve pattern definitively signals that a neural network is overfitting to the training dataset?',
+        options: [
+          'Training loss continues to decrease smoothly, while validation loss begins to curve upward and increase.',
+          'Both training loss and validation loss remain high and refuse to decrease.',
+          'Both training loss and validation loss decrease in parallel toward zero.',
+          'Training loss oscillates between positive and negative numbers.'
+        ],
+        correct: 0,
+        explanation: 'Overfitting occurs when the model memorizes idiosyncratic training noise rather than true underlying concepts. Consequently, training error continues declining while validation error climbs, widening the generalization gap.'
+      },
+      {
+        id: 'w3_m9_q3',
+        question: 'In early stopping, how is the final model checkpoint selected, and what role does the \'patience\' hyperparameter play?',
+        options: [
+          'The model restores parameters from the epoch with the lowest validation loss (θ* = arg min_θ L_val(θ)); patience is the number of non-improving epochs tolerated before halting training.',
+          'The model always keeps the parameters from the final epoch; patience is the learning rate decay factor.',
+          'The model selects the checkpoint where training loss is exactly zero; patience specifies the batch size.',
+          'The model restarts training from scratch whenever validation loss increases.'
+        ],
+        correct: 0,
+        explanation: 'Early stopping monitors validation loss and terminates training if it fails to improve for \'patience\' consecutive epochs. The best checkpoint with lowest validation loss is preserved and restored as the deployed model.'
+      },
+      {
+        id: 'w3_m9_q4',
+        question: 'What visual artifact in the training loss curve typically indicates that the learning rate η is excessively large?',
+        options: [
+          'Erratic oscillations, violent spikes, sudden loss explosions, or divergence to NaN.',
+          'A perfectly horizontal flat line that never changes from epoch 1.',
+          'A monotonic, smooth, asymptotic descent toward zero.',
+          'A step function with perfectly vertical drops at every epoch.'
+        ],
+        correct: 0,
+        explanation: 'When the learning rate is excessively large, gradient updates take giant steps that overshoot the loss minima, bouncing chaotically across ravine walls, causing loss spikes or numerical divergence to infinity/NaN.'
+      }
+    ]
   },
   s10: {
     title: 'Module 10: Learning settings beyond ordinary supervised learning',

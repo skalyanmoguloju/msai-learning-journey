@@ -369,5 +369,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'Random initialization breaks symmetry without conveying domain knowledge. Pretraining initializes the network with general representations (e.g. edge detectors, language syntax) learned from large corpora, which can be fine-tuned or frozen for downstream tasks.',
     useCase: 'Foundation model adaptation (e.g., Vision Transformers, BERT/GPT fine-tuning).',
     remark: 'Transfer learning dramatically reduces sample complexity and training wall-clock time.'
+  },
+  {
+    id: 'ai-w3-m9-fc-1',
+    category: 'Module 9: Monitoring neural-network training',
+    title: 'Generalization Gap & Overfitting Dynamics',
+    frontPrompt: 'How is the Generalization Gap defined, and what trajectory signifies the onset of overfitting?',
+    backFormula: '\\mathcal{G}(t) = \\mathcal{L}_{\\text{val}}(t) - \\mathcal{L}_{\\text{train}}(t), \\qquad \\frac{d\\mathcal{L}_{\\text{train}}}{dt} < 0 \\; \\land \\; \\frac{d\\mathcal{L}_{\\text{val}}}{dt} > 0',
+    backExplanation: 'The generalization gap measures the disparity between performance on unseen validation samples vs. training samples. When training loss continues to fall while validation loss begins to diverge upward, the model has transitioned from learning generalizable statistical regularities to memorizing training noise.',
+    useCase: 'Diagnosing model capacity issues and setting early stopping checkpoints.',
+    remark: 'A negative gap is rare and typically implies validation data is easier or data augmentation was applied only to training.'
+  },
+  {
+    id: 'ai-w3-m9-fc-2',
+    category: 'Module 9: Monitoring neural-network training',
+    title: 'Early Stopping Criterion & Patience',
+    frontPrompt: 'What is the mathematical definition of early stopping model selection, and how does patience operate?',
+    backFormula: '\\theta^* = \\arg\\min_\\theta \\mathcal{L}_{\\text{val}}(\\theta), \\qquad \\text{Halt if } \\forall k \\in [1, P], \\; \\mathcal{L}_{\\text{val}}(t+k) \\ge \\min_{j \\le t} \\mathcal{L}_{\\text{val}}(j)',
+    backExplanation: 'Early stopping preserves the checkpoint theta* from the epoch achieving the absolute minimum validation loss. If validation loss fails to establish a new minimum for P (patience) consecutive epochs, training terminates early and theta* is restored.',
+    useCase: 'Automatic regularization preventing over-training without manual epoch tuning.',
+    remark: 'Always evaluate the final model using a pristine held-out test set, not the validation set.'
+  },
+  {
+    id: 'ai-w3-m9-fc-3',
+    category: 'Module 9: Monitoring neural-network training',
+    title: 'Underfitting vs. Overfitting Diagnostic Signatures',
+    frontPrompt: 'What are the contrasting loss signatures and primary remedies for underfitting versus overfitting?',
+    backFormula: '\\text{Underfitting}: \\mathcal{L}_{\\text{train}} \\uparrow, \\mathcal{L}_{\\text{val}} \\uparrow \\quad \\text{vs.} \\quad \\text{Overfitting}: \\mathcal{L}_{\\text{train}} \\downarrow, \\mathcal{L}_{\\text{val}} \\uparrow',
+    backExplanation: 'Underfitting (high bias): Model lacks expressive capacity or is undertrained. Remedy: Increase network width/depth, train longer, reduce regularization, add features. Overfitting (high variance): Model memorizes noise. Remedy: Add training data, L2 weight decay, dropout, data augmentation, early stopping.',
+    useCase: 'Guiding the iterative debugging cycle in deep learning development.',
+    remark: 'L2 regularization adds a penalty: L_total = L_data + lambda * sum(w_j^2).'
+  },
+  {
+    id: 'ai-w3-m9-fc-4',
+    category: 'Module 9: Monitoring neural-network training',
+    title: 'Learning Rate Pathologies & Loss Curve Artifacts',
+    frontPrompt: 'How do learning rate imbalances manifest in training loss curves?',
+    backFormula: '\\eta \\gg \\eta^* \\implies \\text{Spikes / NaN / Divergence}, \\qquad \\eta \\ll \\eta^* \\implies \\text{Linear Flat Plateaus}',
+    backExplanation: 'Excessively large learning rates cause gradient updates to overshoot valleys, resulting in wild loss oscillations, sudden spikes, or numerical overflow (NaN). Excessively small learning rates lead to agonizingly slow linear descent that may prematurely halt before finding shallow minima.',
+    useCase: 'Tuning learning rates with learning rate finders (Smith 2017) or cosine decay schedules.',
+    remark: 'Adam and modern adaptive optimizers scale updates per-parameter, reducing sensitivity to initial eta.'
   }
 ];
