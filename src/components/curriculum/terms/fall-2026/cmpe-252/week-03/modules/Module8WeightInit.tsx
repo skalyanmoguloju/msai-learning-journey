@@ -64,12 +64,12 @@ export const Module8WeightInit: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-fade-in text-slate-200">
-      {/* 1. CONCEPTUAL FOUNDATION: What Does Initialization Mean? */}
+      {/* CONCEPTUAL FOUNDATION: What Does Initialization Mean? */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">1. What Does Initialization Mean?</h2>
+            <h2 className="text-xl font-bold text-slate-100">What Does Initialization Mean?</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
             Starting Coordinates
@@ -284,12 +284,12 @@ export const Module8WeightInit: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. WHY ALL-ZERO HIDDEN WEIGHTS FAIL */}
+      {/* WHY ALL-ZERO HIDDEN WEIGHTS FAIL */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-rose-400" />
-            <h2 className="text-xl font-bold text-slate-100">2. Why All-Zero Hidden Weights Fail</h2>
+            <h2 className="text-xl font-bold text-slate-100">Why All-Zero Hidden Weights Fail</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 font-semibold">
             Mathematical Symmetry Trap
@@ -337,12 +337,12 @@ export const Module8WeightInit: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. WHY RANDOM SCALE MATTERS: THE GOLDILOCKS ZONE */}
+      {/* WHY RANDOM SCALE MATTERS: THE GOLDILOCKS ZONE */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Scale className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">3. Why the Random Scale Matters</h2>
+            <h2 className="text-xl font-bold text-slate-100">Why the Random Scale Matters</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
             The Variance Balance
@@ -391,12 +391,12 @@ export const Module8WeightInit: React.FC = () => {
         </div>
       </div>
 
-      {/* 5. HE & XAVIER INITIALIZATION */}
+      {/* HE & XAVIER INITIALIZATION */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Maximize2 className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">4. He (Kaiming) &amp; Xavier (Glorot) Methods</h2>
+            <h2 className="text-xl font-bold text-slate-100">He (Kaiming) &amp; Xavier (Glorot) Methods</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-semibold">
             Principled Variance Scaling
@@ -498,12 +498,12 @@ export const Module8WeightInit: React.FC = () => {
         </div>
       </div>
 
-      {/* 6. PRETRAINING AND TRANSFER LEARNING */}
+      {/* PRETRAINING AND TRANSFER LEARNING */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <GitBranch className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">5. Pretraining &amp; Transfer Learning</h2>
+            <h2 className="text-xl font-bold text-slate-100">Pretraining &amp; Transfer Learning</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 font-semibold">
             Learned Initializations

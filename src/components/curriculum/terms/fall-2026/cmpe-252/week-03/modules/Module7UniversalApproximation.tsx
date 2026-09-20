@@ -100,12 +100,12 @@ export const Module7UniversalApproximation: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-fade-in text-slate-200">
-      {/* 1. CONCEPTUAL FOUNDATION: What Does Approximate Mean? */}
+      {/* CONCEPTUAL FOUNDATION: What Does Approximate Mean? */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Target className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">1. What Does &ldquo;Approximate&rdquo; Mean?</h2>
+            <h2 className="text-xl font-bold text-slate-100">What Does &ldquo;Approximate&rdquo; Mean?</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
             Mathematical Precision
@@ -258,12 +258,12 @@ export const Module7UniversalApproximation: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. THE UNIVERSAL APPROXIMATION THEOREM */}
+      {/* THE UNIVERSAL APPROXIMATION THEOREM */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Maximize2 className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">2. The Universal Approximation Theorem</h2>
+            <h2 className="text-xl font-bold text-slate-100">The Universal Approximation Theorem</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
             Cybenko (1989) &amp; Hornik (1991)
@@ -343,12 +343,12 @@ export const Module7UniversalApproximation: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. HOW SIMPLE NEURONS BUILD COMPLEX FUNCTIONS */}
+      {/* HOW SIMPLE NEURONS BUILD COMPLEX FUNCTIONS */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Layers className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">3. How Simple Neurons Build Complex Functions</h2>
+            <h2 className="text-xl font-bold text-slate-100">How Simple Neurons Build Complex Functions</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
             ReLU Basis Construction
@@ -523,12 +523,12 @@ export const Module7UniversalApproximation: React.FC = () => {
         </div>
       </div>
 
-      {/* 6. WHAT THE THEOREM DOES NOT GUARANTEE */}
+      {/* WHAT THE THEOREM DOES NOT GUARANTEE */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-400" />
-            <h2 className="text-xl font-bold text-slate-100">4. What the Theorem Does NOT Guarantee</h2>
+            <h2 className="text-xl font-bold text-slate-100">What the Theorem Does NOT Guarantee</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 font-semibold">
             Crucial Limitations
@@ -584,12 +584,12 @@ export const Module7UniversalApproximation: React.FC = () => {
         </div>
       </div>
 
-      {/* 7. EXPRESSIVE POWER VERSUS LEARNABILITY */}
+      {/* EXPRESSIVE POWER VERSUS LEARNABILITY */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">5. Expressive Power vs. Learnability</h2>
+            <h2 className="text-xl font-bold text-slate-100">Expressive Power vs. Learnability</h2>
           </div>
           <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-semibold">
             The 4 Pillars
