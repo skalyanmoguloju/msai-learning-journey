@@ -356,7 +356,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 7,
     badge: 'Theorem',
     sub: 'Expressive Capacity of Neural Networks',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m7_q1',
+        question: 'In the Universal Approximation Theorem statement ∀ ε > 0, ∃ θ: sup_{x ∈ K} |f(x) - f_θ(x)| < ε, what does ε represent?',
+        options: [
+          'A strictly positive allowed error tolerance bounding the uniform distance between the target function and network prediction across K.',
+          'The minimum number of hidden layers required for convergence.',
+          'The step size (learning rate) hyperparameter used in gradient descent.',
+          'The total number of input features in the observation domain.'
+        ],
+        correct: 0,
+        explanation: 'ε > 0 denotes the error tolerance. The theorem states that for any arbitrary positive error margin ε, no matter how small, there exists a network parameter set θ such that the approximation error is bounded by ε across the entire compact set K.'
+      },
+      {
+        id: 'w3_m7_q2',
+        question: 'Which set of conditions is strictly required for the Universal Approximation Theorem (Cybenko 1989 / Hornik 1991) to hold?',
+        options: [
+          'At least one hidden layer with sufficiently many units, a continuous non-linear activation function, and a compact (closed and bounded) input domain.',
+          'Strictly linear activation functions, zero bias terms, and an infinite unbounded input domain.',
+          'A deep architecture with at least 50 hidden layers and convex quadratic loss landscape.',
+          'A multi-class Softmax layer with orthogonal weight matrices and zero-centered Gaussian inputs.'
+        ],
+        correct: 0,
+        explanation: 'UAT requires a feedforward network with at least one hidden layer, a non-linear activation function (such as sigmoid or ReLU), enough hidden neurons, and a compact (closed and bounded) subset K ⊂ R^d.'
+      },
+      {
+        id: 'w3_m7_q3',
+        question: 'Why does the theoretical guarantee of Universal Approximation NOT guarantee that a neural network can successfully be trained on real-world data?',
+        options: [
+          'Representation does not guarantee learnability: the theorem proves an optimal θ* exists, but gradient descent may fail to discover it due to non-convex local minima, saddle points, or data scarcity.',
+          'The theorem only applies to quantum neural networks and cannot be evaluated on digital computers.',
+          'Neural networks automatically unlearn weights after each training epoch unless weights are frozen.',
+          'Universal approximation only holds when the learning rate α is set to exactly 1.0.'
+        ],
+        correct: 0,
+        explanation: 'Expressive capacity (representation) is distinct from optimization (learnability). Even when a valid parameter configuration θ* exists, gradient-based optimization on non-convex loss surfaces with finite, noisy sample data cannot guarantee finding it.'
+      },
+      {
+        id: 'w3_m7_q4',
+        question: 'How does a combination of simple ReLU neurons construct complex continuous non-linear functions such as f(x) = |x| or localized bump functions?',
+        options: [
+          'By scaling and translating piecewise linear ramp activations (e.g., ReLU(x) + ReLU(-x) = |x|) and summing them at the output layer.',
+          'By rounding all weights to the nearest binary integers 0 and 1.',
+          'By collapsing all hidden layer matrix multiplications into a single linear regression hyperplane.',
+          'By enforcing that all pre-activations z are strictly negative so the derivative is everywhere zero.'
+        ],
+        correct: 0,
+        explanation: 'Each ReLU neuron partitions the space into inactive (zero) and active (linear slope) regions. By translating, scaling, and linearly combining these ramps in the output tier, networks construct localized facets, bumps, and arbitrary piecewise linear approximations of continuous functions.'
+      }
+    ]
   },
   s8: {
     title: 'Module 8: Weight initialization',

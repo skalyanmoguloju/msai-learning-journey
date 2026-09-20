@@ -8,9 +8,7 @@ import {
   RotateCcw,
   Target,
   Layers,
-  ArrowRight,
   Calculator,
-  HelpCircle,
   Activity,
   Maximize2,
   TrendingDown
@@ -99,17 +97,6 @@ export const Module7UniversalApproximation: React.FC = () => {
       meanError: avgErr
     };
   }, [pieces]);
-
-  // --- Quiz State ---
-  const [q1, setQ1] = useState<string | null>(null);
-  const [q2, setQ2] = useState<string | null>(null);
-  const [q3, setQ3] = useState<string | null>(null);
-  const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
-
-  const isQ1Correct = q1 === 'tolerance';
-  const isQ2Correct = q2 === 'conditions';
-  const isQ3Correct = q3 === 'learnability';
-  const totalScore = (isQ1Correct ? 1 : 0) + (isQ2Correct ? 1 : 0) + (isQ3Correct ? 1 : 0);
 
   return (
     <div className="space-y-8 animate-fade-in text-slate-200">
@@ -658,188 +645,7 @@ export const Module7UniversalApproximation: React.FC = () => {
           </p>
         </div>
       </div>
-
-      {/* 8. INTERACTIVE KNOWLEDGE CHECK */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-6 shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-          <div className="flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-xl font-bold text-slate-100">6. Interactive Understanding Check</h2>
-          </div>
-          <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-semibold">
-            Quick Assessment
-          </span>
-        </div>
-
-        <div className="space-y-6 text-xs">
-          {/* Question 1 */}
-          <div className="space-y-3 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-            <p className="font-semibold text-slate-200">
-              1. In the theorem statement <MathText text="\forall \varepsilon > 0, \exists \theta : |f(x) - f_\theta(x)| < \varepsilon" />, what does <MathText text="\varepsilon" /> represent?
-            </p>
-            <div className="space-y-2">
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q1"
-                  value="tolerance"
-                  checked={q1 === 'tolerance'}
-                  onChange={() => setQ1('tolerance')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>An allowed positive error tolerance bounding the distance between target and prediction.</span>
-              </label>
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q1"
-                  value="layers"
-                  checked={q1 === 'layers'}
-                  onChange={() => setQ1('layers')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>The minimum number of hidden layers required in the feedforward network.</span>
-              </label>
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q1"
-                  value="lr"
-                  checked={q1 === 'lr'}
-                  onChange={() => setQ1('lr')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>The gradient descent learning rate parameter.</span>
-              </label>
-            </div>
-          </div>
-
-          {/* Question 2 */}
-          <div className="space-y-3 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-            <p className="font-semibold text-slate-200">
-              2. Which set of conditions represents the core prerequisites of the Universal Approximation Theorem?
-            </p>
-            <div className="space-y-2">
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q2"
-                  value="conditions"
-                  checked={q2 === 'conditions'}
-                  onChange={() => setQ2('conditions')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>At least one hidden layer, non-linear continuous activation, sufficient hidden neurons, and a compact domain.</span>
-              </label>
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q2"
-                  value="linear"
-                  checked={q2 === 'linear'}
-                  onChange={() => setQ2('linear')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>Strictly linear activations, zero bias terms, and an infinite unbounded input domain.</span>
-              </label>
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q2"
-                  value="deep"
-                  checked={q2 === 'deep'}
-                  onChange={() => setQ2('deep')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>A deep architecture with over 100 layers and a convex quadratic loss function.</span>
-              </label>
-            </div>
-          </div>
-
-          {/* Question 3 */}
-          <div className="space-y-3 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-            <p className="font-semibold text-slate-200">
-              3. What is the fundamental theoretical limitation of the Universal Approximation Theorem?
-            </p>
-            <div className="space-y-2">
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q3"
-                  value="learnability"
-                  checked={q3 === 'learnability'}
-                  onChange={() => setQ3('learnability')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>Representation does not guarantee learnability; existence of optimal weights does not imply gradient descent will discover them.</span>
-              </label>
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q3"
-                  value="impossible"
-                  checked={q3 === 'impossible'}
-                  onChange={() => setQ3('impossible')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>Neural networks can never approximate non-linear functions under any circumstances.</span>
-              </label>
-              <label className="flex items-start gap-2.5 cursor-pointer text-slate-300 hover:text-slate-100">
-                <input
-                  type="radio"
-                  name="q3"
-                  value="data"
-                  checked={q3 === 'data'}
-                  onChange={() => setQ3('data')}
-                  className="mt-0.5 accent-indigo-500"
-                />
-                <span>The theorem only works if the training dataset contains exactly zero error.</span>
-              </label>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 pt-2">
-            <button
-              onClick={() => setQuizSubmitted(true)}
-              className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors shadow-sm"
-            >
-              Check Answers
-            </button>
-            {quizSubmitted && (
-              <button
-                onClick={() => {
-                  setQ1(null);
-                  setQ2(null);
-                  setQ3(null);
-                  setQuizSubmitted(false);
-                }}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold transition-colors"
-              >
-                Reset
-              </button>
-            )}
-          </div>
-
-          {quizSubmitted && (
-            <div
-              className={`p-4 rounded-xl border text-xs leading-relaxed ${
-                totalScore === 3
-                  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
-                  : 'bg-amber-500/10 border-amber-500/20 text-amber-300'
-              }`}
-            >
-              <div className="font-bold text-sm mb-1">
-                {totalScore === 3 ? 'Score: 3/3 — Excellent Mastery!' : `Score: ${totalScore}/3 — Review Needed`}
-              </div>
-              <p>
-                {totalScore === 3
-                  ? 'You thoroughly understand approximation error bounds, universal approximation prerequisites, and the vital separation between expressive capacity and algorithmic learnability.'
-                  : 'Review the quantifier formulation in Section 2 and the non-guarantees in Section 4, then re-test yourself.'}
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 };
+
