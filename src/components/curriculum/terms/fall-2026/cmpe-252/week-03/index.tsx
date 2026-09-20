@@ -87,17 +87,9 @@ export const Week03AI: React.FC<Week03AIProps> = ({ course, module }) => {
 
   const [completedSteps, setCompletedSteps] = useState<StepId[]>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY_COMPLETED);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && !parsed.includes(3)) {
-          return [...parsed, 3 as StepId];
-        }
-        return parsed;
-      }
-      return [3 as StepId];
+      return JSON.parse(localStorage.getItem(STORAGE_KEY_COMPLETED) || '[]');
     } catch {
-      return [3 as StepId];
+      return [];
     }
   });
 
