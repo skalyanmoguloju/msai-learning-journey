@@ -42,26 +42,18 @@ export const Module3PerceptronsToNN: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in text-slate-200">
-      {/* Hero / Learning Goal Header */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-3 shadow-sm">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            Machine Learning · Lecture 3 · Module 3
-          </span>
-          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            Architectures & Non-Linearity
-          </span>
-        </div>
-        <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-2.5">
-          <Network className="w-6 h-6 text-indigo-400 shrink-0" />
-          <span>From Perceptrons to Neural Networks</span>
-        </h2>
-        <p className="text-sm text-slate-300 leading-relaxed max-w-4xl">
-          A single perceptron is fundamentally constrained to linear separation. Explore why single-layer
-          architectures fail on non-linear problems like XOR, how multilayer networks construct intermediate
-          feature representations, why deep linear stacks collapse into trivial single layers, and how non-linear
-          activations empower deep learning.
+      {/* ── Learning Goal Callout ─────────────────────────────────────────── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
+        <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-cyan-400" />
+          <span>Learning Goal</span>
+        </h3>
+        <p className="text-xs text-slate-300 leading-relaxed">
+          Understand why a single perceptron is fundamentally limited to linear separation, how multiple neurons collaborate to construct intermediate feature representations, why deep linear stacks collapse into trivial single layers, and how non-linear activations empower neural networks.
         </p>
+        <div className="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-xs text-indigo-300 font-medium leading-relaxed">
+          <strong>The core intuition:</strong> A single perceptron draws a single flat hyperplane. Multiple neurons with non-linear activations warp and fold the feature space, converting non-linearly separable problems like XOR into linearly separable representations.
+        </div>
       </div>
 
       {/* Why One Perceptron Is Not Enough: The XOR Problem */}
@@ -801,11 +793,6 @@ export const Module3PerceptronsToNN: React.FC = () => {
             </tbody>
           </table>
         </div>
-      </div>
-
-      {/* Module Navigation Footer */}
-      <div className="pt-2 text-center text-xs text-slate-500">
-        Module 3 complete · Next: <strong className="text-slate-400">Module 4: Activation Functions</strong>
       </div>
     </div>
   );

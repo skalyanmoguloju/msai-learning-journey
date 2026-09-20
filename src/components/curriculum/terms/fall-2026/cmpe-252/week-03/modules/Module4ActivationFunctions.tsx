@@ -48,25 +48,18 @@ export const Module4ActivationFunctions: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in text-slate-200">
-      {/* Header / Learning Goal */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-3 shadow-sm">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            Machine Learning · Lecture 3 · Module 4
-          </span>
-          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            Non-Linearity & Gradient Dynamics
-          </span>
-        </div>
-        <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-2.5">
-          <Activity className="w-6 h-6 text-indigo-400 shrink-0" />
-          <span>Activation Functions</span>
-        </h2>
-        <p className="text-sm text-slate-300 leading-relaxed max-w-4xl">
-          Discover how activation functions introduce essential non-linear transformations into artificial neurons.
-          Master the mathematical properties, derivative dynamics, saturation risks, and gradient propagation
-          characteristics of Sigmoid, Tanh, ReLU, Leaky ReLU, Softplus, and ELU.
+      {/* ── Learning Goal Callout ─────────────────────────────────────────── */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
+        <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-cyan-400" />
+          <span>Learning Goal</span>
+        </h3>
+        <p className="text-xs text-slate-300 leading-relaxed">
+          Discover how activation functions transform raw pre-activation scores into non-linear representations, preventing deep networks from collapsing into linear hyperplanes and enabling universal function approximation.
         </p>
+        <div className="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-xs text-indigo-300 font-medium leading-relaxed">
+          <strong>The core intuition:</strong> Linear combinations rotate and translate; activation functions bend and squash. Master the mathematical trade-offs between bounded saturation (Sigmoid/Tanh) and non-saturating piecewise rectification (ReLU/Leaky ReLU).
+        </div>
       </div>
 
       {/* Why Activation Functions Are Needed */}
@@ -833,11 +826,6 @@ export const Module4ActivationFunctions: React.FC = () => {
             </tbody>
           </table>
         </div>
-      </div>
-
-      {/* Module Navigation Footer */}
-      <div className="pt-2 text-center text-xs text-slate-500">
-        Module 4 complete · Next: <strong className="text-slate-400">Module 5: Training a Multilayer Neural Network</strong>
       </div>
     </div>
   );
