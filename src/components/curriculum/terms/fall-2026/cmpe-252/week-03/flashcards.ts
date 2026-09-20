@@ -169,5 +169,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'Softplus is a smooth, everywhere-differentiable approximation of ReLU (max(0, z)). Its derivative is exactly the logistic sigmoid function, providing continuous, smooth gradient transitions without the non-differentiable kink at z = 0.',
     useCase: 'Variational autoencoders (VAEs) to enforce smooth, strictly positive variance parameters sigma^2.',
     remark: 'Softplus operates on scalars, whereas Softmax normalizes entire vectors of logits to sum to 1.'
+  },
+  {
+    id: 'ai-w3-m5-fc-1',
+    category: 'Module 5: Training a multilayer neural network',
+    title: 'Sum of Squared Errors & Mean Squared Error',
+    frontPrompt: 'What are the formulas for total sum of squared errors E(w) and Mean Squared Error (MSE), and why do they share identical minima?',
+    backFormula: 'E(\\mathbf{w}) = \\sum_{j=1}^N \\left(y_j - f_\\mathbf{w}(\\mathbf{x}_j)\\right)^2, \\qquad \\text{MSE}(\\mathbf{w}) = \\frac{1}{N} \\sum_{j=1}^N \\left(y_j - f_\\mathbf{w}(\\mathbf{x}_j)\\right)^2',
+    backExplanation: 'Both metrics aggregate squared residual errors across all N observations. Because N > 0 is a fixed positive constant, scaling by 1/N does not change the sign of derivatives or the location of critical points and global minima.',
+    useCase: 'Standard regression objective functions in statistical learning and neural networks.',
+    remark: 'MSE is preferred in practice because its magnitude is invariant to dataset sample size.'
+  },
+  {
+    id: 'ai-w3-m5-fc-2',
+    category: 'Module 5: Training a multilayer neural network',
+    title: 'Gradient Descent Optimization Rule',
+    frontPrompt: 'What is the mathematical formulation of the gradient descent parameter update rule?',
+    backFormula: '\\theta \\longleftarrow \\theta - \\alpha \\nabla_\\theta E(\\theta) = \\theta - \\alpha \\left[ \\frac{\\partial E}{\\partial \\theta_1}, \\dots, \\frac{\\partial E}{\\partial \\theta_P} \\right]^T',
+    backExplanation: 'The multi-variable gradient nabla_theta E points in the direction of steepest rate of loss increase. Moving in the negative gradient direction (-alpha * grad) descends the loss landscape toward local or global error minima.',
+    useCase: 'Foundational iterative optimization algorithm for training deep neural network parameters.',
+    remark: 'Alpha is the learning rate hyperparameter controlling physical step length per iteration.'
+  },
+  {
+    id: 'ai-w3-m5-fc-3',
+    category: 'Module 5: Training a multilayer neural network',
+    title: 'Network Parameter Accounting Formula',
+    frontPrompt: 'How do you calculate the total number of learnable parameters P in a fully connected feedforward network?',
+    backFormula: 'P = \\sum_{l=1}^L \\left( n_{l-1} \\cdot n_l + n_l \\right)',
+    backExplanation: 'For each layer l with n_l neurons receiving inputs from layer l-1 with n_(l-1) units, there are (n_(l-1) * n_l) synaptic weights plus n_l neuron biases. For example, a 3-4-1 network has (3*4 + 4) + (4*1 + 1) = 16 + 5 = 21 parameters.',
+    useCase: 'Calculating model parameter footprint and estimating GPU memory requirements.',
+    remark: 'Does not include hyperparameter counts such as learning rates or batch sizes.'
+  },
+  {
+    id: 'ai-w3-m5-fc-4',
+    category: 'Module 5: Training a multilayer neural network',
+    title: 'The 5-Stage Neural Network Training Loop',
+    frontPrompt: 'What are the five canonical sequential stages of the neural network training loop?',
+    backFormula: '\\text{Initialize}(\\theta) \\longrightarrow \\text{Forward}(\\hat{y}) \\longrightarrow \\text{Loss}(E) \\longrightarrow \\text{Gradients}(\\nabla_\\theta E) \\longrightarrow \\text{Update}(\\theta \\leftarrow \\theta - \\alpha\\nabla E)',
+    backExplanation: '1. Initialize weights/biases; 2. Forward pass computes intermediate activations and prediction; 3. Loss evaluates penalty; 4. Backpropagation applies chain rule to compute gradients; 5. Gradient descent updates parameters. Repeated for multiple epochs.',
+    useCase: 'The foundational architectural loop implemented by PyTorch, TensorFlow, and JAX training scripts.',
+    remark: 'Epoch represents one complete traversal across all N training samples.'
   }
 ];

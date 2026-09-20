@@ -244,7 +244,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 5,
     badge: 'Optimization',
     sub: 'Loss Functions & Optimization Landscapes',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m5_q1',
+        question: 'What is the fundamental purpose of a loss function L(y, ŷ) in training neural networks?',
+        options: [
+          'It provides a quantitative scalar metric evaluating the magnitude of the model’s prediction error.',
+          'It determines the number of hidden layers in the network.',
+          'It resets all weights to zero at the end of each epoch.',
+          'It counts the total number of input features in the observation.'
+        ],
+        correct: 0,
+        explanation: 'A loss function converts prediction errors into a single scalar penalty value, creating a differentiable objective surface that optimization algorithms like gradient descent can minimize.'
+      },
+      {
+        id: 'w3_m5_q2',
+        question: 'In the gradient descent update rule θ ← θ - α ∇_θ E(θ), what is the effect on parameter θ when the local gradient ∇_θ E is negative?',
+        options: [
+          'The parameter θ increases in value because subtracting a negative scalar yields an addition: θ - α(-|g|) = θ + α|g|.',
+          'The parameter θ is immediately reset to 0.',
+          'The parameter θ decreases toward negative infinity.',
+          'The learning rate α is inverted to -α.'
+        ],
+        correct: 0,
+        explanation: 'The negative sign ensures movement opposite to the gradient. When the gradient is negative (loss decreases as θ increases), subtracting the negative gradient raises θ to move downhill toward lower loss.'
+      },
+      {
+        id: 'w3_m5_q3',
+        question: 'How many total learnable parameters (weights + biases) exist in a fully connected network with 3 input features, 4 hidden neurons, and 1 output neuron?',
+        options: [
+          '21 parameters (16 weights and 5 biases)',
+          '12 parameters (only the first layer weights)',
+          '7 parameters (3 inputs + 4 hidden neurons)',
+          '48 parameters (3 × 4 × 4 × 1)'
+        ],
+        correct: 0,
+        explanation: 'Input-to-hidden: (3 inputs × 4 neurons) + 4 biases = 16 parameters. Hidden-to-output: (4 neurons × 1 output) + 1 bias = 5 parameters. Total = 16 + 5 = 21 parameters.'
+      },
+      {
+        id: 'w3_m5_q4',
+        question: 'Why do the total sum of squared errors E(w) and Mean Squared Error (MSE) yield identical optimal parameter solutions θ*?',
+        options: [
+          'They differ only by a constant positive scale factor (1/N), preserving the locations of all critical points, slopes, and global minima.',
+          'They have completely different derivative equations that coincidentally cross at zero.',
+          'MSE is only used for classification, while sum of squared errors is for regression.',
+          'The learning rate α automatically cancels out the division by N.'
+        ],
+        correct: 0,
+        explanation: 'Since MSE = (1/N) E(w) and N > 0 is a fixed constant, ∇ MSE = (1/N) ∇ E(w). Setting both gradients to zero produces the exact same optimal stationary point θ*.'
+      }
+    ]
   },
   s6: {
     title: 'Module 6: Forward propagation and backpropagation',
