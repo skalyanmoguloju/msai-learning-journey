@@ -329,5 +329,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: '1. Outside a compact (bounded) domain K, network outputs can diverge wildly from the target. 2. To approximate a d-dimensional Lipschitz function to error epsilon, a single hidden layer requires exponentially many neurons O((1/epsilon)^d), making shallow networks intractable. Deep networks overcome this via compositional reuse of hierarchical features.',
     useCase: 'Motivating deep multilayer architectures over wide single-hidden-layer networks.',
     remark: 'Depth efficiency allows deep networks to approximate composite functions with polynomially fewer parameters.'
+  },
+  {
+    id: 'ai-w3-m8-fc-1',
+    category: 'Module 8: Weight initialization',
+    title: 'Symmetry Breaking & Zero Initialization Failure',
+    frontPrompt: 'Why does setting all hidden weights to zero cause neural network training to collapse?',
+    backFormula: 'w_1 = w_2 \\implies h_1 = h_2 \\implies \\frac{\\partial \\mathcal{L}}{\\partial w_1} = \\frac{\\partial \\mathcal{L}}{\\partial w_2}',
+    backExplanation: 'If neurons in a hidden layer share identical weights and biases, they evaluate identical outputs for every input. Backpropagation produces identical gradients for each neuron, forcing them to make identical weight updates. The layer cannot specialize and acts as a single neuron.',
+    useCase: 'Explaining why random perturbation is mathematically required to start multi-neuron representation learning.',
+    remark: 'Zero initialization of biases b = 0 is standard and safe, provided weights are randomized.'
+  },
+  {
+    id: 'ai-w3-m8-fc-2',
+    category: 'Module 8: Weight initialization',
+    title: 'He (Kaiming) Initialization for ReLU',
+    frontPrompt: 'What is the formula for He Normal initialization, and why does it feature a factor of 2?',
+    backFormula: 'w \\sim \\mathcal{N}\\left(0, \\frac{2}{n_{\\text{in}}}\\right) \\iff w = \\text{randn} \\cdot \\sqrt{\\frac{2}{n_{\\text{in}}}}',
+    backExplanation: 'Designed by Kaiming He et al. (2015) for rectified linear units. Because ReLU sets all negative pre-activations to 0, it eliminates half the signal variance. Multiplying by 2 restores unit variance per layer, preventing activation collapse or explosion across hundreds of layers.',
+    useCase: 'Default weight initialization strategy for ResNets, ConvNets, and modern feedforward ReLU architectures.',
+    remark: 'Uniform variant: w ~ U(-sqrt(6/n_in), +sqrt(6/n_in)).'
+  },
+  {
+    id: 'ai-w3-m8-fc-3',
+    category: 'Module 8: Weight initialization',
+    title: 'Xavier / Glorot Initialization for Tanh/Sigmoid',
+    frontPrompt: 'What is the formula for Xavier (Glorot) initialization, and which activations is it tailored for?',
+    backFormula: 'w \\sim \\mathcal{N}\\left(0, \\frac{2}{n_{\\text{in}} + n_{\\text{out}}}\\right) \\iff w = \\text{randn} \\cdot \\sqrt{\\frac{2}{n_{\\text{in}} + n_{\\text{out}}}}',
+    backExplanation: 'Formulated by Xavier Glorot & Yoshua Bengio (2010). It balances variance between the forward pass (fan_in) and backward pass (fan_out) for symmetric, zero-centered activation functions with unit derivative at the origin (such as Tanh and linear units).',
+    useCase: 'Initializing recurrent layers, attention projections, and networks with Tanh/Sigmoid gates.',
+    remark: 'When fan_in approx fan_out, Xavier reduces to 1/n_in.'
+  },
+  {
+    id: 'ai-w3-m8-fc-4',
+    category: 'Module 8: Weight initialization',
+    title: 'Pretraining vs. Random Initialization',
+    frontPrompt: 'What is the distinction between random weight initialization and transfer learning/pretraining?',
+    backFormula: '\\theta_{\\text{init}} = \\mathcal{N}(0, \\sigma^2) \\quad \\text{vs.} \\quad \\theta_{\\text{init}} = \\theta^*_{\\text{upstream}}',
+    backExplanation: 'Random initialization breaks symmetry without conveying domain knowledge. Pretraining initializes the network with general representations (e.g. edge detectors, language syntax) learned from large corpora, which can be fine-tuned or frozen for downstream tasks.',
+    useCase: 'Foundation model adaptation (e.g., Vision Transformers, BERT/GPT fine-tuning).',
+    remark: 'Transfer learning dramatically reduces sample complexity and training wall-clock time.'
   }
 ];

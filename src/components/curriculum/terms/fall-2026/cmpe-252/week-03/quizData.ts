@@ -412,7 +412,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 8,
     badge: 'Initialization',
     sub: 'Xavier & He Normal/Uniform Methods',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m8_q1',
+        question: 'Why does initializing all hidden layer weights to zero cause neural network training to fail?',
+        options: [
+          'All hidden neurons compute identical forward activations and receive identical error gradients, preventing symmetry breaking and collapsing the layer to a single effective neuron.',
+          'Zero weights cause immediate arithmetic overflow in the loss function.',
+          'The learning rate is automatically multiplied by zero, permanently freezing updates.',
+          'Zero weights cause inputs to be permanently erased from computer memory.'
+        ],
+        correct: 0,
+        explanation: 'When hidden weights are identical, every neuron computes z_1 = z_2 and h_1 = h_2. Because their contributions to the next layer are identical, their backpropagated gradients are also identical (∂L/∂w_1 = ∂L/∂w_2). Thus they make identical updates and remain clones forever.'
+      },
+      {
+        id: 'w3_m8_q2',
+        question: 'What is the primary rationale behind the factor of 2 in He (Kaiming) initialization: Var(W) = 2 / n_in for ReLU networks?',
+        options: [
+          'ReLU deactivates approximately half of the input space (z < 0), halving output variance; the factor of 2 compensates to preserve constant signal variance across layers.',
+          'Deep networks have twice as many backward passes as forward passes.',
+          'Biases are strictly twice as large as synaptic weights.',
+          'Floating-point numbers in GPU memory require double-precision scaling.'
+        ],
+        correct: 0,
+        explanation: 'Because ReLU outputs 0 for negative inputs, it zeroes out roughly 50% of activations assuming zero-mean pre-activations, halving the variance. Scaling weights by √(2/n_in) doubles the expected variance, maintaining constant signal scale through deep forward passes.'
+      },
+      {
+        id: 'w3_m8_q3',
+        question: 'What severe numerical pathology occurs if initial weights are initialized with too large a variance in networks with Sigmoid or Tanh activations?',
+        options: [
+          'Pre-activations z become extreme, driving activations into flat saturating asymptotic regions where derivatives approach zero, causing gradients to vanish.',
+          'The network immediately predicts 0.5 for every class without evaluating weights.',
+          'The weights invert their signs on every single mini-batch iteration.',
+          'The number of layers in the network automatically decreases.'
+        ],
+        correct: 0,
+        explanation: 'Sigmoid and Tanh have derivatives that approach zero as |z| becomes large (e.g. |z| > 3). Overly large weights push pre-activations into these flat saturating wings, killing gradient flow during backpropagation.'
+      },
+      {
+        id: 'w3_m8_q4',
+        question: 'What is the fundamental distinction between random weight initialization and transfer learning?',
+        options: [
+          'Random initialization breaks symmetry from an unlearned starting point, whereas transfer learning initializes the model with structured representations learned on an upstream task.',
+          'Transfer learning only applies to linear regression models, while random initialization is for neural networks.',
+          'Random initialization requires pretraining on ImageNet for at least 100 epochs.',
+          'Transfer learning eliminates the need for computing backpropagation in all layers.'
+        ],
+        correct: 0,
+        explanation: 'He and Xavier initializations provide well-scaled random starting points that break symmetry but contain no semantic knowledge. Transfer learning starts from weights already tuned on a source dataset, accelerating convergence and boosting generalization on downstream tasks.'
+      }
+    ]
   },
   s9: {
     title: 'Module 9: Monitoring neural-network training',
