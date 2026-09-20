@@ -580,7 +580,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 11,
     badge: 'Transfer',
     sub: 'Domain Adaptation & Fine-Tuning',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m11_q1',
+        question: 'What is actually transferred from a source model to a target model in deep transfer learning?',
+        options: [
+          'Learned internal parameters (weights and biases) that encode hierarchical feature representations, rather than raw training data or human rules.',
+          'The entire uncompressed training database and user query logs of the source organization.',
+          'Only the final classification softmax decision boundaries without hidden features.',
+          'The computer hardware configuration and GPU clock speeds.'
+        ],
+        correct: 0,
+        explanation: 'Transfer learning copies the numerical parameters θ_S learned on a data-rich source task. These weights capture general feature extractors (edges, textures, object parts) that can be reused locally without exposing confidential source data.'
+      },
+      {
+        id: 'w3_m11_q2',
+        question: 'In deep transfer learning, what is the precise operational difference between freezing a layer versus fine-tuning it?',
+        options: [
+          'A frozen layer computes forward activations normally but receives no gradient updates (W_new = W_old), whereas fine-tuning allows gradients to update weights (W_new = W_old - η ∇_W L_T).',
+          'Freezing permanently deletes the layer from the computational graph to save memory.',
+          'Freezing sets all weights in the layer to zero during the forward pass.',
+          'Fine-tuning requires training with zero learning rate.'
+        ],
+        correct: 0,
+        explanation: 'Freezing preserves pretrained feature detectors by setting their effective learning rate to zero during backpropagation. Fine-tuning calculates gradients through the layers and updates their parameters to better fit target-domain nuances.'
+      },
+      {
+        id: 'w3_m11_q3',
+        question: 'When adapting a 5-hidden-layer network pretrained on 1,000 ImageNet classes to a 3-class medical diagnosis task, how is the architecture typically modified?',
+        options: [
+          'The five feature-extraction hidden layers (H_1 through H_5) are preserved, while the source output head (W_O_S in R^{1000 x d}) is replaced by a newly initialized target head (W_O_T in R^{3 x d}).',
+          'All five hidden layers are deleted and only the 1,000-class output layer is retained.',
+          'The input dimensions are padded with 997 dummy zeros to match the 1,000 source classes.',
+          'No architectural changes are made; classes 4 through 1,000 are simply ignored.'
+        ],
+        correct: 0,
+        explanation: 'Because the target task has a different label space (|Y_T| = 3 vs |Y_S| = 1,000), the source output layer is stripped and replaced with a newly dimensioned linear projection W_O_T in R^{3 x d}. The intermediate hidden layers (H_1-H_5) provide the high-level representation h^(5).'
+      },
+      {
+        id: 'w3_m11_q4',
+        question: 'What is "Negative Transfer", and when is it most likely to occur?',
+        options: [
+          'When transferring knowledge from a source domain actively degrades target task performance compared to training from scratch, typically due to extreme domain mismatch or conflicting task semantics.',
+          'When loss gradients become strictly negative during target fine-tuning.',
+          'When the learning rate is multiplied by -1.',
+          'When zero-shot text embeddings have negative cosine similarities.'
+        ],
+        correct: 0,
+        explanation: 'Negative transfer happens when the source and target tasks are fundamentally dissimilar or have conflicting representations. In such scenarios, the source parameter prior biases optimization into poor local regions, resulting in worse accuracy than randomly initialized training.'
+      }
+    ]
   },
   s12: {
     title: 'Module 12: Contrastive learning and SimCLR',

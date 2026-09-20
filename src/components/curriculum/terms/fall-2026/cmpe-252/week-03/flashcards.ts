@@ -449,5 +449,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'When neural networks sequentially learn new tasks, gradient descent overwrites parameters critical for past tasks, causing performance on earlier tasks to collapse catastrophically. Mitigation strategies include Rehearsal (memory replay buffers), Architectural modularity (dynamic parameter expansion), and Regularization (Elastic Weight Consolidation / EWC using Fisher information F).',
     useCase: 'Lifelong autonomous agents, streaming robotics, on-device personalized model updating.',
     remark: 'Balancing plasticity (learning new concepts) with stability (retaining old knowledge) is the central dilemma.'
+  },
+  {
+    id: 'ai-w3-m11-fc-1',
+    category: 'Module 11: Few-shot and transfer learning',
+    title: 'Hierarchical Representations & Transferability',
+    frontPrompt: 'What knowledge is transferred in deep transfer learning, and why are earlier layers more transferable than later layers?',
+    backFormula: '\\mathbf{x} \\xrightarrow{\\text{edges}} \\mathbf{h}^{(1)} \\xrightarrow{\\text{textures}} \\mathbf{h}^{(2)} \\xrightarrow{\\text{parts}} \\dots \\xrightarrow{\\text{classes}} \\hat{y}',
+    backExplanation: 'Transfer learning transfers numerical parameters (θ_S) that create intermediate coordinate spaces. Early layers learn universal Gabor-like primitives (edges, color gradients) that apply across almost all vision tasks; later layers encode domain-specific semantic categories that must be retrained or replaced for new target tasks.',
+    useCase: 'Designing layer-specific transfer pipelines and deciding which layers to reuse across disparate domains.',
+    remark: 'Source data and confidential user records remain private; only the weight matrices are shared.'
+  },
+  {
+    id: 'ai-w3-m11-fc-2',
+    category: 'Module 11: Few-shot and transfer learning',
+    title: 'Freezing vs. Fine-Tuning Dynamics',
+    frontPrompt: 'What is the operational and mathematical distinction between freezing a layer and fine-tuning it in target adaptation?',
+    backFormula: '\\text{Frozen}: \\mathbf{W}_{\\text{new}} = \\mathbf{W}_{\\text{old}} \\quad \\text{vs.} \\quad \\text{Fine-Tuned}: \\mathbf{W}_{\\text{new}} = \\mathbf{W}_{\\text{old}} - \\eta \\frac{\\partial \\mathcal{L}_T}{\\partial \\mathbf{W}}',
+    backExplanation: 'Freezing maintains fixed feature extractors by suppressing gradient updates (zero learning rate for those layers), preventing overfitting on tiny target datasets. Fine-tuning allows target task gradients to propagate through the weights, adapting representations at the cost of requiring more target data and risking representational drift.',
+    useCase: 'Adapting large pretrained foundation backbones (e.g., ResNets, Transformers) to niche domain datasets.',
+    remark: 'Standard best practice: freeze early layers, fine-tune the penultimate layer, and train the output head from scratch.'
+  },
+  {
+    id: 'ai-w3-m11-fc-3',
+    category: 'Module 11: Few-shot and transfer learning',
+    title: 'Negative Transfer & Distribution Mismatch',
+    frontPrompt: 'What is Negative Transfer, and under what conditions does transferring source weights degrade target performance?',
+    backFormula: '\\mathcal{R}_{\\text{target}}(\\theta_S) > \\mathcal{R}_{\\text{target}}(\\theta_{\\text{random}}) \\iff \\text{Transfer Harms Generalization}',
+    backExplanation: 'Negative transfer occurs when transferred source knowledge actively impairs target task accuracy compared to training from a random initialization. It is triggered by extreme semantic divergence (e.g. text syntax applied to audio spectrograms), severe adversarial distribution shifts, or deceptive inductive biases.',
+    useCase: 'Auditing transfer feasibility between dissimilar domains (e.g., synthetic gaming images vs. real endoscopic video).',
+    remark: 'Negative transfer can be diagnosed by comparing downstream validation error against an ablated baseline trained from scratch.'
+  },
+  {
+    id: 'ai-w3-m11-fc-4',
+    category: 'Module 11: Few-shot and transfer learning',
+    title: 'Zero-Shot Classification via Multimodal Alignment',
+    frontPrompt: 'How does zero-shot learning classify unseen classes without any labeled target training examples?',
+    backFormula: '\\hat{y} = \\arg\\max_c \\cos\\left(f_{\\text{image}}(\\mathbf{x}), \\; f_{\\text{text}}(\\text{"a photo of a "} + c)\\right)',
+    backExplanation: 'Zero-shot learning relies on prior knowledge learned from auxiliary modalities or semantic relationships. In multimodal models like CLIP, image embeddings and textual category embeddings are projected into a shared latent metric space, classifying an unseen image by finding the text prompt with maximum cosine similarity.',
+    useCase: 'Open-vocabulary image classification and zero-shot retrieval without task-specific training sets.',
+    remark: '\"Zero-shot\" means zero target-task training examples; massive pretraining data was still utilized upstream.'
   }
 ];
