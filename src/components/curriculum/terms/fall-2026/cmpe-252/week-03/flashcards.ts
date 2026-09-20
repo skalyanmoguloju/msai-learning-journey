@@ -489,5 +489,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'Zero-shot learning relies on prior knowledge learned from auxiliary modalities or semantic relationships. In multimodal models like CLIP, image embeddings and textual category embeddings are projected into a shared latent metric space, classifying an unseen image by finding the text prompt with maximum cosine similarity.',
     useCase: 'Open-vocabulary image classification and zero-shot retrieval without task-specific training sets.',
     remark: '\"Zero-shot\" means zero target-task training examples; massive pretraining data was still utilized upstream.'
+  },
+  {
+    id: 'ai-w3-m12-fc-1',
+    category: 'Module 12: Contrastive learning and SimCLR',
+    title: 'Encoder-Projector Architecture in SimCLR',
+    frontPrompt: 'Why does SimCLR introduce a non-linear projection head g(h) after the backbone encoder f(x), rather than applying contrastive loss directly to h?',
+    backFormula: '\\mathbf{h} = f_\\theta(\\mathbf{x}) \\in \\mathbb{R}^{d_h}, \\quad \\mathbf{z} = g_\\phi(\\mathbf{h}) = \\mathbf{W}^{(2)}\\sigma\\left(\\mathbf{W}^{(1)}\\mathbf{h}\\right) \\in \\mathbb{R}^{d_z}',
+    backExplanation: 'The contrastive loss forces embeddings to be completely invariant to augmentations (crops, color jitter). Applying loss to z = g(h) allows the projection head to discard superficial color and crop details, while intermediate representation h retains richer semantic information (such as object orientation and scale) needed for downstream tasks.',
+    useCase: 'Self-supervised vision representation learning (SimCLR, MoCo v2, BYOL).',
+    remark: 'Downstream linear classifiers are trained on backbone representation h, completely discarding head g.'
+  },
+  {
+    id: 'ai-w3-m12-fc-2',
+    category: 'Module 12: Contrastive learning and SimCLR',
+    title: 'NT-Xent (Normalized Temperature-Scaled Cross-Entropy) Loss',
+    frontPrompt: 'What is the mathematical formulation of the NT-Xent / InfoNCE loss for positive pair (i, j) in a batch of 2N views?',
+    backFormula: '\\mathcal{L}_{i,j} = -\\log \\frac{\\exp\\left(\\text{sim}(\\mathbf{z}_i, \\mathbf{z}_j)/\\tau\\right)}{\\sum_{k=1}^{2N} \\mathbb{I}_{[k \\neq i]} \\exp\\left(\\text{sim}(\\mathbf{z}_i, \\mathbf{z}_k)/\\tau\\right)}',
+    backExplanation: 'NT-Xent measures the categorical cross-entropy of identifying positive view j among 2N - 1 candidate views. Cosine similarity sim(u, v) = (u · v) / (||u|| ||v||) is scaled by temperature tau, which controls how sharply hard negatives are penalized during optimization.',
+    useCase: 'Contrastive learning loss in SimCLR, CLIP image-text alignment, and sentence transformers.',
+    remark: 'A lower temperature tau increases gradient sensitivity to hard negative examples.'
+  },
+  {
+    id: 'ai-w3-m12-fc-3',
+    category: 'Module 12: Contrastive learning and SimCLR',
+    title: 'Representation Collapse & In-Batch Repulsion',
+    frontPrompt: 'What is representation collapse in self-supervised learning, and how do in-batch negatives prevent it?',
+    backFormula: '\\forall \\mathbf{x}, \\; f_\\theta(\\mathbf{x}) = \\mathbf{c} \\implies \\text{sim}\\left(f_\\theta(\\mathbf{x}_i), f_\\theta(\\mathbf{x}_j)\\right) = 1.0 \\quad (\\text{Degenerate Collapse})',
+    backExplanation: 'Without repulsive terms, an encoder can trivially minimize contrastive distance between positive views by collapsing all inputs to a constant vector c. In-batch negatives create repulsive electrostatic-like forces, pushing representations of different images apart to span the hypersphere.',
+    useCase: 'Preventing mode collapse in self-supervised metric learning and Siamese networks.',
+    remark: 'Non-contrastive methods (e.g. BYOL, SimSiam) prevent collapse without negatives using stop-gradients and momentum encoders.'
+  },
+  {
+    id: 'ai-w3-m12-fc-4',
+    category: 'Module 12: Contrastive learning and SimCLR',
+    title: 'SimCLR Batch Symmetries & Effective Negatives',
+    frontPrompt: 'For a mini-batch of N original images, how many views, positive pairs, and in-batch negatives are evaluated in SimCLR?',
+    backFormula: 'N \\text{ images} \\longrightarrow 2N \\text{ views}; \\quad \\text{Per anchor}: 1 \\text{ positive}, \\; 2N - 2 \\text{ negatives}; \\quad \\mathcal{L}_{\\text{batch}} = \\frac{1}{2N} \\sum_{i=1}^{2N} \\mathcal{L}_i',
+    backExplanation: 'SimCLR generates two views per image, yielding 2N views. For each anchor view, the other view of the same image is the positive target, while the 2N - 2 views from the remaining N - 1 images serve as negatives. The loss is computed symmetrically across all 2N views and averaged.',
+    useCase: 'Determining mini-batch scaling: SimCLR performance improves substantially with large batch sizes (e.g., N = 4096 = 8190 negatives).',
+    remark: 'SimCLR requires large batch sizes or memory banks to supply sufficiently diverse hard negatives.'
   }
 ];

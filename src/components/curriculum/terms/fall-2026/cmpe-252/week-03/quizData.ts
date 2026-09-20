@@ -636,6 +636,67 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 12,
     badge: 'Self-Supervised',
     sub: 'InfoNCE Loss & Visual Representation Learning',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m12_q1',
+        question: 'What is an embedding coordinate in a deep neural network representation?',
+        options: [
+          'An internal continuous activation produced by a neuron in a selected feature layer, encoding learned patterns of the input.',
+          'A categorical human-annotated ground-truth class label.',
+          'A random uninitialized floating-point scalar unrelated to the input image.',
+          'The physical pixel location in screen memory where an image is rendered.'
+        ],
+        correct: 0,
+        explanation: 'An embedding z = f_θ(x) is a learned continuous vector where each coordinate corresponds to the activation of a hidden neuron. These coordinates represent extracted semantic features rather than explicit class names.'
+      },
+      {
+        id: 'w3_m12_q2',
+        question: 'In contrastive learning frameworks like SimCLR, which pair of views constitutes a "positive pair"?',
+        options: [
+          'Two distinct, stochastically augmented views (e.g. crop + color jitter) generated from the exact same original source image.',
+          'Two images that happen to share positive pixel values at coordinate (0,0).',
+          'Any two randomly chosen images sampled from the same training batch.',
+          'An image and its inverted negative color mask.'
+        ],
+        correct: 0,
+        explanation: 'Positive pairs are formed by applying two independent stochastic transformations t_1(x) and t_2(x) to the same underlying original sample x. Because they originate from the same entity, the network is trained to maximize their embedding similarity.'
+      },
+      {
+        id: 'w3_m12_q3',
+        question: 'Why are negative examples strictly necessary in self-supervised contrastive learning?',
+        options: [
+          'To prevent representation collapse, where the encoder trivially learns a constant mapping f_θ(x) = c that makes all embeddings identical.',
+          'To ensure the gradient with respect to the bias term is always zero.',
+          'To double the floating-point precision of GPU matrix multiplications.',
+          'Because neural networks cannot calculate loss on positive numbers alone.'
+        ],
+        correct: 0,
+        explanation: 'If only positive pairs were pulled together without repulsive negative terms, the network could trivially minimize loss by collapsing the entire representation space to a single static vector c. In-batch negatives provide repulsive pressure that spreads embeddings uniformly across the hypersphere.'
+      },
+      {
+        id: 'w3_m12_q4',
+        question: 'How does the InfoNCE / NT-Xent loss respond as the positive similarity probability p_positive approaches 1.0?',
+        options: [
+          'Because the loss is L = -log(p_positive), as p_positive approaches 1.0, the loss smoothly approaches 0.0.',
+          'The loss diverges asymptotically toward positive infinity.',
+          'The loss begins to oscillate uncontrollably between positive and negative values.',
+          'The network automatically resets its weights to zero.'
+        ],
+        correct: 0,
+        explanation: 'The contrastive loss is the negative log-likelihood of the positive pair: L = -log(p_pos). When p_pos = 1.0 (the positive pair dominates all comparisons), -log(1.0) = 0, indicating zero penalty.'
+      },
+      {
+        id: 'w3_m12_q5',
+        question: 'In SimCLR, if a mini-batch contains N original unaugmented images, how many transformed views are created and how many negative views does each anchor face?',
+        options: [
+          '2N total views are created; for each anchor view, there is exactly 1 positive partner and 2N - 2 in-batch negatives.',
+          'N views are created; each anchor faces N negatives and 0 positives.',
+          'N^2 views are created; each anchor faces 2N negatives.',
+          '4N views are created; each anchor faces 1 negative.'
+        ],
+        correct: 0,
+        explanation: 'Each of the N original images produces 2 augmented views, resulting in 2N views in the batch. For any chosen anchor view, its only positive is the other view from the same source image, leaving the remaining 2N - 2 views as in-batch negatives.'
+      }
+    ]
   }
 };
