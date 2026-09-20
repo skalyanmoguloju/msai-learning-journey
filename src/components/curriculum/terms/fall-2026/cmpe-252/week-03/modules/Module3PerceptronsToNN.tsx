@@ -9,7 +9,6 @@ import {
   AlertTriangle,
   Binary,
   Activity,
-  BookOpen,
   Sliders,
   HelpCircle,
   Eye
@@ -735,63 +734,6 @@ export const Module3PerceptronsToNN: React.FC = () => {
                 : 'Steep transition region: High sensitivity to input variations.'}
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* Key Architectural Glossary */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-bold text-slate-100">Key Technical Glossary</h3>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left">
-            <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-semibold">
-                <th className="pb-2.5 w-1/4">Term</th>
-                <th className="pb-2.5 w-3/4">Architectural Definition</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Artificial Neuron</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The elementary computational unit of a neural network. Computes an affine inner product <MathText text="\mathbf{w}^T \mathbf{x} + b" /> and applies a non-linear activation function <MathText text="g(z)" />.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Layer</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A parallel bank of neurons that receive the same input vector from the preceding tier and evaluate their respective outputs simultaneously.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Hidden Layer</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  An intermediate computational layer situated between inputs and outputs whose activation states are internal latent features rather than direct observables.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Forward Propagation</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The unidirectional calculation pass from inputs through successive hidden layers to the output layer to generate predictions.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Linear Collapse</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The mathematical property where any composition of purely linear functions simplifies to a single equivalent affine transformation <MathText text="\mathbf{W}' \mathbf{x} + \mathbf{b}'" />.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Non-linear Activation</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A scalar mathematical mapping (e.g., ReLU, Sigmoid, Tanh) that bends decision boundaries, breaking linear collapse and enabling universal approximation.
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

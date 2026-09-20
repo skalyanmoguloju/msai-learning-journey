@@ -11,7 +11,6 @@ import {
   Play,
   Layers,
   Calculator,
-  BookOpen,
   Activity,
   Target
 } from 'lucide-react';
@@ -614,57 +613,6 @@ export const Module6ForwardBackprop: React.FC = () => {
               <span>Reset Parameters</span>
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Key Technical Glossary */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-bold text-slate-100">Key Technical Glossary</h3>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left">
-            <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-semibold">
-                <th className="pb-2.5 w-1/4">Term</th>
-                <th className="pb-2.5 w-3/4">Architectural Definition</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Forward Propagation</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The unidirectional calculation pass from input nodes through successive hidden layers to compute predictions and loss.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Backpropagation</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  An efficient dynamic programming algorithm that calculates exact analytical gradients of the scalar loss with respect to all network parameters by propagating error sensitivities backward via the chain rule.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Chain Rule</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  Calculus identity stating that the derivative of a composite function is the product of its local constituent partial derivatives.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Error Signal (<MathText text="\delta" />)</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The partial derivative of the loss with respect to a layer's pre-activation vector <MathText text="\partial \mathcal{L} / \partial \mathbf{z}" />.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Gradient Descent</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The optimization rule that consumes backpropagated gradients to update parameter values downhill: <MathText text="\theta \leftarrow \theta - \alpha \nabla_\theta \mathcal{L}" />.
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

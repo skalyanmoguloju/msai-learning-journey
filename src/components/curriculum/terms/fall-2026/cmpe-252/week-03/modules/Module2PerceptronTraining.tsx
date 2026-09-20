@@ -9,8 +9,7 @@ import {
   Scale,
   Calculator,
   Layers,
-  ArrowRight,
-  BookOpen
+  ArrowRight
 } from 'lucide-react';
 import { MathText } from '../../../../../common';
 
@@ -590,47 +589,6 @@ export const Module2PerceptronTraining: React.FC = () => {
             <li>A predefined maximum epoch threshold is reached (e.g., <MathText text="$\text{max\_epochs} = 100$" />).</li>
             <li>Classification accuracy on validation data plateaus or begins degrading (early stopping).</li>
           </ul>
-        </div>
-      </div>
-
-      {/* ── Key Glossary ─────────────────────────────────────────────────── */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
-        <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-          <BookOpen className="w-4 h-4 text-purple-400" />
-          <span>Perceptron Training Glossary</span>
-        </h3>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-slate-800 text-slate-400">
-                <th className="pb-2 font-semibold">Technical Term</th>
-                <th className="pb-2 font-semibold">Formal Definition &amp; Conceptual Role</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300 font-mono">Training Example</td>
-                <td className="py-2.5">A single paired observation consisting of feature vector <MathText text="$\mathbf{x}$" /> and ground-truth target label <MathText text="$y \in \{-1, +1\}$" />.</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-cyan-300 font-mono">Parameter Update</td>
-                <td className="py-2.5">The mathematical modification of weights (<MathText text="$\Delta \mathbf{w} = \alpha(y - \hat{y})\mathbf{x}$" />) and bias (<MathText text="$\Delta b = \alpha(y - \hat{y})$" />) following a misclassification.</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-emerald-300 font-mono">Epoch</td>
-                <td className="py-2.5">One complete single pass through the entire training dataset where every instance is evaluated and trained upon.</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-amber-300 font-mono">Learning Rate <MathText text="$\alpha$" /></td>
-                <td className="py-2.5">A hyperparameter scaling the size of parameter adjustments made during each corrective step.</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-purple-300 font-mono">Convergence</td>
-                <td className="py-2.5">The terminal state where the model achieves zero classification error across the entire training set, resulting in no further parameter updates.</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

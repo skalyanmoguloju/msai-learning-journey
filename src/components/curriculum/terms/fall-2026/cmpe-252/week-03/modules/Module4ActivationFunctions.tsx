@@ -770,63 +770,6 @@ export const Module4ActivationFunctions: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Key Architectural Glossary */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-bold text-slate-100">Key Technical Glossary</h3>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left">
-            <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-semibold">
-                <th className="pb-2.5 w-1/4">Term</th>
-                <th className="pb-2.5 w-3/4">Architectural Definition</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Activation Function</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A scalar mathematical transformation applied to the pre-activation score <MathText text="z" /> that confers non-linear modeling capacity.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Saturation</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A state in bounded activation functions (like sigmoid or tanh) where large inputs drive the output into nearly flat asymptotic regions.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Vanishing Gradient</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The exponential attenuation of backpropagated error gradients toward zero caused by compounding tiny local activation derivatives across many layers.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Zero-Centered</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  Activation functions (e.g. Tanh) whose outputs have an expected mean of approximately 0, preventing directional gradient oscillation.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Dying ReLU</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A failure mode where a neuron outputs zero across all training examples, receiving zero gradient and permanently freezing its weights.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Softmax</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A multi-dimensional vector normalization operator that converts arbitrary class logits into a mutually exclusive probability distribution summing to 1.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 };

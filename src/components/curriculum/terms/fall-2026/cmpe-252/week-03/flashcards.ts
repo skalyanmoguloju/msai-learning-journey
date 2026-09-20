@@ -249,5 +249,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'Backpropagation is an analytical gradient evaluation algorithm that computes partial derivatives dL/dtheta via dynamic programming. Gradient descent is an optimization rule that takes those computed derivatives and updates parameter values downhill.',
     useCase: 'Distinguishing between the derivative calculation phase and the optimization step in deep learning.',
     remark: 'They are complementary: backpropagation provides the compass; gradient descent takes the step.'
+  },
+  {
+    id: 'ai-w3-m2-fc-5',
+    category: 'Module 2: Perceptron training',
+    title: 'Perceptron Convergence & Stopping Rules',
+    frontPrompt: 'When does perceptron training stop, and what practical stopping rules are used for non-linearly separable data?',
+    backFormula: '\\text{Convergence}: \\forall i, \\; y_i(\\mathbf{w}^T\\mathbf{x}_i + b) > 0 \\quad \\text{vs.} \\quad \\text{Stopping Rule}: t \\ge T_{\\max}',
+    backExplanation: 'On linearly separable data, training terminates when every instance is correctly classified (zero mistakes). On non-linearly separable data (e.g. XOR), the algorithm oscillates indefinitely without converging, requiring practical stopping criteria like a maximum epoch limit T_max or early stopping based on validation error.',
+    useCase: 'Preventing infinite training loops in perceptron classification.',
+    remark: 'Novikoff’s Theorem guarantees convergence only if a separating margin gamma > 0 exists.'
+  },
+  {
+    id: 'ai-w3-m3-fc-5',
+    category: 'Module 3: From perceptrons to neural networks',
+    title: 'Hidden Layer & Latent Representation',
+    frontPrompt: 'What is an architectural hidden layer, and how does it enable solving non-linear problems like XOR?',
+    backFormula: '\\mathbf{h} = g\\left(\\mathbf{W}\\mathbf{x} + \\mathbf{b}\\right) \\in \\mathbb{R}^{d_h}',
+    backExplanation: 'An intermediate tier of artificial neurons situated between inputs and outputs. It projects raw input coordinates into a latent feature space where previously non-separable classes (such as opposite diagonals in XOR) become linearly separable by a subsequent output hyperplane.',
+    useCase: 'Feature learning and non-linear coordinate transformation in deep learning.',
+    remark: 'Hidden activations are internal variables not directly dictated by the environment.'
+  },
+  {
+    id: 'ai-w3-m4-fc-5',
+    category: 'Module 4: Activation functions',
+    title: 'Softmax Multi-Class Probability Function',
+    frontPrompt: 'What is the Softmax operator, and how does it convert raw vector logits into a normalized probability distribution?',
+    backFormula: 'P(y = k \\mid \\mathbf{z}) = \\text{Softmax}(\\mathbf{z})_k = \\frac{e^{z_k}}{\\sum_{j=1}^K e^{z_j}}',
+    backExplanation: 'Softmax takes an arbitrary real-valued logit vector z and exponentiates each entry (ensuring positive values), then normalizes by the partition sum so all probabilities strictly sum to 1.0. Used in the final output layer for mutually exclusive multi-class classification.',
+    useCase: 'Multi-class classification outputs (e.g., MNIST digit recognition, ImageNet, LLM next-token prediction).',
+    remark: 'Softplus is a scalar function ln(1+e^z); Softmax is a vector normalization operator.'
+  },
+  {
+    id: 'ai-w3-m5-fc-5',
+    category: 'Module 5: Training a multilayer neural network',
+    title: 'Single-Sample Loss vs. Empirical Dataset Risk',
+    frontPrompt: 'What is the formal difference between a single-sample loss function L and the empirical dataset risk E(theta)?',
+    backFormula: '\\mathcal{L}\\left(y_i, f_\\theta(\\mathbf{x}_i)\\right) \\quad \\text{vs.} \\quad E(\\theta) = \\frac{1}{N} \\sum_{i=1}^N \\mathcal{L}\\left(y_i, f_\\theta(\\mathbf{x}_i)\\right)',
+    backExplanation: 'The loss function L evaluates prediction error on a single observation. The empirical risk (cost function E) is the aggregate average loss over the entire training set of N examples, serving as the scalar objective function minimized by gradient descent.',
+    useCase: 'Formulating empirical risk minimization (ERM) in machine learning.',
+    remark: 'Batch gradient descent minimizes E(theta); stochastic gradient descent (SGD) approximates it with mini-batches.'
   }
 ];

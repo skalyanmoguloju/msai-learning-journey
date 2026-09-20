@@ -10,7 +10,6 @@ import {
   RotateCcw,
   Sliders,
   Scale,
-  BookOpen,
   Play,
   Calculator,
   Activity,
@@ -703,63 +702,6 @@ export const Module5TrainingMultilayerNN: React.FC = () => {
               {squaredLossVal === 0 ? 'Zero Loss (Optimal)' : `Penalty = ${squaredLossVal} units`}
             </span>
           </div>
-        </div>
-      </div>
-
-      {/* Key Technical Glossary */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-bold text-slate-100">Key Technical Glossary</h3>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left">
-            <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-semibold">
-                <th className="pb-2.5 w-1/4">Term</th>
-                <th className="pb-2.5 w-3/4">Architectural Definition</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Parameter (θ)</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  Any learnable internal scalar quantity (weight or bias) whose numerical value is directly modified by gradient descent updates.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Loss Function (L)</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  A mathematical criterion that evaluates the discrepancy between a single model prediction <MathText text="\hat{y}" /> and ground truth <MathText text="y" />.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Gradient (∇)</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The multi-variable vector of partial derivatives pointing in the direction of maximum instantaneous rate of loss increase.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Learning Rate (α)</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  The scalar hyperparameter regulating the step size taken along the negative gradient vector during each parameter update.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Epoch</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  One complete chronological traversal through every individual training observation in the dataset.
-                </td>
-              </tr>
-              <tr>
-                <td className="py-2.5 font-bold text-indigo-300">Gradient Descent</td>
-                <td className="py-2.5 text-slate-400 leading-relaxed">
-                  An iterative first-order optimization algorithm that adjusts parameters in the negative gradient direction to reach local/global error minima.
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
