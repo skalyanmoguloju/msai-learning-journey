@@ -300,7 +300,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 6,
     badge: 'Gradients',
     sub: 'Chain Rule & Error Propagation',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m6_q1',
+        question: 'What is the correct mathematical dependency path for backward error propagation in a two-layer network?',
+        options: [
+          'L → a^(2) → z^(2) → a^(1) → z^(1) → W^(1), b^(1)',
+          'L → z^(2) → W^(1) → a^(1) → x',
+          'x → z^(1) → a^(1) → z^(2) → L',
+          'L → W^(1) → b^(1) → W^(2) → b^(2)'
+        ],
+        correct: 0,
+        explanation: 'Because loss depends directly on output activations a^(2), error flows: Loss L → output activation a^(2) → output pre-activation z^(2) → hidden activation a^(1) → hidden pre-activation z^(1) → input-layer parameters W^(1), b^(1).'
+      },
+      {
+        id: 'w3_m6_q2',
+        question: 'What is the exact distinction between backpropagation and gradient descent?',
+        options: [
+          'Backpropagation calculates the analytical gradient vector ∇_θ L; gradient descent consumes those gradients to execute the parameter update step θ ← θ - α ∇_θ L.',
+          'Backpropagation updates the weights; gradient descent computes the forward predictions.',
+          'Backpropagation is only used for convolutional networks, while gradient descent is for MLPs.',
+          'Gradient descent operates backward, while backpropagation operates forward.'
+        ],
+        correct: 0,
+        explanation: 'Backpropagation is an efficient dynamic programming algorithm that evaluates partial derivatives ∂L/∂θ via the chain rule. Gradient descent is an optimization rule that uses those derivatives to iteratively adjust parameter values.'
+      },
+      {
+        id: 'w3_m6_q3',
+        question: 'Why does an inactive ReLU neuron with pre-activation z^(1) < 0 prevent gradient flow to its incoming weights?',
+        options: [
+          'The local activation derivative is ReLU\'(z^(1)) = 0; because the chain rule multiplies derivatives along the path, the entire product becomes zero.',
+          'Negative pre-activations cause a divide-by-zero error in the loss function.',
+          'The learning rate α automatically jumps to zero for negative activations.',
+          'The incoming weights are immediately deleted from memory.'
+        ],
+        correct: 0,
+        explanation: 'Since δ^(1) = (W^(2))^T δ^(2) ⊙ ReLU\'(z^(1)) and ReLU\'(z^(1)) = 0 for z^(1) < 0, the error signal δ^(1) collapses to 0, yielding ∂L/∂W^(1) = 0.'
+      },
+      {
+        id: 'w3_m6_q4',
+        question: 'In backpropagation, how is the error signal δ^(l) defined, and how is it used to compute the weight gradient ∂L/∂W^(l)?',
+        options: [
+          'δ^(l) ≡ ∂L/∂z^(l), and the weight gradient is computed as the outer product ∂L/∂W^(l) = δ^(l) (a^(l-1))^T.',
+          'δ^(l) ≡ ∂L/∂W^(l), and the gradient is computed by adding the bias vector b^(l).',
+          'δ^(l) is the network prediction error (y - ŷ) divided by total epochs.',
+          'δ^(l) is the inverse of the learning rate α.'
+        ],
+        correct: 0,
+        explanation: 'By defining the error sensitivity δ^(l) = ∂L/∂z^(l), the multivariate chain rule neatly factorizes the parameter gradient into the outer product of the current layer\'s error signal and the transposed activation vector from the preceding layer: δ^(l) (a^(l-1))^T.'
+      }
+    ]
   },
   s7: {
     title: 'Module 7: Universal approximation',

@@ -209,5 +209,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: '1. Initialize weights/biases; 2. Forward pass computes intermediate activations and prediction; 3. Loss evaluates penalty; 4. Backpropagation applies chain rule to compute gradients; 5. Gradient descent updates parameters. Repeated for multiple epochs.',
     useCase: 'The foundational architectural loop implemented by PyTorch, TensorFlow, and JAX training scripts.',
     remark: 'Epoch represents one complete traversal across all N training samples.'
+  },
+  {
+    id: 'ai-w3-m6-fc-1',
+    category: 'Module 6: Forward propagation and backpropagation',
+    title: 'The Multilayer Chain Rule',
+    frontPrompt: 'How does the multivariate chain rule decompose the gradient of the loss with respect to an early hidden weight?',
+    backFormula: '\\frac{\\partial \\mathcal{L}}{\\partial w^{(1)}} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial a^{(2)}}\\right) \\cdot \\left(\\frac{\\partial a^{(2)}}{\\partial z^{(2)}}\\right) \\cdot \\left(\\frac{\\partial z^{(2)}}{\\partial a^{(1)}}\\right) \\cdot \\left(\\frac{\\partial a^{(1)}}{\\partial z^{(1)}}\\right) \\cdot \\left(\\frac{\\partial z^{(1)}}{\\partial w^{(1)}}\\right)',
+    backExplanation: 'The total derivative equals the sequential product of local sensitivities along the computational path. If any intermediate derivative is zero (e.g. saturated sigmoid tail or dead ReLU), the entire gradient becomes zero.',
+    useCase: 'Reverse automatic differentiation and gradient propagation through deep networks.',
+    remark: 'Backpropagation computes these factors efficiently via reverse-mode accumulation.'
+  },
+  {
+    id: 'ai-w3-m6-fc-2',
+    category: 'Module 6: Forward propagation and backpropagation',
+    title: 'Vectorized Backpropagation Error Recurrence',
+    frontPrompt: 'What is the recurrence relation for the error signal delta^(l) across hidden layers in a neural network?',
+    backFormula: '\\boldsymbol{\\delta}^{(l)} = \\left(\\mathbf{W}^{(l+1)}\\right)^T \\boldsymbol{\\delta}^{(l+1)} \\odot g^{(l)\\prime}\\left(\\mathbf{z}^{(l)}\\right)',
+    backExplanation: 'The error sensitivity delta^(l) = dL/dz^(l) is computed by projecting downstream error signals delta^(l+1) backward through transposed weight matrix (W^(l+1))^T and gating them via elementwise Hadamard product with the local derivative g\'(z^(l)).',
+    useCase: 'Core vectorized backward pass implemented in deep learning framework autograd engines.',
+    remark: 'Convention: Output layer base case is delta^(L) = (dL/da^(L)) odot g\'(z^(L)).'
+  },
+  {
+    id: 'ai-w3-m6-fc-3',
+    category: 'Module 6: Forward propagation and backpropagation',
+    title: 'Parameter Gradients from Error Signals',
+    frontPrompt: 'How are weight and bias gradients computed from the layer error signal delta^(l) and activations a^(l-1)?',
+    backFormula: '\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}^{(l)}} = \\boldsymbol{\\delta}^{(l)} \\left(\\mathbf{a}^{(l-1)}\\right)^T, \\qquad \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{b}^{(l)}} = \\boldsymbol{\\delta}^{(l)}',
+    backExplanation: 'The gradient of the weight matrix is the outer product of the current layer\'s error vector delta^(l) and the transposed activation vector from the previous layer. The bias gradient is directly the error vector itself.',
+    useCase: 'Computing exact parameter updates for stochastic gradient descent and Adam optimizers.',
+    remark: 'For mini-batch training with B samples, gradients are averaged over B outer products.'
+  },
+  {
+    id: 'ai-w3-m6-fc-4',
+    category: 'Module 6: Forward propagation and backpropagation',
+    title: 'Backpropagation vs. Gradient Descent',
+    frontPrompt: 'What is the precise conceptual difference between Backpropagation and Gradient Descent?',
+    backFormula: '\\text{Backprop}: \\theta \\mapsto \\nabla_\\theta \\mathcal{L} \\qquad \\text{vs.} \\qquad \\text{Gradient Descent}: \\theta \\longleftarrow \\theta - \\alpha \\nabla_\\theta \\mathcal{L}',
+    backExplanation: 'Backpropagation is an analytical gradient evaluation algorithm that computes partial derivatives dL/dtheta via dynamic programming. Gradient descent is an optimization rule that takes those computed derivatives and updates parameter values downhill.',
+    useCase: 'Distinguishing between the derivative calculation phase and the optimization step in deep learning.',
+    remark: 'They are complementary: backpropagation provides the compass; gradient descent takes the step.'
   }
 ];
