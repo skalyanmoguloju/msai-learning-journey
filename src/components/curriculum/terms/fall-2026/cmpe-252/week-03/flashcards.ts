@@ -129,5 +129,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'ReLU provides non-linear piecewise rectification while maintaining a constant derivative of 1 for all positive inputs. This solves the vanishing gradient saturation problem that plagues sigmoid and tanh activations.',
     useCase: 'Standard default activation function for hidden layers in modern deep feedforward and convolutional networks.',
     remark: 'Derivative is 1 for z > 0, 0 for z < 0, and non-differentiable at z = 0 (subgradient 0 or 1 is used).'
+  },
+  {
+    id: 'ai-w3-m4-fc-1',
+    category: 'Module 4: Activation functions',
+    title: 'Logistic Sigmoid Function & Derivative',
+    frontPrompt: 'What is the mathematical definition and derivative of the logistic sigmoid activation function?',
+    backFormula: '\\sigma(z) = \\frac{1}{1 + e^{-z}}, \\qquad \\sigma\'(z) = \\sigma(z)\\bigl(1 - \\sigma(z)\\bigr) \\le 0.25',
+    backExplanation: 'Sigmoid maps real inputs to (0, 1), making it ideal for modeling class posterior probabilities P(y = 1 | x). Its derivative reaches a peak of 0.25 at z = 0 and decays to 0 at the tails, precipitating vanishing gradients in deep networks.',
+    useCase: 'Output layer activation for binary classification tasks and gating mechanisms in LSTMs.',
+    remark: 'Vanishing gradient bound: Product of L derivatives scales as O(0.25^L).'
+  },
+  {
+    id: 'ai-w3-m4-fc-2',
+    category: 'Module 4: Activation functions',
+    title: 'Hyperbolic Tangent (Tanh) Properties',
+    frontPrompt: 'What is the definition, range, and derivative of the Tanh activation function, and why is it preferred over Sigmoid in shallow networks?',
+    backFormula: '\\tanh(z) = \\frac{e^z - e^{-z}}{e^z + e^{-z}} = 2\\sigma(2z) - 1, \\qquad \\tanh\'(z) = 1 - \\tanh^2(z)',
+    backExplanation: 'Tanh maps to (-1, +1) and is zero-centered with tanh(0) = 0. Its peak derivative is 1.0 at the origin (4x higher than sigmoid). Zero-centering avoids systematic directional bias in weight gradient descent updates.',
+    useCase: 'Hidden layers in recurrent neural networks (RNNs) and shallow feedforward networks.',
+    remark: 'Still suffers from gradient saturation as |z| exceeds ~3.0.'
+  },
+  {
+    id: 'ai-w3-m4-fc-3',
+    category: 'Module 4: Activation functions',
+    title: 'The Dying ReLU Problem & Leaky ReLU',
+    frontPrompt: 'Why do ordinary ReLU neurons die, and how does Leaky ReLU resolve this failure mode?',
+    backFormula: '\\text{LeakyReLU}(z) = \\max(\\alpha z, z) = \\begin{cases} z & \\text{if } z \\ge 0 \\\\ \\alpha z & \\text{if } z < 0 \\end{cases} \\quad (\\alpha \\approx 0.01)',
+    backExplanation: 'For z < 0, standard ReLU outputs 0 with 0 derivative. If an aggressive weight update causes z < 0 for all training data, the neuron permanently dies. Leaky ReLU preserves a slight gradient alpha > 0 on the negative side, enabling neuron revival.',
+    useCase: 'Robust replacement for standard ReLU to prevent dead neuron capacity loss.',
+    remark: 'Parametric ReLU (PReLU) treats alpha as a learnable parameter updated by backpropagation.'
+  },
+  {
+    id: 'ai-w3-m4-fc-4',
+    category: 'Module 4: Activation functions',
+    title: 'Softplus Function & Analytic Derivative',
+    frontPrompt: 'What is the Softplus activation function, and what elegant relationship connects its derivative to Sigmoid?',
+    backFormula: '\\text{Softplus}(z) = \\ln\\left(1 + e^z\\right), \\qquad \\frac{d}{dz}\\text{Softplus}(z) = \\frac{e^z}{1 + e^z} = \\sigma(z)',
+    backExplanation: 'Softplus is a smooth, everywhere-differentiable approximation of ReLU (max(0, z)). Its derivative is exactly the logistic sigmoid function, providing continuous, smooth gradient transitions without the non-differentiable kink at z = 0.',
+    useCase: 'Variational autoencoders (VAEs) to enforce smooth, strictly positive variance parameters sigma^2.',
+    remark: 'Softplus operates on scalars, whereas Softmax normalizes entire vectors of logits to sum to 1.'
   }
 ];

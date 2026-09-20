@@ -188,7 +188,56 @@ export const AI_WEEK3_QUIZ: Record<string, QuizModule> = {
     stepNumber: 4,
     badge: 'Non-Linearity',
     sub: 'Sigmoid, Tanh, ReLU & Softmax',
-    questions: []
+    questions: [
+      {
+        id: 'w3_m4_q1',
+        question: 'Which activation function is most standardly employed at the output neuron of a binary classification network to model class posterior probabilities?',
+        options: [
+          'Sigmoid (logistic function)',
+          'Standard ReLU',
+          'Linear / Identity',
+          'Softmax with 10 classes'
+        ],
+        correct: 0,
+        explanation: 'The sigmoid function σ(z) = 1 / (1 + e^-z) maps any real-valued input score into the open interval (0, 1), providing a natural model for the Bernoulli posterior probability P(y = 1 | x).'
+      },
+      {
+        id: 'w3_m4_q2',
+        question: 'What mathematical property distinguishes the hyperbolic tangent (tanh) activation function from the standard sigmoid function?',
+        options: [
+          'Tanh is zero-centered with outputs bounded in (-1, +1), preventing directional zig-zagging in weight gradient updates.',
+          'Tanh derivative is strictly constant and equals 1 everywhere.',
+          'Tanh outputs probabilities that sum to 1 across classes.',
+          'Tanh is non-differentiable at the origin z = 0.'
+        ],
+        correct: 0,
+        explanation: 'Because tanh(z) maps to (-1, +1) with tanh(0) = 0, its output distribution is centered around zero. This avoids the systematic positive bias of sigmoid activations that slows down gradient descent.'
+      },
+      {
+        id: 'w3_m4_q3',
+        question: 'What is the "Dying ReLU" problem and how does Leaky ReLU mitigate it?',
+        options: [
+          'Neurons receiving negative scores output 0 with 0 derivative, permanently halting gradient updates; Leaky ReLU maintains a small negative slope αz to keep gradients flowing.',
+          'ReLU neurons explode to infinity for negative scores; Leaky ReLU truncates positive activations.',
+          'ReLU activations consume exponential GPU memory; Leaky ReLU compresses tensors into 8-bit integers.',
+          'ReLU cannot be computed in parallel; Leaky ReLU permits vectorized matrix operations.'
+        ],
+        correct: 0,
+        explanation: 'When z < 0, ReLU(z) = 0 and ReLU\'(z) = 0. If a weight update drives z negative across all inputs, the neuron dies. Leaky ReLU sets a small slope (e.g., α = 0.01) for z < 0, guaranteeing a non-zero gradient flows through.'
+      },
+      {
+        id: 'w3_m4_q4',
+        question: 'Why does using sigmoid activations in hidden layers of deep neural networks cause the vanishing gradient problem?',
+        options: [
+          'The maximum derivative of sigmoid is only 0.25 at z = 0; multiplying these small derivatives across multiple layers shrinks backpropagated gradients exponentially.',
+          'The derivative of sigmoid approaches infinity at the saturation tails.',
+          'Sigmoid is discontinuous and cannot be differentiated by backpropagation.',
+          'Sigmoid outputs negative values that cancel out positive gradients.'
+        ],
+        correct: 0,
+        explanation: 'Since σ\'(z) = σ(z)(1 - σ(z)) <= 0.25, the chain rule multiplies terms <= 0.25 at every layer. In an L-layer network, gradients shrink by at least (0.25)^L, effectively freezing early layers.'
+      }
+    ]
   },
   s5: {
     title: 'Module 5: Training a multilayer neural network',
