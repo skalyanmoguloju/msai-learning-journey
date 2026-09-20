@@ -289,5 +289,45 @@ export const AI_WEEK3_FLASHCARDS: AIFlashcard[] = [
     backExplanation: 'The loss function L evaluates prediction error on a single observation. The empirical risk (cost function E) is the aggregate average loss over the entire training set of N examples, serving as the scalar objective function minimized by gradient descent.',
     useCase: 'Formulating empirical risk minimization (ERM) in machine learning.',
     remark: 'Batch gradient descent minimizes E(theta); stochastic gradient descent (SGD) approximates it with mini-batches.'
+  },
+  {
+    id: 'ai-w3-m7-fc-1',
+    category: 'Module 7: Universal approximation',
+    title: 'Universal Approximation Theorem (UAT)',
+    frontPrompt: 'What does the Universal Approximation Theorem state about feedforward neural networks?',
+    backFormula: '\\forall \\varepsilon > 0, \\; \\exists \\theta : \\sup_{x \\in K} \\left| f(x) - f_\\theta(x) \\right| < \\varepsilon',
+    backExplanation: 'A standard feedforward network with at least one hidden layer, a non-linear activation function, and sufficiently many hidden units can approximate any continuous function on a compact (closed and bounded) subset K of R^d to arbitrary precision epsilon > 0.',
+    useCase: 'Theoretical foundation proving that neural networks are general-purpose function approximators.',
+    remark: 'Proven by Cybenko (1989) for sigmoid and generalized by Hornik (1991) to any non-polynomial continuous activation.'
+  },
+  {
+    id: 'ai-w3-m7-fc-2',
+    category: 'Module 7: Universal approximation',
+    title: 'Expressive Power vs. Algorithmic Learnability',
+    frontPrompt: 'Why does the existence of an approximating parameter set theta* NOT guarantee successful neural network training?',
+    backFormula: '\\text{Representation (\\exists } \\theta^*) \\quad \\centernot\\implies \\quad \\text{Learnability (\\text{GD discovery})}',
+    backExplanation: 'Universal approximation guarantees representation (expressive capacity), but does not guarantee that gradient descent optimization can discover theta*. Practical training is vulnerable to non-convex local minima, saddle points, vanishing gradients, poor initialization, and finite/noisy sample data.',
+    useCase: 'Troubleshooting model underperformance: distinguishing capacity limitations from optimization or data deficits.',
+    remark: 'Even if a network CAN represent a function, learning it with polynomial sample complexity is not guaranteed.'
+  },
+  {
+    id: 'ai-w3-m7-fc-3',
+    category: 'Module 7: Universal approximation',
+    title: 'Piecewise Linear Function Synthesis via ReLU',
+    frontPrompt: 'How do linear combinations of simple ReLU neurons construct complex continuous functions like |x| or bumps?',
+    backFormula: '|x| = \\text{ReLU}(x) + \\text{ReLU}(-x), \\qquad \\text{Bump}(x) = \\text{ReLU}(x) - 2\\text{ReLU}(x-1) + \\text{ReLU}(x-2)',
+    backExplanation: 'Each ReLU neuron divides the input space into active (linear slope) and inactive (flat zero) regions. By shifting and scaling these piecewise linear ramps and summing them at the output layer, networks construct localized facets, bumps, and arbitrary piecewise linear approximations.',
+    useCase: 'Understanding how modern deep networks with ReLU activations model high-dimensional manifolds.',
+    remark: 'Without non-linear activations, any depth collapses into a single affine hyperplane Wx + b.'
+  },
+  {
+    id: 'ai-w3-m7-fc-4',
+    category: 'Module 7: Universal approximation',
+    title: 'Compact Domains & The Curse of Dimensionality',
+    frontPrompt: 'Why is the compact domain restriction K crucial in UAT, and why do single-layer networks fail in high dimensions?',
+    backFormula: 'N_{\\text{neurons}} = \\mathcal{O}\\left(\\left(\\frac{1}{\\varepsilon}\\right)^d\\right) \\quad \\text{for } x \\in K \\subset \\mathbb{R}^d',
+    backExplanation: '1. Outside a compact (bounded) domain K, network outputs can diverge wildly from the target. 2. To approximate a d-dimensional Lipschitz function to error epsilon, a single hidden layer requires exponentially many neurons O((1/epsilon)^d), making shallow networks intractable. Deep networks overcome this via compositional reuse of hierarchical features.',
+    useCase: 'Motivating deep multilayer architectures over wide single-hidden-layer networks.',
+    remark: 'Depth efficiency allows deep networks to approximate composite functions with polynomially fewer parameters.'
   }
 ];
