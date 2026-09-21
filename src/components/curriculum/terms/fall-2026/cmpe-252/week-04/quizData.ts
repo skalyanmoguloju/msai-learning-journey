@@ -88,7 +88,68 @@ export const AI_WEEK4_QUIZ: Record<string, QuizSection> = {
     stepNumber: 2,
     badge: 'Spatial Invariance',
     sub: 'Parameter Efficiency & Translation Equivariance',
-    questions: []
+    questions: [
+      {
+        id: 'ai-w4-m2-q1',
+        question: 'What dictates the channel depth (C_out) of the output tensor produced by a standard 2D convolutional layer?',
+        options: [
+          'The number of filters (kernels) in the layer\'s filter bank',
+          'The spatial height and width of the input image',
+          'The pooling window size and stride',
+          'The amount of zero padding P applied to the borders'
+        ],
+        correct: 0,
+        explanation: 'Each distinct filter in the filter bank scans the multi-channel input and produces exactly one 2D feature map. Stacking these maps yields an output tensor depth equal to C_out.'
+      },
+      {
+        id: 'ai-w4-m2-q2',
+        question: 'What is the full parameter tensor shape of a single convolutional filter operating on an input with C_in channels?',
+        options: [
+          'H_in x W_in x C_out',
+          'K_h x K_w x C_in',
+          'H_out x W_out x C_in',
+          'K_h x K_w x C_out'
+        ],
+        correct: 1,
+        explanation: 'A filter spans a local spatial area (K_h x K_w) and must extend across all C_in channels of the input feature tensor.'
+      },
+      {
+        id: 'ai-w4-m2-q3',
+        question: 'What does the principle of parameter sharing (weight tying) establish in convolutional neural networks?',
+        options: [
+          'Every spatial pixel location maintains a unique set of trainable weights',
+          'The exact same filter weights are reused across every spatial patch of the input tensor',
+          'Weights are tied directly between the first convolutional layer and the final classifier',
+          'Only biases are shared, while weights vary across image coordinates'
+        ],
+        correct: 1,
+        explanation: 'Parameter sharing applies the same localized filter across the entire image grid. This enforces translation equivariance and prevents parameter explosion as image resolution increases.'
+      },
+      {
+        id: 'ai-w4-m2-q4',
+        question: 'What operation does a standard max-pooling layer perform on an input feature map?',
+        options: [
+          'It computes a weighted linear combination using learned backpropagated weights',
+          'It selects the maximum activation value within each local spatial window',
+          'It calculates the dot product between adjacent channel vectors',
+          'It normalizes each feature map to zero mean and unit variance'
+        ],
+        correct: 1,
+        explanation: 'Max pooling is a fixed, parameter-free downsampling operation that retains only the dominant activation in each local window, conferring local translation tolerance.'
+      },
+      {
+        id: 'ai-w4-m2-q5',
+        question: 'When a feature map is downsampled using a 2x2 pooling operation with stride S=2, what fraction of the spatial locations remain?',
+        options: [
+          'One-half (50% of the locations)',
+          'One-fourth (25% of the locations)',
+          'One-eighth (12.5% of the locations)',
+          'The number of locations remains unchanged while channels double'
+        ],
+        correct: 1,
+        explanation: 'Because both spatial height and width are halved (H/2 and W/2), the total spatial positions become (H/2) * (W/2) = (H * W) / 4, reducing the spatial footprint by a factor of 4 (75% reduction).'
+      }
+    ]
   },
   s3: {
     title: 'Module 3: CNN building blocks',
