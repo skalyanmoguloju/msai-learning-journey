@@ -95,7 +95,6 @@ export const INITIAL_SEMESTERS: Semester[] = [
             topics: [
               'Deep learning and feature learning',
               'Why convolutional neural networks?',
-              'CNN building blocks',
               'Important CNN architectures',
               'Transformers and self-attention',
               'Basic recurrent neural networks',

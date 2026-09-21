@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Sparkles,
   Eye,
-  Layers,
   Cpu,
   Zap,
   RotateCcw,
@@ -12,7 +11,7 @@ import {
   ArrowLeftRight
 } from 'lucide-react';
 
-export type StepId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+export type StepId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export interface StepMeta {
   id: StepId;
@@ -39,55 +38,48 @@ export const STEPS: StepMeta[] = [
   },
   {
     id: 3,
-    title: 'CNN building blocks',
-    badge: 'Kernels & Pooling',
-    subtitle: 'Convolutions, padding, stride, channel depth, pooling, and feature map dimensions',
-    icon: Layers
-  },
-  {
-    id: 4,
     title: 'Important CNN architectures',
     badge: 'Model Evolution',
     subtitle: 'LeNet, AlexNet, VGG, GoogLeNet/Inception, and ResNet skip connections',
     icon: Cpu
   },
   {
-    id: 5,
+    id: 4,
     title: 'Transformers and self-attention',
     badge: 'Attention Mechanism',
     subtitle: 'Scaled dot-product attention, multi-head projection, and sequence-to-sequence modeling',
     icon: Zap
   },
   {
-    id: 6,
+    id: 5,
     title: 'Basic recurrent neural networks',
     badge: 'Sequential Memory',
     subtitle: 'Recurrent transitions, hidden state propagation, and unfolding across time',
     icon: RotateCcw
   },
   {
-    id: 7,
+    id: 6,
     title: 'RNN loss and training',
     badge: 'BPTT Optimization',
     subtitle: 'Backpropagation Through Time (BPTT), exploding gradients, and vanishing signals',
     icon: TrendingDown
   },
   {
-    id: 8,
+    id: 7,
     title: 'Gated Recurrent Unit (GRU)',
     badge: 'Gated Control',
     subtitle: 'Update gates, reset gates, and parameter-efficient memory preservation',
     icon: GitBranch
   },
   {
-    id: 9,
+    id: 8,
     title: 'Long Short-Term Memory (LSTM)',
     badge: 'Cell State',
     subtitle: 'Forget, input, and output gates, cell state highways, and additive gradient flow',
     icon: Repeat
   },
   {
-    id: 10,
+    id: 9,
     title: 'Bidirectional RNNs',
     badge: 'Bidirectional Context',
     subtitle: 'Forward and backward temporal representations, concatenation, and sequence tagging',

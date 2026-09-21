@@ -152,57 +152,111 @@ export const AI_WEEK4_QUIZ: Record<string, QuizSection> = {
     ]
   },
   s3: {
-    title: 'Module 3: CNN building blocks',
+    title: 'Module 3: Important CNN architectures',
     stepNumber: 3,
-    badge: 'Kernels & Pooling',
-    sub: 'Padding, Stride, Receptive Fields & Spatial Math',
-    questions: []
+    badge: 'Architectures',
+    sub: 'LeNet, AlexNet, VGG, ResNet Residual Highways & MobileNet',
+    questions: [
+      {
+        id: 'ai-w4-m3-q1',
+        question: 'In LeNet-5, what does the value 400 represent after flattening the S4 pooling layer output (5×5×16)?',
+        options: [
+          'The original number of raw input pixels',
+          'The learned feature activations entering the first fully connected dense layer',
+          'The total number of filters in the entire network',
+          'The number of output digit classification classes'
+        ],
+        correct: 1,
+        explanation: 'The 400 scalar values come directly from flattening the final pooling feature maps (5 * 5 * 16 = 400), serving as the learned spatial representation fed to the dense classifier.'
+      },
+      {
+        id: 'ai-w4-m3-q2',
+        question: 'What is the primary architectural purpose of a residual shortcut (skip connection) in ResNet?',
+        options: [
+          'To provide an identity pathway allowing representations and gradients to flow unimpeded without attenuation',
+          'To eliminate all non-linear activation functions from the network',
+          'To constrain all intermediate feature maps to a 1x1 spatial resolution',
+          'To convert convolutional operations into dense matrix multiplications'
+        ],
+        correct: 0,
+        explanation: 'Residual connections establish an identity highway y = F(x) + x. In the backward pass, dy/dx = dF/dx + 1, ensuring gradients can travel directly through the identity term (+1) even through hundreds of layers.'
+      },
+      {
+        id: 'ai-w4-m3-q3',
+        question: 'What dimension constraint must strictly hold before performing the elementwise residual addition y = F(x) + x?',
+        options: [
+          'The tensor shapes of F(x) and x must be strictly identical across height, width, and channels',
+          'The input x must have double the spatial resolution of F(x)',
+          'The shortcut tensor must be all zeros prior to addition',
+          'F(x) must be a 1D vector while x is a 2D matrix'
+        ],
+        correct: 0,
+        explanation: 'Because tensor addition is elementwise, F(x) and x must match in dimensions. When spatial downsampling or channel expansion occurs, a 1x1 projection shortcut S(x) is applied so that y = F(x) + S(x).'
+      },
+      {
+        id: 'ai-w4-m3-q4',
+        question: 'What is the primary role of a pointwise (1×1) convolution in modern architectures like MobileNet and Inception?',
+        options: [
+          'To mix, project, and linearly combine channels at each spatial pixel location without spatial filtering',
+          'To filter a 3x3 local neighborhood across the image grid',
+          'To downsample spatial resolution via max-pooling',
+          'To normalize tensor activations across batch instances'
+        ],
+        correct: 0,
+        explanation: 'A 1x1 convolution has a spatial receptive field of 1x1, meaning it computes a linear combination across all channels at each specific coordinate, allowing channel expansion or reduction independently of spatial filtering.'
+      },
+      {
+        id: 'ai-w4-m3-q5',
+        question: 'In MobileNet models, what effect does the width multiplier alpha (0 < alpha <= 1) have on the network architecture?',
+        options: [
+          'It uniformly scales the number of channels across all layers, reducing parameters and computation quadratically by alpha^2',
+          'It scales the input image height and width resolution',
+          'It controls the learning rate decay schedule during training',
+          'It specifies the spatial kernel size for depthwise convolutions'
+        ],
+        correct: 0,
+        explanation: 'The width multiplier alpha thins the channel dimension of each layer (C_in\' = alpha * C_in, C_out\' = alpha * C_out). Since convolution computation scales with C_in * C_out, both parameters and FLOPs scale approximately by alpha^2.'
+      }
+    ]
   },
   s4: {
-    title: 'Module 4: Important CNN architectures',
+    title: 'Module 4: Transformers and self-attention',
     stepNumber: 4,
-    badge: 'Architectures',
-    sub: 'LeNet, AlexNet, VGG & ResNet Residual Highways',
-    questions: []
-  },
-  s5: {
-    title: 'Module 5: Transformers and self-attention',
-    stepNumber: 5,
     badge: 'Attention',
     sub: 'Scaled Dot-Product Attention & QKV Projections',
     questions: []
   },
-  s6: {
-    title: 'Module 6: Basic recurrent neural networks',
-    stepNumber: 6,
+  s5: {
+    title: 'Module 5: Basic recurrent neural networks',
+    stepNumber: 5,
     badge: 'Recurrence',
     sub: 'Hidden State Transitions & Temporal Unfolding',
     questions: []
   },
-  s7: {
-    title: 'Module 7: RNN loss and training',
-    stepNumber: 7,
+  s6: {
+    title: 'Module 6: RNN loss and training',
+    stepNumber: 6,
     badge: 'BPTT',
     sub: 'Backpropagation Through Time & Gradient Stability',
     questions: []
   },
-  s8: {
-    title: 'Module 8: Gated Recurrent Unit (GRU)',
-    stepNumber: 8,
+  s7: {
+    title: 'Module 7: Gated Recurrent Unit (GRU)',
+    stepNumber: 7,
     badge: 'GRU',
     sub: 'Update & Reset Gates for Memory Retention',
     questions: []
   },
-  s9: {
-    title: 'Module 9: Long Short-Term Memory (LSTM)',
-    stepNumber: 9,
+  s8: {
+    title: 'Module 8: Long Short-Term Memory (LSTM)',
+    stepNumber: 8,
     badge: 'LSTM',
     sub: 'Cell State Highway, Forget, Input & Output Gates',
     questions: []
   },
-  s10: {
-    title: 'Module 10: Bidirectional RNNs',
-    stepNumber: 10,
+  s9: {
+    title: 'Module 9: Bidirectional RNNs',
+    stepNumber: 9,
     badge: 'Bidirectional',
     sub: 'Dual-Directional Context & Sequence Modeling',
     questions: []

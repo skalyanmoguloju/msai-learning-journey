@@ -24,14 +24,13 @@ import { AI_WEEK4_DOCUMENTS } from './documentsData';
 import {
   Module1DeepLearningFeatureLearning,
   Module2WhyCNNs,
-  Module3CNNBuildingBlocks,
-  Module4ImportantCNNArchitectures,
-  Module5TransformersSelfAttention,
-  Module6BasicRNNs,
-  Module7RNNLossTraining,
-  Module8GRU,
-  Module9LSTM,
-  Module10BiRNNs,
+  Module3ImportantCNNArchitectures,
+  Module4TransformersSelfAttention,
+  Module5BasicRNNs,
+  Module6RNNLossTraining,
+  Module7GRU,
+  Module8LSTM,
+  Module9BiRNNs,
   Week4QuizView
 } from './modules';
 
@@ -240,14 +239,13 @@ export const Week04AI: React.FC<Week04AIProps> = ({ course, module }) => {
               {/* Dynamic Module Component Render */}
               {activeStep === 1 && <Module1DeepLearningFeatureLearning />}
               {activeStep === 2 && <Module2WhyCNNs />}
-              {activeStep === 3 && <Module3CNNBuildingBlocks />}
-              {activeStep === 4 && <Module4ImportantCNNArchitectures />}
-              {activeStep === 5 && <Module5TransformersSelfAttention />}
-              {activeStep === 6 && <Module6BasicRNNs />}
-              {activeStep === 7 && <Module7RNNLossTraining />}
-              {activeStep === 8 && <Module8GRU />}
-              {activeStep === 9 && <Module9LSTM />}
-              {activeStep === 10 && <Module10BiRNNs />}
+              {activeStep === 3 && <Module3ImportantCNNArchitectures />}
+              {activeStep === 4 && <Module4TransformersSelfAttention />}
+              {activeStep === 5 && <Module5BasicRNNs />}
+              {activeStep === 6 && <Module6RNNLossTraining />}
+              {activeStep === 7 && <Module7GRU />}
+              {activeStep === 8 && <Module8LSTM />}
+              {activeStep === 9 && <Module9BiRNNs />}
 
               {/* Assessment Banner */}
               <div className="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md mt-6">

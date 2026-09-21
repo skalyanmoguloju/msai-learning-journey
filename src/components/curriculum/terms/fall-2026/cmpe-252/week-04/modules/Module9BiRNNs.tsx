@@ -1,16 +1,16 @@
 import React from 'react';
-import { RotateCcw, Layers } from 'lucide-react';
+import { ArrowLeftRight, Layers } from 'lucide-react';
 
-export const Module6BasicRNNs: React.FC = () => {
+export const Module9BiRNNs: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in text-slate-200">
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-3 shadow-sm">
         <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-          <RotateCcw className="w-5 h-5 text-indigo-400" />
-          <span>Module 6: Basic recurrent neural networks</span>
+          <ArrowLeftRight className="w-5 h-5 text-indigo-400" />
+          <span>Module 9: Bidirectional RNNs</span>
         </h3>
         <p className="text-xs text-slate-400 leading-relaxed">
-          Recurrent state transitions, memory across temporal sequences, and unrolling loops across time steps.
+          Forward and backward temporal contexts, representation concatenation, and sequence-level predictive power.
         </p>
         <div className="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-medium flex items-center gap-2">
           <Layers className="w-4 h-4 text-indigo-400 shrink-0" />

@@ -200,6 +200,106 @@ export const AI_WEEK4_FLASHCARDS: UniversalFlashcard[] = [
     backExplanation: 'A standard CNN block cascades convolution (linear pattern matching and cross-channel mixing), ReLU (elementwise non-linear thresholding), and pooling (spatial summarization and downsampling).',
     useCase: 'Backbone architecture of VGG, AlexNet, and classical convolutional networks.',
     remark: 'Modern architectures frequently replace pooling with strided convolutions and insert Batch Normalization.'
+  },
+  {
+    id: 'ai-w4-m3-fc-1',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Network Architecture & Design Patterns',
+    frontPrompt: 'What is a neural network architecture, and what trade-offs govern its design?',
+    backFormula: '\\hat{y} = f_L \\circ f_{L-1} \\circ \\dots \\circ f_1(x)',
+    backExplanation: 'An architecture defines the topological arrangement of operations (convolutions, activations, residual highways, downsamplers) balancing representation capacity, parameter efficiency, latency, and gradient trainability.',
+    useCase: 'Selecting models tailored for cloud inference (e.g. ResNet/VGG) vs edge deployment (e.g. MobileNet).',
+    remark: 'Modern designs favor modular, repeating block motifs over ad-hoc layer configurations.'
+  },
+  {
+    id: 'ai-w4-m3-fc-2',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Residual Function F(x)',
+    frontPrompt: 'In a ResNet residual block, what is the mathematical definition and role of the residual function F(x)?',
+    backFormula: 'F(x) = \\mathcal{H}(x) - x \\implies y = F(x) + x',
+    backExplanation: 'Rather than forcing stacked layers to fit the full underlying mapping H(x), ResNet trains layers to fit a residual mapping F(x). If an identity mapping is optimal, weights can easily be driven toward zero.',
+    useCase: 'Enabling stable optimization of ultra-deep networks (50, 101, 152+ layers).',
+    remark: 'Residual learning avoids the degradation problem where deeper un-shunted networks exhibit higher training error.'
+  },
+  {
+    id: 'ai-w4-m3-fc-3',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Residual Skip Connection Gradient Highway',
+    frontPrompt: 'Why does adding a skip connection y = F(x) + x prevent the vanishing gradient problem in deep networks?',
+    backFormula: '\\frac{\\partial y}{\\partial x} = \\frac{\\partial F(x)}{\\partial x} + I',
+    backExplanation: 'The derivative contains an additive identity term (+I) that allows gradient signals from higher layers to propagate backward directly to early layers without being repeatedly attenuated by matrix multiplications.',
+    useCase: 'Training networks exceeding 1,000 layers without optimization stagnation.',
+    remark: 'Even if the Jacobian dF/dx is small or unstable, the +I term guarantees clean gradient flow.'
+  },
+  {
+    id: 'ai-w4-m3-fc-4',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Projection Shortcut S(x)',
+    frontPrompt: 'When is a projection shortcut required in a residual network, and how is it implemented?',
+    backFormula: 'y = F(x) + S(x), \\quad S(x) = W_s x \\text{ with } 1 \\times 1 \\text{ conv, stride } S',
+    backExplanation: 'When a residual block performs spatial downsampling (stride > 1) or expands channel depth (C_out > C_in), x and F(x) cannot be added directly. A 1x1 convolution with matching stride aligns their dimensions.',
+    useCase: 'Transition blocks between ResNet stages (e.g. ResNet-50 conv3_1, conv4_1, conv5_1).',
+    remark: 'Identity shortcuts are used when shapes match; projection shortcuts are used only when shapes change.'
+  },
+  {
+    id: 'ai-w4-m3-fc-5',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Small Convolutions Principle (VGG Stack)',
+    frontPrompt: 'Why is stacking two 3x3 convolutions superior to using a single 5x5 convolution?',
+    backFormula: '2 \\times (3 \\times 3) = 18 \\text{ weights} < 1 \\times (5 \\times 5) = 25 \\text{ weights}',
+    backExplanation: 'Two stacked 3x3 convolutions have the exact same effective receptive field (5x5) as a single 5x5 convolution, but require 28% fewer parameters and incorporate two non-linear activations instead of one, increasing discriminative capacity.',
+    useCase: 'Architectural design principle established by VGG and adopted by all modern vision backbones.',
+    remark: 'Three stacked 3x3 convolutions cover a 7x7 receptive field with 27 weights vs 49 weights (45% reduction).'
+  },
+  {
+    id: 'ai-w4-m3-fc-6',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Depthwise Convolution',
+    frontPrompt: 'How does depthwise convolution differ from standard 2D convolution?',
+    backFormula: '\\text{Weights}_{\\text{DW}} = K^2 \\times C_{\\text{in}} \\quad (\\text{vs. } K^2 \\times C_{\\text{in}} \\times C_{\\text{out}})',
+    backExplanation: 'Depthwise convolution applies a single spatial filter per input channel independently without performing any cross-channel summation. It performs spatial feature extraction while keeping channels segregated.',
+    useCase: 'MobileNet, Xception, and EfficientNet lightweight mobile backbones.',
+    remark: 'Depthwise convolution alone cannot capture cross-channel interactions; it must be paired with pointwise convolution.'
+  },
+  {
+    id: 'ai-w4-m3-fc-7',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Pointwise (1x1) Convolution',
+    frontPrompt: 'What is a pointwise convolution, and how does it complement depthwise convolution?',
+    backFormula: '\\text{Weights}_{\\text{PW}} = 1 \\times 1 \\times C_{\\text{in}} \\times C_{\\text{out}} = C_{\\text{in}} \\times C_{\\text{out}}',
+    backExplanation: 'Pointwise convolution is a 1x1 filter that computes linear combinations across all channels at each individual spatial pixel, handling channel projection and mixing with zero spatial receptive field.',
+    useCase: 'Second phase of depthwise-separable convolution, Bottleneck blocks, and Inception dimensionality reduction.',
+    remark: 'Depthwise (spatial) + Pointwise (channel) factorizes standard convolution into two decoupled steps.'
+  },
+  {
+    id: 'ai-w4-m3-fc-8',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Depthwise-Separable Efficiency Ratio',
+    frontPrompt: 'What is the theoretical parameter and computation reduction ratio of depthwise-separable convolution compared to standard convolution?',
+    backFormula: '\\frac{K^2 C_{\\text{in}} + C_{\\text{in}} C_{\\text{out}}}{K^2 C_{\\text{in}} C_{\\text{out}}} = \\frac{1}{C_{\\text{out}}} + \\frac{1}{K^2}',
+    backExplanation: 'For a 3x3 kernel (K=3) and typical channel depth (e.g. C_out >= 64), the computational cost drops to approximately 1/9 to 1/8 of standard convolution (an 88-90% reduction in FLOPs and parameters).',
+    useCase: 'Designing real-time computer vision models on mobile devices and edge microcontrollers.',
+    remark: 'Enables AlexNet/VGG-level accuracy at a fraction of the compute and memory footprint.'
+  },
+  {
+    id: 'ai-w4-m3-fc-9',
+    category: 'Module 3: Important CNN architectures',
+    title: 'MobileNet Multipliers (Width alpha and Resolution rho)',
+    frontPrompt: 'How do the width multiplier (alpha) and resolution multiplier (rho) scale model complexity?',
+    backFormula: 'C\' = \\alpha C, \\quad (H\', W\') = (\\rho H, \\rho W), \\quad \\text{Cost} \\propto \\alpha^2 \\rho^2',
+    backExplanation: 'Width multiplier alpha thins channel depth, while resolution multiplier rho scales spatial input size. Because parameters scale with alpha^2 and MACs scale with alpha^2 * rho^2, practitioners can seamlessly trade off latency and accuracy.',
+    useCase: 'Generating a scalable family of models from a single architecture (e.g., MobileNet 0.5x 160).',
+    remark: 'Typically alpha in (0, 1] and rho in (0, 1].'
+  },
+  {
+    id: 'ai-w4-m3-fc-10',
+    category: 'Module 3: Important CNN architectures',
+    title: 'Fully Convolutional Networks (FCN) & Semantic Segmentation',
+    frontPrompt: 'How does a Fully Convolutional Network convert an image classifier into a dense per-pixel segmentation engine?',
+    backFormula: 'X \\in \\mathbb{R}^{H \\times W \\times 3} \\xrightarrow{\\text{All Conv/Deconv}} Y \\in \\mathbb{R}^{H \\times W \\times K}',
+    backExplanation: 'FCN replaces dense fully connected layers with 1x1 convolutions and incorporates upsampling/transposed convolutions. Instead of a single class vector, it outputs an H x W x K tensor providing K class logits for every individual pixel.',
+    useCase: 'Autonomous driving road segmentation, medical image lesion segmentation, and scene parsing.',
+    remark: 'Skip connections from early high-resolution layers recover fine spatial boundaries lost in pooling.'
   }
 ];
 
