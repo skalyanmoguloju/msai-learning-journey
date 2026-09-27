@@ -337,10 +337,195 @@ export const INITIAL_SEMESTERS: Semester[] = [
                 'Implementation strategy in Python / PyTorch.'
               ],
               callout: 'Syllabus Objective: Finding a good representation of complex data.',
-              speakerNotes: 'Good evening Professor Krishna and classmates. Today we are presenting our final project for CMPE-252.'
+              speakerNotes: 'Introduce the core project motivations, problem scoping, and technical architecture.'
             }
           ]
-        }
+        },
+        assignments: [
+          {
+            id: 'cmpe252-m1-proposal',
+            title: 'Project Proposal & Literature Review',
+            category: 'Proposal',
+            dueDate: '2026-10-14',
+            status: 'pending',
+            weight: '10% of Final Project',
+            description: 'Formulate core project objectives, acquire and preprocess multi-modal datasets, conduct a comprehensive literature survey, and establish evaluation baselines for Dr. Gautam Krishna.',
+            requirements: [
+              'Submit a 1-2 page proposal outlining research goals, dataset provenance, and team responsibilities.',
+              'Define rigorous data preprocessing pipelines (e.g. spectrogram conversion for audio, spatial normalizations for vision).',
+              'Review at least 3 state-of-the-art peer-reviewed publications relevant to the proposed architecture.',
+              'Specify milestone execution timeline and baseline performance targets.'
+            ],
+            documents: [
+              {
+                title: 'Week 1: Data-Driven Methods (Lecture Slides)',
+                url: 'documents/cmpe-252/week-01/data-driven-methods.pdf',
+                type: 'pdf',
+                description: 'Foundations of data representations, feature learning, and inductive biases.',
+                size: '1.2 MB'
+              },
+              {
+                title: 'Week 2: AI Basics Continued (Lecture Slides)',
+                url: 'documents/cmpe-252/week-02/lecture-02-ai-basics-continued.pdf',
+                type: 'pdf',
+                description: 'Matrix decompositions, gradient vectors, eigenvalues, and SVD.',
+                size: '1.4 MB'
+              },
+              {
+                title: 'Week 3: Neural Networks Foundations (Lecture Slides)',
+                url: 'documents/cmpe-252/week-03/lecture-03-neural-networks-deep-learning.pdf',
+                type: 'pdf',
+                description: 'Biological inspiration, perceptrons, backpropagation, and loss functions.',
+                size: '2.8 MB'
+              },
+              {
+                title: 'Capstone Proposal Guidelines & Rubric',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'canvas',
+                description: 'Official SJSU Canvas submission portal, rubric, and format specifications.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd1'
+          },
+          {
+            id: 'cmpe252-m2-paper-review',
+            title: 'In-Class Paper Presentation & Technical Review',
+            category: 'Presentation',
+            dueDate: '2026-11-18',
+            status: 'pending',
+            weight: '50% of Course Grade',
+            description: 'Deliver an in-class technical presentation (group of 3) reviewing and critically evaluating a high-impact AI research paper, followed by a live defense with Dr. Gautam Krishna.',
+            requirements: [
+              '20-minute slide presentation followed by 5-minute technical Q&A defense.',
+              'Deep mathematical walkthrough of the core loss functions, model architecture, and optimization.',
+              'Empirical analysis of benchmark results, experimental replication, and ablation insights.',
+              'Critical discussion of limitations, inductive bias trade-offs, and future research directions.'
+            ],
+            documents: [
+              {
+                title: 'Week 3: Neural Networks & Backprop Slides',
+                url: 'documents/cmpe-252/week-03/lecture-03-neural-networks-deep-learning.pdf',
+                type: 'pdf',
+                description: 'Reference slides for backpropagation, activation functions, and optimization.',
+                size: '2.8 MB'
+              },
+              {
+                title: 'Week 4: CNNs, Transformers & RNNs (Lecture Slides)',
+                url: 'documents/cmpe-252/week-04/lecture-04-deep-networks-cnns-transformers-rnns.pdf',
+                type: 'pdf',
+                description: 'Comprehensive slides covering modern vision backbones, attention, and recurrence.',
+                size: '5.7 MB'
+              },
+              {
+                title: 'Paper Presentation Slide Template',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'rubric',
+                description: 'Recommended slide deck structure, presentation timing, and grading rubric.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd2'
+          },
+          {
+            id: 'cmpe252-m3-system-pipeline',
+            title: 'Model Pipeline Implementation & Benchmark Milestone',
+            category: 'Milestone',
+            dueDate: '2026-11-25',
+            status: 'pending',
+            weight: '10% of Final Project',
+            description: 'Implement end-to-end data pipelines and baseline deep neural architectures (CNN, Transformer, or Generative Autoencoder), establishing empirical benchmark comparisons.',
+            requirements: [
+              'Fully functional data loading, tokenization/augmentation, and tensor processing pipeline.',
+              'Baseline neural network implementation with reproducible training curves and validation logging.',
+              'Comparative evaluation table against linear/classical baselines.',
+              'Interim milestone summary and code repository check-in.'
+            ],
+            documents: [
+              {
+                title: 'Week 4: CNNs, Transformers & RNNs (Lecture Slides)',
+                url: 'documents/cmpe-252/week-04/lecture-04-deep-networks-cnns-transformers-rnns.pdf',
+                type: 'pdf',
+                description: 'Architectures for feature extraction and sequence modeling.',
+                size: '5.7 MB'
+              },
+              {
+                title: 'Week 4: RNN, GRU & LSTM (Handwritten Notes)',
+                url: 'documents/cmpe-252/week-04/lecture-04-handwritten-notes-rnn-gru-lstm.pdf',
+                type: 'pdf',
+                description: 'Handwritten mathematical derivations for recurrent cells, gating, and BPTT.',
+                size: '957 KB'
+              },
+              {
+                title: 'Capstone GitHub Repository',
+                url: 'https://github.com/sjsu-msai/cmpe252-ai-data-engineering',
+                type: 'github',
+                description: 'Project code repository with environment setup, baseline models, and datasets.'
+              }
+            ],
+            submissionUrl: 'https://github.com/sjsu-msai/cmpe252-ai-data-engineering'
+          },
+          {
+            id: 'cmpe252-m4-oral-exam',
+            title: 'Final Project Presentation & Oral Examination',
+            category: 'Exam',
+            dueDate: '2026-12-09',
+            status: 'pending',
+            weight: '30% of Course Grade',
+            description: 'Individual and group oral examination with Dr. Gautam Krishna defending all theoretical concepts from Weeks 1-14 and showcasing live system inference performance.',
+            requirements: [
+              'Live interactive demonstration of inference pipeline and evaluation on unseen test data.',
+              'Individual oral defense answering rigorous theoretical questions on optimization, backprop, CNNs, Transformers, and RNNs.',
+              'Comprehensive slide deck summarizing results, error analysis, and ablations.'
+            ],
+            documents: [
+              {
+                title: 'Oral Examination Guidelines & Topic Coverage',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'rubric',
+                description: 'Detailed rubric on individual grading breakdown and required theoretical mastery.'
+              },
+              {
+                title: 'Live System Demonstration Portal',
+                url: 'https://cmpe252-demo.sjsu-ai.internal',
+                type: 'link',
+                description: 'Interactive demo interface for real-time model inference and visualization.'
+              }
+            ],
+            relatedProjectDeliverableId: 'd3'
+          },
+          {
+            id: 'cmpe252-m5-final-report',
+            title: 'Final Project Written Report & Codebase Submission',
+            category: 'Report',
+            dueDate: '2026-12-16',
+            status: 'pending',
+            weight: '20% of Final Project',
+            description: 'Submission of conference-style final paper (IEEE format) detailing problem statement, methodology, architectural diagrams, empirical results, ablations, and reproducible codebase.',
+            requirements: [
+              '6-8 page IEEE double-column conference format paper with abstract, math formulations, and citations.',
+              'Rigorous ablation study validating design choices (e.g. depth, attention heads, regularizers).',
+              'Clean, documented GitHub repository with README, environment YAML/requirements.txt, and checkpoint weights.',
+              'Contribution statement itemizing individual member responsibilities.'
+            ],
+            documents: [
+              {
+                title: 'IEEE Conference Paper Template (LaTeX / Overleaf)',
+                url: 'https://www.ieee.org/conferences/publishing/templates.html',
+                type: 'rubric',
+                description: 'Official IEEE double-column conference proceedings formatting template.'
+              },
+              {
+                title: 'Final Report Canvas Submission Portal',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'canvas',
+                description: 'Final submission portal on Canvas for PDF report and codebase archive.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd4'
+          }
+        ]
       },
       {
         id: 'cmpe-257-sec-02',
@@ -421,11 +606,18 @@ export const INITIAL_SEMESTERS: Semester[] = [
           {
             id: 'm257-3',
             week: 'Week 03',
-            title: 'Advanced Supervised Learning',
-            description: 'Generalization theory, bias and variance tradeoff, cross-validation, and nonlinear transformations.',
-            topics: ['Theory of Generalization', 'Bias and Variance Decomposition', 'Cross-Validation & Hyperparameter Tuning', 'Generative vs Discriminative Models'],
+            title: 'Decision Trees & Ensemble Methods',
+            description: 'Why decision trees, decision-tree fundamentals, classification trees and split criteria, regression trees and CART, bagging and random forests, and gradient boosting.',
+            topics: [
+              'Why decision trees?',
+              'Decision-tree fundamentals',
+              'Classification trees and split criteria',
+              'Regression trees and CART',
+              'Bagging and random forests',
+              'Gradient boosting and final comparison'
+            ],
             status: 'in-progress',
-            reading: 'CS229 Notes Chapter 2'
+            reading: 'Breiman et al. (1984), Breiman (2001), Friedman (2001)'
           },
           {
             id: 'm257-4',
@@ -686,10 +878,223 @@ export const INITIAL_SEMESTERS: Semester[] = [
                 'Dataset pre-processing and exploratory analysis.'
               ],
               callout: 'Goal: Evaluate mathematical underpinnings and empirical performance.',
-              speakerNotes: 'Good morning Dr. Hajihashemi and classmates. Today we are presenting our applied machine learning final project for CMPE-257.'
+              speakerNotes: 'Walk through machine learning problem formulation, loss objectives, and empirical setup.'
             }
           ]
-        }
+        },
+        assignments: [
+          {
+            id: 'cmpe257-m1-hw1',
+            title: 'Homework 1: Supervised Learning & Linear Models',
+            category: 'Assignment',
+            dueDate: '2026-09-11',
+            status: 'completed',
+            weight: '6.25% of Course Grade',
+            description: 'Implement foundational supervised learning algorithms from scratch without external ML libraries: Linear Regression (Normal Equation & Gradient Descent) and Logistic Regression.',
+            requirements: [
+              'Derive the matrix formulation for the Ordinary Least Squares (OLS) normal equation: w = (X^T X)^{-1} X^T y.',
+              'Implement Batch and Stochastic Gradient Descent with dynamic learning rate decay.',
+              'Build binary Logistic Regression with log-loss optimization and decision threshold tuning.',
+              'Submit documented Jupyter Notebook with empirical convergence plots and performance metrics (RMSE, Accuracy, F1).'
+            ],
+            documents: [
+              {
+                title: 'Session 1: Introduction to Machine Learning (Slides)',
+                url: 'documents/cmpe-257/week-01/session1.pdf',
+                type: 'pdf',
+                description: 'Foundations of learning paradigms, hypothesis spaces, and inductive biases.',
+                size: '1.8 MB'
+              },
+              {
+                title: 'Andrew Ng CS229: Supervised Learning Notes',
+                url: 'https://cs229.stanford.edu/main_notes.pdf',
+                type: 'pdf',
+                description: 'Comprehensive Stanford CS229 lecture notes on linear classification and LMS algorithms.'
+              },
+              {
+                title: 'Homework 1 Starter Code & Canvas Portal',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'canvas',
+                description: 'Canvas submission portal with starter notebook and synthetic test benchmarks.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd1'
+          },
+          {
+            id: 'cmpe257-m2-hw2',
+            title: 'Homework 2: Unsupervised Learning & PCA',
+            category: 'Assignment',
+            dueDate: '2026-10-02',
+            status: 'pending',
+            weight: '6.25% of Course Grade',
+            description: 'Implement Principal Component Analysis (eigen-decomposition and SVD) alongside K-Means and Expectation-Maximization (GMM) clustering algorithms.',
+            requirements: [
+              'Compute the empirical covariance matrix and solve for principal orthogonal eigenvectors.',
+              'Verify variance retention ratio vs number of principal components (Elbow curve / scree plot).',
+              'Implement K-Means clustering with K-Means++ initialization and silhouette score evaluation.',
+              'Compare cluster purity and reconstruction error across dimensionality-reduced datasets.'
+            ],
+            documents: [
+              {
+                title: 'Session 2: Unsupervised Learning & Clustering (Slides)',
+                url: 'documents/cmpe-257/week-02/session2.pdf',
+                type: 'pdf',
+                description: 'Eigenvectors, variance maximization, distance metrics, and clustering.',
+                size: '2.1 MB'
+              },
+              {
+                title: 'Homework 2 Starter Notebook',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'notebook',
+                description: 'Jupyter template with data loaders for Iris, Wine, and MNIST subsets.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd2'
+          },
+          {
+            id: 'cmpe257-m3-midterm',
+            title: 'In-Class Midterm Examination',
+            category: 'Exam',
+            dueDate: '2026-10-02',
+            status: 'pending',
+            weight: '25% of Course Grade',
+            description: 'Comprehensive in-person examination covering theoretical principles, mathematical derivations, and algorithm design from Weeks 1 through 7 with Dr. Zara Hajihashemi.',
+            requirements: [
+              'In-person written exam (ENG 337).',
+              'Topics: Linear regression, Logistic regression, Perceptrons, SVMs (Primal & Dual), Kernels, PCA, and Decision Trees.',
+              'One double-sided handwritten 8.5x11 formula sheet permitted.'
+            ],
+            documents: [
+              {
+                title: 'Midterm Comprehensive Study Guide & Practice Problems',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'rubric',
+                description: 'Detailed topic review breakdown, sample exam problems, and formula references.'
+              }
+            ],
+            relatedProjectDeliverableId: 'd3'
+          },
+          {
+            id: 'cmpe257-m4-hw3',
+            title: 'Homework 3: Back-propagation & MLPs',
+            category: 'Assignment',
+            dueDate: '2026-10-23',
+            status: 'pending',
+            weight: '6.25% of Course Grade',
+            description: 'Construct a modular multi-layer perceptron library from scratch with customizable activation layers, forward passes, and backward chain-rule gradient propagation.',
+            requirements: [
+              'Implement modular layer classes: Linear, ReLU, Sigmoid, and SoftmaxCrossEntropyLoss.',
+              'Verify analytical gradients using numerical finite-difference gradient checking (tolerance < 1e-6).',
+              'Train on non-linearly separable datasets (Spiral and Moons) and plot decision boundaries.',
+              'Analyze the impact of He vs Xavier weight initialization on gradient propagation.'
+            ],
+            documents: [
+              {
+                title: 'Neural Network Derivations & Backprop Guide',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'pdf',
+                description: 'Matrix calculus derivations for Jacobians and backward sensitivity vectors.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd4'
+          },
+          {
+            id: 'cmpe257-m5-hw4',
+            title: 'Homework 4: Neural Networks & Deep Learning',
+            category: 'Assignment',
+            dueDate: '2026-11-13',
+            status: 'pending',
+            weight: '6.25% of Course Grade',
+            description: 'Train and evaluate Convolutional Neural Networks and modern regularizers (Dropout, Batch Normalization, Weight Decay) on complex multi-class image benchmarks.',
+            requirements: [
+              'Build and train custom CNN architectures (comparing standard vs residual blocks).',
+              'Conduct ablation studies evaluating the effectiveness of Data Augmentation and Dropout.',
+              'Plot loss curves, confusion matrices, and feature activation maps for misclassified instances.'
+            ],
+            documents: [
+              {
+                title: 'Deep Learning Practical Guidelines (Goodfellow Ch. 11)',
+                url: 'https://www.deeplearningbook.org/',
+                type: 'link',
+                description: 'Hyperparameter tuning, performance metrics, and debugging strategies.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd5'
+          },
+          {
+            id: 'cmpe257-m6-presentation',
+            title: 'In-Class Project Presentation (Week 14)',
+            category: 'Presentation',
+            dueDate: '2026-11-20',
+            status: 'pending',
+            weight: '10% of Final Project',
+            description: 'In-class group presentation presenting project problem formulation, dataset characteristics, baseline models, novel technical contributions, and empirical results.',
+            requirements: [
+              '15-minute slide presentation followed by 5-minute Q&A.',
+              'Slide deck must follow conference presentation standards (clean visuals, no text walls).',
+              'Demonstration of baseline comparison and ablation studies.'
+            ],
+            documents: [
+              {
+                title: 'Project Presentation Rubric & Guidelines',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'rubric',
+                description: 'Evaluation criteria covering clarity, technical depth, and presentation defense.'
+              }
+            ],
+            relatedProjectDeliverableId: 'd6'
+          },
+          {
+            id: 'cmpe257-m7-final-exam',
+            title: 'In-Class Final Examination',
+            category: 'Exam',
+            dueDate: '2026-12-09',
+            status: 'pending',
+            weight: '25% of Course Grade',
+            description: 'Comprehensive course examination covering all topics from Weeks 1 through 15 (8:30 AM - 10:30 AM in ENG 337).',
+            requirements: [
+              'In-person final exam testing conceptual synthesis across classical ML and modern deep architectures.',
+              'Two double-sided handwritten 8.5x11 cheat sheets permitted.'
+            ],
+            documents: [
+              {
+                title: 'Final Examination Review Syllabus',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'rubric',
+                description: 'Comprehensive topic review and practice problem collection.'
+              }
+            ],
+            relatedProjectDeliverableId: 'd7'
+          },
+          {
+            id: 'cmpe257-m8-final-report',
+            title: 'Final Project Written Report & Codebase Submission',
+            category: 'Report',
+            dueDate: '2026-12-14',
+            status: 'pending',
+            weight: '15% of Final Project',
+            description: 'Final submission of research paper and documented codebase embodying the full applied machine learning workflow.',
+            requirements: [
+              'Comprehensive conference-format written paper with clear mathematical formulation and error analysis.',
+              'Fully reproducible GitHub repository with documented training instructions and environment files.',
+              'Team contribution matrix.'
+            ],
+            documents: [
+              {
+                title: 'Final Project Report Submission Portal',
+                url: 'https://sjsu.instructure.com/courses/1635708',
+                type: 'canvas',
+                description: 'Canvas submission portal for final report PDF and GitHub link.'
+              }
+            ],
+            submissionUrl: 'https://sjsu.instructure.com/courses/1635708',
+            relatedProjectDeliverableId: 'd8'
+          }
+        ]
       }
     ]
   }

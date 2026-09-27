@@ -15,22 +15,8 @@ interface WeekProps { course?: Course; module?: SyllabusModule; }
 // ── CMPE-257 syllabus topics per week (stub metadata) ───────────────────────
 
 export { Week02ML } from './week-02';
-
-export const Week03ML: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 03" topicHint="Logistic Regression & Classification"
-    upcomingTopics={['Sigmoid Function', 'Binary Cross-Entropy Loss', 'Softmax Regression', 'Newton-Raphson Method']}
-  />
-);
-
-export const Week04ML: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 04" topicHint="Support Vector Machines"
-    upcomingTopics={['Margin Maximization', 'Kernel Trick (RBF, Poly)', 'Soft-Margin SVM', 'SMO Algorithm']}
-  />
-);
+export { Week03ML } from './week-03';
+export { Week04ML } from './week-04';
 
 export const Week05ML: React.FC<WeekProps> = ({ course, module }) => (
   <UnderConstructionWeek

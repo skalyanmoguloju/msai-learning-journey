@@ -103,6 +103,28 @@ export interface CoursePresentation {
   qaChecklist: QAChecklistItem[];
 }
 
+export interface AssignmentDocumentLink {
+  title: string;
+  url: string;
+  type: 'pdf' | 'notebook' | 'github' | 'dataset' | 'rubric' | 'canvas' | 'link';
+  description?: string;
+  size?: string;
+}
+
+export interface AssignmentMilestone {
+  id: string;
+  title: string;
+  category: 'Assignment' | 'Proposal' | 'Milestone' | 'Report' | 'Exam' | 'Presentation';
+  dueDate: string;
+  status: 'completed' | 'in-progress' | 'pending';
+  weight?: string;
+  description: string;
+  requirements: string[];
+  documents: AssignmentDocumentLink[];
+  submissionUrl?: string;
+  relatedProjectDeliverableId?: string;
+}
+
 export interface Course {
   id: string;
   code: string;
@@ -123,6 +145,7 @@ export interface Course {
   notes: LectureNote[];
   project: CourseProject;
   presentation: CoursePresentation;
+  assignments?: AssignmentMilestone[];
 }
 
 export interface Semester {

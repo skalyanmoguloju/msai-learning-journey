@@ -1,0 +1,9 @@
+export { Module1InstanceBasedKNN } from './Module1InstanceBasedKNN';
+export { Module2KNNDistanceWeighted } from './Module2KNNDistanceWeighted';
+export { Module3GenerativeVsDiscriminative } from './Module3GenerativeVsDiscriminative';
+export { Module4GaussianDiscriminantAnalysis } from './Module4GaussianDiscriminantAnalysis';
+export { Module5NaiveBayes } from './Module5NaiveBayes';
+export { Module6KMeansClustering } from './Module6KMeansClustering';
+export { Module7GMMandEM } from './Module7GMMandEM';
+export { Module8JensensELBO } from './Module8JensensELBO';
+export { Week4QuizView } from './Week4QuizView';
