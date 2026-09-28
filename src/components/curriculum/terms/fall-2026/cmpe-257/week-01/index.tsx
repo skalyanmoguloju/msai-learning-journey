@@ -28,7 +28,7 @@ import { Module6ModernParadigms } from './modules/Module6ModernParadigms';
 import { Week1QuizView } from './modules/Week1QuizView';
 import { ML_QUIZ_QUESTIONS } from './quizData';
 
-const STORAGE_KEY_COMPLETED = 'cmpe257_week01_completed_modules';
+const STORAGE_KEY_COMPLETED = 'cmpe257_week01_completed_modules_v2';
 const WEEK_KEY = 'cmpe-257_week-01';
 
 export interface Week01MLProps {
@@ -74,9 +74,14 @@ export const Week01ML: React.FC<Week01MLProps> = ({ course, module }) => {
 
   const [completedModules, setCompletedModules] = useState<string[]>(() => {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY_COMPLETED) || '[]');
+      const stored = localStorage.getItem(STORAGE_KEY_COMPLETED);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+      return ML_MODULES.map(m => m.id);
     } catch {
-      return [];
+      return ML_MODULES.map(m => m.id);
     }
   });
 

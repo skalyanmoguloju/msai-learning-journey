@@ -43,7 +43,7 @@ export const ML_WEEK3_MODULES: MLWeek3Module[] = [
     title: 'Why decision trees?',
     category: 'Motivation & Intuition',
     icon: HelpCircle,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Human interpretability, white-box rules, overcoming linearity assumptions, handling mixed numerical and categorical features without scaling, and robustness to monotonic transformations.',
     keyQuestions: [
       'Why do complex non-linear relationships break standard linear and logistic classifiers without manual feature engineering?',
@@ -92,7 +92,7 @@ export const ML_WEEK3_MODULES: MLWeek3Module[] = [
     title: 'Decision-tree fundamentals',
     category: 'Tree Architecture',
     icon: TreeDeciduous,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Anatomy of trees (root, internal test nodes, branches, leaves), greedy top-down induction (ID3/C4.5/CART), recursive splitting, stop conditions, and controlling tree depth.',
     keyQuestions: [
       'What are the constituent components of a decision tree (root node, decision nodes, leaf nodes)?',
@@ -142,7 +142,7 @@ export const ML_WEEK3_MODULES: MLWeek3Module[] = [
     title: 'Classification trees and split criteria',
     category: 'Split Metrics',
     icon: Binary,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Measuring node impurity: Shannon Entropy, Information Gain, Information Gain Ratio, Gini Impurity, Misclassification Error, and comparing split objectives.',
     keyQuestions: [
       'What is Shannon Entropy, and how does Information Gain measure uncertainty reduction?',
@@ -191,7 +191,7 @@ export const ML_WEEK3_MODULES: MLWeek3Module[] = [
     title: 'Regression trees and CART',
     category: 'Continuous Targets',
     icon: TrendingUp,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Continuous target prediction, variance reduction splitting, Cost-Complexity Pruning (minimal cost-complexity pruning), the alpha parameter, and bias-variance tradeoff.',
     keyQuestions: [
       'How does split criteria change from classification (impurity) to regression (variance reduction / MSE)?',
@@ -240,7 +240,7 @@ export const ML_WEEK3_MODULES: MLWeek3Module[] = [
     title: 'Bagging and random forests',
     category: 'Ensemble Learning',
     icon: Layers,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Ensemble theory, Bootstrap Aggregation (Bagging), Out-of-Bag (OOB) validation error, Random Forest feature subsampling (mtry), tree decorrelation, and variance reduction.',
     keyQuestions: [
       'Why does averaging multiple high-variance estimators reduce total variance without increasing bias?',
@@ -289,7 +289,7 @@ export const ML_WEEK3_MODULES: MLWeek3Module[] = [
     title: 'Gradient boosting and final comparison',
     category: 'Sequential Ensembles',
     icon: Zap,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Sequential boosting philosophy, AdaBoost vs Gradient Boosting, fitting negative pseudo-residuals, learning rate shrinkage, modern libraries (XGBoost, LightGBM, CatBoost), and master model comparison.',
     keyQuestions: [
       'How does boosting fundamentally differ from bagging in terms of sequential vs parallel training?',

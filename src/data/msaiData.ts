@@ -600,7 +600,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
               'Naive Bayes',
               'MLE versus MAP'
             ],
-            status: 'in-progress',
+            status: 'completed',
             reading: 'CS229 Notes Chapter 1 & Chapter 2'
           },
           {
@@ -616,26 +616,44 @@ export const INITIAL_SEMESTERS: Semester[] = [
               'Bagging and random forests',
               'Gradient boosting and final comparison'
             ],
-            status: 'in-progress',
+            status: 'completed',
             reading: 'Breiman et al. (1984), Breiman (2001), Friedman (2001)'
           },
           {
             id: 'm257-4',
             week: 'Week 04',
-            title: 'Unsupervised Learning, PCA',
-            description: 'Dimensionality reduction, clustering, and feature extraction. Homework 1 due.',
-            topics: ['Principal Component Analysis (PCA)', 'Eigenvalue Decomposition & SVD', 'K-Means Clustering', 'HW1 Due: Supervised Learning'],
-            status: 'upcoming',
-            reading: 'CS229 Notes Chapter 8 & Bishop Ch. 12'
+            title: 'Instance-Based Learning, Generative Classifiers, K-Means & GMM',
+            description: 'KNN distance metrics, weighted voting, Generative vs. Discriminative models, Gaussian Discriminant Analysis, Naive Bayes, K-Means clustering, Gaussian Mixture Models, and EM.',
+            topics: [
+              'Instance-based learning and KNN foundations',
+              'KNN representation, distance, weighted KNN',
+              'Generative versus discriminative learning',
+              'Gaussian Discriminant Analysis',
+              'Naive Bayes',
+              'Unsupervised learning and K-means',
+              'Gaussian Mixture Models and EM',
+              'Jensen’s inequality, ELBO, and mixture extensions'
+            ],
+            status: 'completed',
+            reading: 'Cover & Hart (1967), Ng & Jordan (2001), Dempster et al. (1977)'
           },
           {
             id: 'm257-5',
             week: 'Week 05',
-            title: 'SVM, Trees, Feature Engineering',
-            description: 'Kernel methods, maximum margin hyperplanes, radial basis functions, decision trees, and feature representation.',
-            topics: ['Support Vector Machines (Hard/Soft Margin)', 'Kernel Trick & RBF', 'Decision Trees (CART)', 'Feature Engineering & Selection'],
-            status: 'upcoming',
-            reading: 'CS229 Notes Chapter 3 & Géron Ch. 5, 6'
+            title: 'Support Vector Machines, Margins, Kernels & Optimization',
+            description: 'Hyperplanes, maximal-margin classification, soft margins and slack variables, feature expansion, the Kernel trick, multiclass SVM, regularization, and optimization algorithms.',
+            topics: [
+              'Hyperplanes and linear classification',
+              'Maximal-margin classifier',
+              'Support vector classifier and soft margins',
+              'Feature expansion and nonlinear boundaries',
+              'SVMs and kernel functions',
+              'Multiclass SVM and confidence',
+              'Regularization and bias–variance',
+              'Optimization methods'
+            ],
+            status: 'in-progress',
+            reading: 'Cortes & Vapnik (1995), Mercer (1909), Platt (1998)'
           },
           {
             id: 'm257-6',

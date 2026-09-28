@@ -41,7 +41,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Instance-based learning and KNN foundations',
     category: 'Instance-Based Learning',
     icon: HelpCircle,
-    readingStatus: 'in_progress',
+    readingStatus: 'completed',
     description: 'Lazy learning vs. eager learning, non-parametric memory-based prediction, inductive bias of local smoothness, decision boundaries, and Voronoi tessellations.',
     keyQuestions: [
       'Why is KNN classified as a lazy (instance-based) learner with zero explicit training time?',
@@ -74,7 +74,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'KNN representation, distance, weighted KNN',
     category: 'Distance Metrics & Weighting',
     icon: Binary,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Metrics space metrics (Euclidean, Manhattan, Minkowski, Mahalanobis), feature standardization, distance-weighted voting/regression, and efficient spatial indexing (KD-trees, Ball trees).',
     keyQuestions: [
       'Why does unstandardized feature variance distort distance metrics in KNN?',
@@ -107,7 +107,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Generative versus discriminative learning',
     category: 'Probabilistic Paradigms',
     icon: Compass,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Modeling joint probability P(X, Y) vs. conditional probability P(Y | X), Bayes decision rule, asymptotic error rates, and handling missing data.',
     keyQuestions: [
       'What is the fundamental mathematical difference between modeling P(X, Y) and modeling P(Y | X)?',
@@ -140,7 +140,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Gaussian Discriminant Analysis',
     category: 'Generative Classifiers',
     icon: Layers,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Multivariate Gaussian distribution, Linear Discriminant Analysis (LDA with shared covariance), Quadratic Discriminant Analysis (QDA with class-specific covariance), and connection to logistic regression.',
     keyQuestions: [
       'Why does shared covariance between classes yield linear decision boundaries in LDA?',
@@ -173,7 +173,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Naive Bayes',
     category: 'Probabilistic Classifiers',
     icon: Activity,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Conditional independence assumption, Bernoulli NB (binary text features), Multinomial NB (word count histograms), Gaussian NB, and Laplace (additive) smoothing.',
     keyQuestions: [
       'What is the Naive Bayes conditional independence assumption and how does it reduce parameter complexity from O(2^d) to O(d)?',
@@ -206,7 +206,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Unsupervised learning and K-means',
     category: 'Unsupervised Learning',
     icon: BarChart2,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Unsupervised clustering objective, Lloyd algorithm (alternating coordinate descent), inertia distortion function, K-means++ initialization, and elbow / silhouette methods.',
     keyQuestions: [
       'How does K-means formulate clustering as an optimization problem minimizing within-cluster sum of squares (WCSS)?',
@@ -239,7 +239,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Gaussian Mixture Models and EM',
     category: 'Latent Variable Models',
     icon: GitFork,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Soft clustering with Gaussian components, latent categorical indicator z, Expectation step (responsibilities gamma_ik), and Maximization step (updating weights, means, and covariance matrices).',
     keyQuestions: [
       'How does GMM generalize K-means from hard spherical assignments to soft ellipsoidal probabilistic clusters?',
@@ -272,7 +272,7 @@ export const ML_WEEK4_MODULES: MLWeek4Module[] = [
     title: 'Jensen’s inequality, ELBO, and mixture extensions',
     category: 'Theoretical Foundations',
     icon: Cpu,
-    readingStatus: 'yet_to_complete',
+    readingStatus: 'completed',
     description: 'Concavity of logarithm, Jensen’s inequality derivation of the Evidence Lower Bound (ELBO), KL divergence gap, monotonic convergence proof of EM, and mixture model extensions.',
     keyQuestions: [
       'How does Jensen’s inequality establish that the ELBO is a rigorous lower bound on the marginal log-likelihood log P(X)?',

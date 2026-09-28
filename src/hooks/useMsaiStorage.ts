@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Semester, FundamentalTopic, SubTabType, ActiveView, CustomUserNote, Course } from '../types/course';
+import { Semester, FundamentalTopic, SubTabType, ActiveView, CustomUserNote, Course, SyllabusModule } from '../types/course';
 import { INITIAL_SEMESTERS } from '../data/msaiData';
 import { INITIAL_FUNDAMENTALS } from '../data/fundamentalsData';
 
 const STORAGE_KEYS = {
-  SEMESTERS: 'msai_journey_semesters_v2',
+  SEMESTERS: 'msai_journey_semesters_v3',
+  SEMESTERS_V2: 'msai_journey_semesters_v2',
   SEMESTERS_LEGACY: 'msai_journey_semesters_v1',
   FUNDAMENTALS: 'msai_journey_fundamentals_v1',
   ACTIVE_SEMESTER: 'msai_journey_active_sem_v1',
@@ -15,17 +16,32 @@ const STORAGE_KEYS = {
 };
 
 function normalizeSemesters(sems: Semester[]): Semester[] {
+  // Build lookup map of official module definitions from INITIAL_SEMESTERS
+  const officialModMap = new Map<string, SyllabusModule>();
+  INITIAL_SEMESTERS.forEach(sem =>
+    sem.courses.forEach(course =>
+      course.modules.forEach(mod => {
+        officialModMap.set(mod.id, mod);
+      })
+    )
+  );
+
   return sems.map(sem => ({
     ...sem,
     courses: sem.courses.map(course => ({
       ...course,
-      modules: course.modules.map(mod => ({
-        ...mod,
-        status: mod.id === 'm252-3' ? 'completed' : mod.status,
-        week: mod.week ? mod.week.replace(/^Session\s*/i, 'Week ') : mod.week,
-        description: mod.description ? mod.description.replace(/Session\s*/gi, 'Week ') : mod.description,
-        reading: mod.reading ? mod.reading.replace(/Session\s*/gi, 'Week ') : mod.reading
-      })),
+      modules: course.modules.map(mod => {
+        const official = officialModMap.get(mod.id);
+        return {
+          ...mod,
+          status: official?.status ?? (mod.id === 'm252-3' ? 'completed' : mod.status),
+          title: official?.title ?? mod.title,
+          description: official?.description ?? (mod.description ? mod.description.replace(/Session\s*/gi, 'Week ') : mod.description),
+          topics: official?.topics ?? mod.topics,
+          reading: official?.reading ?? (mod.reading ? mod.reading.replace(/Session\s*/gi, 'Week ') : mod.reading),
+          week: mod.week ? mod.week.replace(/^Session\s*/i, 'Week ') : mod.week,
+        };
+      }),
       notes: course.notes ? course.notes.map(note => ({
         ...note,
         week: note.week ? note.week.replace(/^Session\s*/i, 'Week ') : note.week

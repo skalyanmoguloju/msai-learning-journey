@@ -18,13 +18,7 @@ export { Week02ML } from './week-02';
 export { Week03ML } from './week-03';
 export { Week04ML } from './week-04';
 
-export const Week05ML: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 05" topicHint="Neural Networks & Backpropagation"
-    upcomingTopics={['Multi-Layer Perceptrons', 'Backpropagation Derivation', 'Vanishing Gradients', 'Weight Initialization']}
-  />
-);
+export { Week05ML } from './week-05';
 
 export const Week06ML: React.FC<WeekProps> = ({ course, module }) => (
   <UnderConstructionWeek

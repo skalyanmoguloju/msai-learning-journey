@@ -1,0 +1,10 @@
+export { IncompleteModuleView } from './IncompleteModuleView';
+export { Module1HyperplanesLinear } from './Module1HyperplanesLinear';
+export { Module2MaximalMargin } from './Module2MaximalMargin';
+export { Module3SupportVectorSoftMargin } from './Module3SupportVectorSoftMargin';
+export { Module4FeatureExpansionNonlinear } from './Module4FeatureExpansionNonlinear';
+export { Module5SVMKernelFunctions } from './Module5SVMKernelFunctions';
+export { Module6MulticlassSVMConfidence } from './Module6MulticlassSVMConfidence';
+export { Module7RegularizationBiasVariance } from './Module7RegularizationBiasVariance';
+export { Module8OptimizationMethods } from './Module8OptimizationMethods';
+export { Week5QuizView } from './Week5QuizView';

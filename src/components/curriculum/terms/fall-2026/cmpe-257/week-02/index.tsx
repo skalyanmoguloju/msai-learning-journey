@@ -33,7 +33,7 @@ import {
   Module9MLEvsMAP
 } from './modules';
 
-const STORAGE_KEY_COMPLETED = 'cmpe257_week02_completed_modules';
+const STORAGE_KEY_COMPLETED = 'cmpe257_week02_completed_modules_v2';
 const WEEK_KEY = 'cmpe-257_week-02';
 
 export interface Week02MLProps {
@@ -78,12 +78,16 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // All 10 modules start as "yet to complete reading" (empty completed array)
   const [completedModules, setCompletedModules] = useState<string[]>(() => {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY_COMPLETED) || '[]');
+      const stored = localStorage.getItem(STORAGE_KEY_COMPLETED);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+      return ML_WEEK2_MODULES.map(m => m.id);
     } catch {
-      return [];
+      return ML_WEEK2_MODULES.map(m => m.id);
     }
   });
 

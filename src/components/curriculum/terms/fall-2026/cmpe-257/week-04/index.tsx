@@ -33,7 +33,7 @@ import {
   Week4QuizView
 } from './modules';
 
-const STORAGE_KEY_COMPLETED = 'cmpe257_week04_completed_modules';
+const STORAGE_KEY_COMPLETED = 'cmpe257_week04_completed_modules_v2';
 const WEEK_KEY = 'cmpe-257_week-04';
 
 export interface Week04MLProps {
@@ -81,9 +81,13 @@ export const Week04ML: React.FC<Week04MLProps> = ({ course, module }) => {
   const [completedModules, setCompletedModules] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_COMPLETED);
-      return stored ? JSON.parse(stored) : [];
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+      return ML_WEEK4_MODULES.map(m => m.id);
     } catch {
-      return [];
+      return ML_WEEK4_MODULES.map(m => m.id);
     }
   });
 

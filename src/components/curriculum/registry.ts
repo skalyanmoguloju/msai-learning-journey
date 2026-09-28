@@ -10,6 +10,8 @@ import { Week04AI } from './terms/fall-2026/cmpe-252/week-04';
 import { Week01ML } from './terms/fall-2026/cmpe-257/week-01';
 import { Week02ML } from './terms/fall-2026/cmpe-257/week-02';
 import { Week03ML } from './terms/fall-2026/cmpe-257/week-03';
+import { Week04ML } from './terms/fall-2026/cmpe-257/week-04';
+import { Week05ML } from './terms/fall-2026/cmpe-257/week-05';
 
 // ── CMPE-252 stub weeks (5–16) ───────────────────────────────────────────────
 import {
@@ -17,9 +19,9 @@ import {
   Week09AI, Week10AI, Week11AI, Week12AI, Week13AI, Week14AI, Week15AI, Week16AI,
 } from './terms/fall-2026/cmpe-252/stubs';
 
-// ── CMPE-257 stub weeks (4–16) ───────────────────────────────────────────────
+// ── CMPE-257 stub weeks (6–16) ───────────────────────────────────────────────
 import {
-  Week04ML, Week05ML, Week06ML, Week07ML, Week08ML,
+  Week06ML, Week07ML, Week08ML,
   Week09ML, Week10ML, Week11ML, Week12ML, Week13ML, Week14ML, Week15ML, Week16ML,
 } from './terms/fall-2026/cmpe-257/stubs';
 
@@ -92,7 +94,7 @@ export function getWeekComponent(
   module: SyllabusModule
 ): WeekViewComponent {
   const isCmpe252 = course.id === 'cmpe-252-sec-01' || course.code === 'CMPE-252';
-  const isCmpe257 = course.id === 'cmpe-257-sec-01' || course.code === 'CMPE-257';
+  const isCmpe257 = course.id === 'cmpe-257-sec-01' || course.id === 'cmpe-257-sec-02' || course.code === 'CMPE-257';
   const weekNum = extractWeekNumber(module);
 
   if (isCmpe252) {
@@ -113,7 +115,7 @@ export function getWeekComponent(
  * Stubs (UnderConstructionWeek wrappers) must NOT appear here.
  */
 const CMPE252_AVAILABLE_WEEKS = new Set([1, 2, 3, 4]);
-const CMPE257_AVAILABLE_WEEKS = new Set([1, 2]);
+const CMPE257_AVAILABLE_WEEKS = new Set([1, 2, 3, 4, 5]);
 
 /**
  * Returns true if the given week for this course has a real implementation
@@ -123,7 +125,7 @@ const CMPE257_AVAILABLE_WEEKS = new Set([1, 2]);
  */
 export function isWeekAvailable(course: Course, module: SyllabusModule): boolean {
   const isCmpe252 = course.id === 'cmpe-252-sec-01' || course.code === 'CMPE-252';
-  const isCmpe257 = course.id === 'cmpe-257-sec-01' || course.code === 'CMPE-257';
+  const isCmpe257 = course.id === 'cmpe-257-sec-01' || course.id === 'cmpe-257-sec-02' || course.code === 'CMPE-257';
   const weekNum = extractWeekNumber(module);
 
   if (isCmpe252) return CMPE252_AVAILABLE_WEEKS.has(weekNum);
