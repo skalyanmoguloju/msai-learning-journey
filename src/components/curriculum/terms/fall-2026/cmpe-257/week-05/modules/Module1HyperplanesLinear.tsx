@@ -38,38 +38,29 @@ export const Module1HyperplanesLinear: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in text-slate-200">
-      {/* Goal & Core Intuition Banner */}
-      <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10 space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono uppercase tracking-wider">
-              Module 1 Overview
-            </span>
-            <span className="text-xs text-slate-400">Foundations of Support Vector Machines</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Hyperplanes and Linear Classification
-          </h1>
-          <p className="text-sm text-slate-300 leading-relaxed max-w-3xl">
-            <strong>Goal:</strong> Understand how a linear classifier leverages feature vectors, weight parameters, and an algebraic bias to cleanly separate two classes across an ambient feature space.
-          </p>
-
-          <div className="p-4 rounded-xl bg-blue-950/40 border border-blue-800/60 flex items-start gap-3 mt-4">
-            <Compass className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-            <p className="text-xs sm:text-sm text-blue-200 leading-relaxed">
-              <strong>Core Intuition:</strong> A hyperplane forms the separating boundary. The linear score <MathText text="$f(\mathbf{x}) = \mathbf{w}^T\mathbf{x} + b$" /> tells us which side of the boundary an observation lies on, while its magnitude reflects geometric confidence.
-            </p>
-          </div>
+    <div className="space-y-6 animate-fade-in text-slate-200">
+      {/* Learning Goal & Core Intuition */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
+        <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-cyan-400" />
+          <span>Learning Goal &amp; Core Intuition</span>
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Understand how a linear classifier leverages feature vectors, weight parameters, and an algebraic bias to cleanly separate two classes across an ambient feature space.
+        </p>
+        <div className="p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/60 flex items-start gap-2.5 text-xs text-blue-200 leading-relaxed">
+          <Compass className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+          <span>
+            <strong>Key Intuition:</strong> A hyperplane forms the separating boundary. The linear score <MathText text="$f(\mathbf{x}) = \mathbf{w}^T\mathbf{x} + b$" /> tells us which side of the boundary an observation lies on, while its magnitude reflects perpendicular distance and geometric confidence.
+          </span>
         </div>
-      </section>
+      </div>
 
       {/* Section 1: Binary Classification */}
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Target className="w-5 h-5 text-indigo-400" />
-          <h2 className="text-lg font-bold text-white">1. Binary Classification</h2>
+          <h2 className="text-lg font-bold text-white">Binary Classification</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -96,7 +87,7 @@ export const Module1HyperplanesLinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Layers className="w-5 h-5 text-cyan-400" />
-          <h2 className="text-lg font-bold text-white">2. Feature Vectors</h2>
+          <h2 className="text-lg font-bold text-white">Feature Vectors</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -130,7 +121,7 @@ export const Module1HyperplanesLinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Scale className="w-5 h-5 text-emerald-400" />
-          <h2 className="text-lg font-bold text-white">3. What is a Hyperplane?</h2>
+          <h2 className="text-lg font-bold text-white">What is a Hyperplane?</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -197,7 +188,7 @@ export const Module1HyperplanesLinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Hash className="w-5 h-5 text-purple-400" />
-          <h2 className="text-lg font-bold text-white">4. The Hyperplane Equation</h2>
+          <h2 className="text-lg font-bold text-white">The Hyperplane Equation</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -245,7 +236,7 @@ export const Module1HyperplanesLinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Activity className="w-5 h-5 text-blue-400" />
-          <h2 className="text-lg font-bold text-white">5. Which Side of the Boundary?</h2>
+          <h2 className="text-lg font-bold text-white">Which Side of the Boundary?</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -321,7 +312,7 @@ export const Module1HyperplanesLinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-6">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Sliders className="w-5 h-5 text-amber-400" />
-          <h2 className="text-lg font-bold text-white">6. Complete Numerical Classifier &amp; Interactive Simulator</h2>
+          <h2 className="text-lg font-bold text-white">Complete Numerical Classifier &amp; Interactive Simulator</h2>
         </div>
 
         <div className="space-y-2">
@@ -528,7 +519,7 @@ export const Module1HyperplanesLinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-          <h2 className="text-lg font-bold text-white">7. Recap and Practice Pipeline</h2>
+          <h2 className="text-lg font-bold text-white">Recap and Practice Pipeline</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">

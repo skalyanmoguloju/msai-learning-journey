@@ -652,7 +652,7 @@ export const INITIAL_SEMESTERS: Semester[] = [
               'Regularization and bias–variance',
               'Optimization methods'
             ],
-            status: 'in-progress',
+            status: 'completed',
             reading: 'Cortes & Vapnik (1995), Mercer (1909), Platt (1998)'
           },
           {

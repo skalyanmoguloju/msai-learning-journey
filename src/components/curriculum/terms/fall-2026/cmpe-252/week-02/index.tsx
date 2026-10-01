@@ -117,6 +117,20 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
   const nextStep = activeStep < STEPS.length ? STEPS.find(s => s.id === (activeStep + 1) as StepId) : null;
   const progressPct = Math.round((completedSteps.length / STEPS.length) * 100);
 
+  const handleNextStep = useCallback(() => {
+    if (!nextStep) return;
+    setCompletedSteps(prev => (prev.includes(activeStep) ? prev : [...prev, activeStep]));
+    showToast(`Completed Module ${activeStep}! 🎉`);
+    setActiveStep(nextStep.id);
+  }, [nextStep, activeStep, showToast]);
+
+  const handlePrevStep = useCallback(() => {
+    if (!prevStep) return;
+    setCompletedSteps(prev => prev.filter(id => id !== prevStep.id && id !== activeStep));
+    showToast(`Marked Module ${prevStep.id} as Incomplete`);
+    setActiveStep(prevStep.id);
+  }, [prevStep, activeStep, showToast]);
+
   const totalQuestions = useMemo(() => {
     return Object.values(AI_WEEK2_QUIZ).reduce((acc, m) => acc + m.questions.length, 0);
   }, []);
@@ -218,8 +232,8 @@ export const Week02AI: React.FC<Week02AIProps> = ({ course, module }) => {
               onToggleComplete={() => toggleStepComplete(activeStep)}
               hasPrev={Boolean(prevStep)}
               hasNext={Boolean(nextStep)}
-              onPrevModule={() => prevStep && setActiveStep(prevStep.id)}
-              onNextModule={() => nextStep && setActiveStep(nextStep.id)}
+              onPrevModule={handlePrevStep}
+              onNextModule={handleNextStep}
               prevLabel={prevStep ? `Module ${prevStep.id}` : undefined}
               nextLabel={nextStep ? `Module ${nextStep.id}` : undefined}
             >

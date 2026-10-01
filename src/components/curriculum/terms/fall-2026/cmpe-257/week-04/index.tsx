@@ -33,7 +33,7 @@ import {
   Week4QuizView
 } from './modules';
 
-const STORAGE_KEY_COMPLETED = 'cmpe257_week04_completed_modules_v2';
+const STORAGE_KEY_COMPLETED = 'cmpe257_week04_completed_modules_v3';
 const WEEK_KEY = 'cmpe-257_week-04';
 
 export interface Week04MLProps {
@@ -81,13 +81,9 @@ export const Week04ML: React.FC<Week04MLProps> = ({ course, module }) => {
   const [completedModules, setCompletedModules] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_COMPLETED);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-      return ML_WEEK4_MODULES.map(m => m.id);
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      return ML_WEEK4_MODULES.map(m => m.id);
+      return [];
     }
   });
 
@@ -127,6 +123,20 @@ export const Week04ML: React.FC<Week04MLProps> = ({ course, module }) => {
   const prevMod = currentModIdx > 0 ? ML_WEEK4_MODULES[currentModIdx - 1] : null;
   const nextMod = currentModIdx < ML_WEEK4_MODULES.length - 1 ? ML_WEEK4_MODULES[currentModIdx + 1] : null;
   const progressPct = Math.round((completedModules.length / ML_WEEK4_MODULES.length) * 100);
+
+  const handleNextModule = useCallback(() => {
+    if (!nextMod) return;
+    setCompletedModules(prev => (prev.includes(currentMod.id) ? prev : [...prev, currentMod.id]));
+    showToast(`Completed "${currentMod.shortTitle || currentMod.title}"! 🎉`);
+    setActiveModuleId(nextMod.id);
+  }, [nextMod, currentMod, setActiveModuleId, showToast]);
+
+  const handlePrevModule = useCallback(() => {
+    if (!prevMod) return;
+    setCompletedModules(prev => prev.filter(id => id !== prevMod.id && id !== currentMod.id));
+    showToast(`Marked "${prevMod.shortTitle || prevMod.title}" as incomplete`);
+    setActiveModuleId(prevMod.id);
+  }, [prevMod, currentMod, setActiveModuleId, showToast]);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -227,8 +237,8 @@ export const Week04ML: React.FC<Week04MLProps> = ({ course, module }) => {
               onToggleComplete={() => toggleModuleComplete(currentMod.id)}
               hasPrev={Boolean(prevMod)}
               hasNext={Boolean(nextMod)}
-              onPrevModule={() => prevMod && setActiveModuleId(prevMod.id)}
-              onNextModule={() => nextMod && setActiveModuleId(nextMod.id)}
+              onPrevModule={handlePrevModule}
+              onNextModule={handleNextModule}
               prevLabel={prevMod ? `Module ${prevMod.stepNumber}` : undefined}
               nextLabel={nextMod ? `Module ${nextMod.stepNumber}` : undefined}
             >

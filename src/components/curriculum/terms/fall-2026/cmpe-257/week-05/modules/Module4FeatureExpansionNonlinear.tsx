@@ -56,38 +56,29 @@ export const Module4FeatureExpansionNonlinear: React.FC = () => {
   const totalExpandedTerms = computeCombinations(pDim + degree, degree);
 
   return (
-    <div className="space-y-8 animate-fade-in text-slate-200">
-      {/* Goal & Core Intuition Banner */}
-      <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10 space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono uppercase tracking-wider">
-              Module 4 Overview
-            </span>
-            <span className="text-xs text-slate-400">Nonlinear Decision Boundaries</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Feature Expansion and Nonlinear Boundaries
-          </h1>
-          <p className="text-sm text-slate-300 leading-relaxed max-w-3xl">
-            <strong>Goal:</strong> Understand how a linear classifier operating in an algebraically expanded feature space can produce intricate, curved nonlinear decision boundaries in the original feature space.
-          </p>
-
-          <div className="p-4 rounded-xl bg-cyan-950/40 border border-cyan-800/60 flex items-start gap-3 mt-4">
-            <Sparkles className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
-            <p className="text-xs sm:text-sm text-cyan-200 leading-relaxed">
-              <strong>Core Intuition:</strong> The model remains strictly linear in the derived features it receives. We alter the geometric representation so that a straight hyperplane in the expanded space curves naturally when projected back onto original coordinates.
-            </p>
-          </div>
+    <div className="space-y-6 animate-fade-in text-slate-200">
+      {/* Learning Goal & Core Intuition */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3 shadow-sm">
+        <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-cyan-400" />
+          <span>Learning Goal &amp; Core Intuition</span>
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Understand how a linear classifier operating in an algebraically expanded feature space can produce intricate, curved nonlinear decision boundaries in the original feature space.
+        </p>
+        <div className="p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-800/60 flex items-start gap-2.5 text-xs text-cyan-200 leading-relaxed">
+          <Sparkles className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+          <span>
+            <strong>Key Intuition:</strong> The model remains strictly linear in the derived features it receives. We alter the geometric representation so that a straight hyperplane in the expanded space curves naturally when projected back onto original coordinates.
+          </span>
         </div>
-      </section>
+      </div>
 
       {/* Section 1: Why a Linear Boundary May Fail */}
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <AlertCircle className="w-5 h-5 text-rose-400" />
-          <h2 className="text-lg font-bold text-white">1. Why a Linear Boundary May Fail</h2>
+          <h2 className="text-lg font-bold text-white">Why a Linear Boundary May Fail</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -151,7 +142,7 @@ export const Module4FeatureExpansionNonlinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Layers className="w-5 h-5 text-cyan-400" />
-          <h2 className="text-lg font-bold text-white">2. Expand the Feature Space</h2>
+          <h2 className="text-lg font-bold text-white">Expand the Feature Space</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -244,7 +235,7 @@ export const Module4FeatureExpansionNonlinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-4">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Activity className="w-5 h-5 text-purple-400" />
-          <h2 className="text-lg font-bold text-white">3. Polynomial Boundary Example (Circular Separator)</h2>
+          <h2 className="text-lg font-bold text-white">Polynomial Boundary Example (Circular Separator)</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -292,7 +283,7 @@ export const Module4FeatureExpansionNonlinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-5">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <Grid className="w-5 h-5 text-emerald-400" />
-          <h2 className="text-lg font-bold text-white">4. Linear in Transformed Space, Nonlinear in Original Space</h2>
+          <h2 className="text-lg font-bold text-white">Linear in Transformed Space, Nonlinear in Original Space</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">
@@ -452,7 +443,7 @@ export const Module4FeatureExpansionNonlinear: React.FC = () => {
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md space-y-5">
         <div className="flex items-center gap-2.5 border-b border-slate-800 pb-3">
           <TrendingUp className="w-5 h-5 text-amber-400" />
-          <h2 className="text-lg font-bold text-white">5. Why Explicit Expansion Becomes Prohibitive</h2>
+          <h2 className="text-lg font-bold text-white">Why Explicit Expansion Becomes Prohibitive</h2>
         </div>
 
         <p className="text-sm text-slate-300 leading-relaxed">

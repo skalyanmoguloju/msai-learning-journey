@@ -291,41 +291,166 @@ export const ML_WEEK5_MODULES: MLWeek5Module[] = [
     stepNumber: 6,
     shortTitle: 'Multiclass SVM',
     title: 'Multiclass SVM and confidence',
-    category: 'Module 6',
+    category: 'Multiclass Ensembles',
     icon: Layers,
     readingStatus: 'yet_to_complete',
     estimatedTime: '1–1.5 hours',
-    description: 'Awaiting course material for Module 6: Multiclass SVM and confidence.',
-    keyQuestions: [],
-    coreTheorems: [],
-    concepts: []
+    description: 'Understand how binary SVMs are combined via One-versus-All (OvA) and One-versus-One (OvO) to perform multiclass classification and evaluate geometric confidence.',
+    keyQuestions: [
+      'Why is a single binary SVM incapable of directly classifying 3 or more categories?',
+      'How does One-versus-All (OvA) determine its winner compared to One-versus-One (OvO)?',
+      'What is the mathematical distinction between a raw decision score f(x) and perpendicular geometric distance |f(x)| / ||w||?'
+    ],
+    coreTheorems: [
+      {
+        name: 'One-versus-All Decision Rule',
+        formula: '\\hat{y} = \\arg\\max_{k \\in \\{1, \\dots, K\\}} (\\mathbf{w}_k^T \\mathbf{x} + b_k)',
+        explanation: 'Evaluates K distinct binary classifiers trained as class-k vs rest, assigning the instance to the model with the largest algebraic score.'
+      },
+      {
+        name: 'One-versus-One Model Complexity',
+        formula: 'N_{\\text{OvO}} = \\frac{K(K - 1)}{2} = \\binom{K}{2}',
+        explanation: 'Trains a pairwise binary classifier for every unique combination of classes, aggregating predictions via plurality majority voting.'
+      }
+    ],
+    concepts: [
+      {
+        title: 'One-versus-All (OvA / OvR)',
+        badge: 'K Classifiers',
+        summary: 'Trains K binary models where class k is +1 and all other classes are -1.',
+        bullets: [
+          'Linear scaling with class count O(K).',
+          'Winner chosen by argmax of decision scores f_k(x).',
+          'Scores are decision values, not calibrated probabilities.'
+        ],
+        formula: '\\hat{y} = \\arg\\max_k f_k(\\mathbf{x})'
+      },
+      {
+        title: 'Geometric Distance as Confidence',
+        badge: 'Scale Invariance',
+        summary: 'Perpendicular distance measures geometric confidence, independent of weight vector scaling.',
+        bullets: [
+          'Raw score f(x) changes under equation scaling, but distance |f(x)| / ||w|| is invariant.',
+          'Larger distance indicates greater classification margin and confidence.'
+        ],
+        formula: '\\text{dist}(\\mathbf{x}, \\mathcal{H}) = \\frac{|\\mathbf{w}^T \\mathbf{x} + b|}{\\|\\mathbf{w}\\|}'
+      }
+    ]
   },
   {
     id: 'm7',
     stepNumber: 7,
     shortTitle: 'Regularization',
     title: 'Regularization and bias–variance',
-    category: 'Module 7',
+    category: 'Generalization & Complexity',
     icon: Sliders,
     readingStatus: 'yet_to_complete',
-    estimatedTime: '3.5–4.5 hours',
-    description: 'Awaiting course material for Module 7: Regularization and bias–variance.',
-    keyQuestions: [],
-    coreTheorems: [],
-    concepts: []
+    estimatedTime: '2–2.5 hours',
+    description: 'Understand underfitting vs overfitting, the bias–variance tradeoff, L1/L2 and Elastic Net penalties, neural network dropout, and early stopping model selection.',
+    keyQuestions: [
+      'What is the fundamental difference between high bias (underfitting) and high variance (overfitting)?',
+      'Why can L1 regularization (Lasso) drive weights to exactly zero while L2 (Ridge) only shrinks them?',
+      'How do early stopping and validation error guide optimal epoch and hyperparameter selection?'
+    ],
+    coreTheorems: [
+      {
+        name: 'L2 Ridge Regularization Objective',
+        formula: 'J(\\theta) = \\text{loss} + \\lambda \\sum_{j=1}^p \\theta_j^2',
+        explanation: 'Penalizes large squared weight magnitudes to prevent brittle sensitivity to individual feature changes.'
+      },
+      {
+        name: 'L1 Lasso Regularization Objective',
+        formula: 'J(\\theta) = \\text{loss} + \\lambda \\sum_{j=1}^p |\\theta_j|',
+        explanation: 'Penalizes absolute weight values; non-differentiable corner at zero sets coefficients to exactly 0 for feature selection.'
+      },
+      {
+        name: 'Elastic Net Combined Objective',
+        formula: 'J(\\theta) = \\text{loss} + \\lambda \\left[ \\rho \\sum_{j=1}^p |\\theta_j| + (1 - \\rho) \\sum_{j=1}^p \\theta_j^2 \\right]',
+        explanation: 'Combines L1 and L2 penalties via mixing parameter rho in [0, 1] for stable selection among correlated features.'
+      }
+    ],
+    concepts: [
+      {
+        title: 'Bias–Variance Tradeoff',
+        badge: 'Generalization',
+        summary: 'Bias represents systematic model error from over-simplicity; variance measures sensitivity to sample fluctuations.',
+        bullets: [
+          'High bias leads to underfitting where both train and test errors are high.',
+          'High variance leads to overfitting with low training error but poor generalization.',
+          'Irreducible noise is inherent randomness that no model can eliminate.'
+        ],
+        formula: '\\text{Error} = \\text{Bias}^2 + \\text{Variance} + \\sigma^2'
+      },
+      {
+        title: 'Validation & Early Stopping',
+        badge: 'Model Selection',
+        summary: 'Monitors validation error during iterative training and preserves weights from the epoch with minimal validation loss.',
+        bullets: [
+          'Prevents training past the point where generalization deteriorates.',
+          'Patience accommodates short-term validation loss fluctuations.',
+          'Test set remains strictly isolated for final reporting.'
+        ]
+      }
+    ]
   },
   {
     id: 'm8',
     stepNumber: 8,
     shortTitle: 'Optimization Methods',
     title: 'Optimization methods',
-    category: 'Module 8',
+    category: 'Algorithmic Optimization',
     icon: Zap,
     readingStatus: 'yet_to_complete',
-    estimatedTime: '3–4 hours',
-    description: 'Awaiting course material for Module 8: Optimization methods.',
-    keyQuestions: [],
-    coreTheorems: [],
-    concepts: []
+    estimatedTime: '2–2.5 hours',
+    description: 'Understand gradient descent, momentum, Nesterov acceleration, adaptive learning rates (RMSProp), Adam moments and bias correction, and AdamW decoupled weight decay.',
+    keyQuestions: [
+      'How does momentum prevent zigzagging and accelerate parameter traversal through loss ravines?',
+      'Why do adaptive methods like RMSProp and Adam scale updates by historical squared gradients?',
+      'What is the critical advantage of AdamW over standard Adam with L2 regularization?'
+    ],
+    coreTheorems: [
+      {
+        name: 'Classical Momentum Velocity Rule',
+        formula: 'v_t = \\beta v_{t-1} + \\nabla J(\\theta_t), \\quad \\theta_{t+1} = \\theta_t - \\eta v_t',
+        explanation: 'Accumulates directional velocity to accelerate persistent movements and dampen transverse oscillations.'
+      },
+      {
+        name: 'RMSProp Adaptive Scaling',
+        formula: 's_t = \\beta s_{t-1} + (1 - \\beta)g_t^2, \\quad \\theta_{t+1} = \\theta_t - \\eta \\frac{g_t}{\\sqrt{s_t} + \\varepsilon}',
+        explanation: 'Scales updates inversely by root mean square of recent gradients, dampening runaway dimensions.'
+      },
+      {
+        name: 'Adam with Bias Correction',
+        formula: '\\theta_{t+1} = \\theta_t - \\eta \\frac{\\hat{m}_t}{\\sqrt{\\hat{v}_t} + \\varepsilon}, \\quad \\hat{m}_t = \\frac{m_t}{1 - \\beta_1^t}, \\; \\hat{v}_t = \\frac{v_t}{1 - \\beta_2^t}',
+        explanation: 'Fuses directional first moment and squared second moment, with analytical bias correction for initial steps.'
+      },
+      {
+        name: 'AdamW Decoupled Weight Decay',
+        formula: '\\theta_{t+1} = \\theta_t - \\eta \\frac{\\hat{m}_t}{\\sqrt{\\hat{v}_t} + \\varepsilon} - \\eta \\lambda \\theta_t',
+        explanation: 'Decouples weight shrinkage from gradient adaptation, preserving intended regularization across all parameters.'
+      }
+    ],
+    concepts: [
+      {
+        title: 'Direction vs Magnitude Moments',
+        badge: 'Adam Architecture',
+        summary: 'm_t captures momentum direction (first moment) while v_t monitors magnitude variance (second moment).',
+        bullets: [
+          'First moment beta_1 is typically 0.9.',
+          'Second moment beta_2 is typically 0.999.',
+          'Division by sqrt(v_t) normalizes disparate feature learning rates.'
+        ],
+        formula: 'm_t = \\beta_1 m_{t-1} + (1-\\beta_1)g_t, \\quad v_t = \\beta_2 v_{t-1} + (1-\\beta_2)g_t^2'
+      },
+      {
+        title: 'Decoupled Decay vs L2 Regularization',
+        badge: 'AdamW Advantage',
+        summary: 'Standard L2 regularization gets distorted by Adam adaptive scaling; AdamW applies direct proportional shrinkage.',
+        bullets: [
+          'Parameters with frequent large gradients get penalized proportionally rather than under-regularized.',
+          'Crucial architectural standard for modern transformer training and large models.'
+        ]
+      }
+    ]
   }
 ];

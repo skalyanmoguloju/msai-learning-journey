@@ -100,7 +100,7 @@ export const Module7ConstructingGLM: React.FC = () => {
               { num: '5', title: 'Complete Comparison' }
             ].map((step) => (
               <div key={step.num} className="bg-slate-950/70 p-2 rounded-lg border border-slate-800 text-center">
-                <span className="text-[10px] text-amber-400 font-bold block">Part {step.num}</span>
+                <span className="text-[10px] text-amber-400 font-bold block">Step {step.num}</span>
                 <span className="text-slate-300 text-[11px] font-medium">{step.title}</span>
               </div>
             ))}
@@ -115,11 +115,11 @@ export const Module7ConstructingGLM: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Part 1: The Three Ingredients ──────────────────────────────── */}
+      {/* ── The Three Ingredients ──────────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <div className="flex items-center gap-2 text-amber-400">
           <Layers className="w-4 h-4" />
-          <h3 className="text-base font-bold text-slate-100">Part 1 — The Three Ingredients of a GLM</h3>
+          <h3 className="text-base font-bold text-slate-100">The Three Ingredients of a GLM</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
@@ -197,11 +197,11 @@ export const Module7ConstructingGLM: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Part 2: Link Functions and Inverse Links ────────────────────── */}
+      {/* ── Link Functions and Inverse Links ────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <div className="flex items-center gap-2 text-cyan-400">
           <Activity className="w-4 h-4" />
-          <h3 className="text-base font-bold text-slate-100">Part 2 — Link Functions and Inverse Links</h3>
+          <h3 className="text-base font-bold text-slate-100">Link Functions and Inverse Links</h3>
         </div>
 
         <p className="text-xs text-slate-300 leading-relaxed">
@@ -496,11 +496,11 @@ export const Module7ConstructingGLM: React.FC = () => {
         )}
       </div>
 
-      {/* ── Part 5: Complete Comparison Table ─────────────────────────── */}
+      {/* ── Complete Comparison Table ─────────────────────────── */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-sm">
         <div className="flex items-center gap-2 text-purple-400">
           <Table className="w-4 h-4" />
-          <h3 className="text-base font-bold text-slate-100">Part 5 — Complete Comparative Architecture</h3>
+          <h3 className="text-base font-bold text-slate-100">Complete Comparative Architecture</h3>
         </div>
 
         <div className="overflow-x-auto">

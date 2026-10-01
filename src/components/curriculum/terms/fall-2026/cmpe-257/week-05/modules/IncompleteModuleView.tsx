@@ -23,9 +23,6 @@ export const IncompleteModuleView: React.FC<IncompleteModuleViewProps> = ({
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20">
             <AlertCircle className="w-3.5 h-3.5" /> Incomplete &bull; Awaiting Content
           </div>
-          <h2 className="text-xl font-bold text-slate-100">
-            Module {moduleNumber}: {title}
-          </h2>
           <p className="text-sm text-slate-400">
             Estimated Study Time: <span className="font-semibold text-slate-300">{estimatedTime}</span>
           </p>

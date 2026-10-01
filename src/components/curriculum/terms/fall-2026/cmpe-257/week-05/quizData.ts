@@ -320,66 +320,187 @@ export const ML_WEEK5_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     moduleId: 'm6',
-    question: "Why are raw SVM decision scores f(x) = w^T phi(x) + b not valid probabilities?",
+    question: "With four distinct classes (K = 4), how many One-versus-One (OvO) binary SVMs must be trained?",
     options: [
-      "They can be negative and are not constrained to the interval [0, 1] or normalized to sum to 1",
-      "They do not depend on the support vectors",
-      "They are always integer values",
-      "They are only defined for binary inputs"
+      "6 models (K(K - 1) / 2 = 4(3) / 2)",
+      "4 models (K)",
+      "12 models (4 * 3)",
+      "16 models (4^2)"
     ],
     correct: 0,
-    explanation: "Raw scores represent unnormalized geometric signed distances in (-infinity, +infinity). Platt scaling fits a logistic sigmoid to calibrate them into well-calibrated probabilities in [0, 1]."
+    explanation: "One-versus-One trains a unique binary model for every unique pair of classes: K(K - 1) / 2 = 4(3) / 2 = 6 distinct pairwise classifiers."
+  },
+  {
+    moduleId: 'm6',
+    question: "In a 3-class One-versus-All classifier, the evaluated scores for an observation are Cat = -0.4, Dog = +1.6, and Bird = +0.2. Which class is predicted?",
+    options: [
+      "Dog, because +1.6 is the highest algebraic decision score",
+      "Bird, because it is positive but closest to zero",
+      "Cat, because its negative score implies the least error",
+      "No prediction can be made without converting to probabilities"
+    ],
+    correct: 0,
+    explanation: "One-versus-All uses the argmax decision rule: y_hat = argmax_k f_k(x). Since Dog has the largest score (+1.6), Dog is selected."
+  },
+  {
+    moduleId: 'm6',
+    question: "Does an SVM decision score of f(x) = +0.8 indicate an 80% posterior probability of belonging to the positive class?",
+    options: [
+      "No, it is an uncalibrated geometric decision-function score, not a probability",
+      "Yes, all positive scores between 0 and 1 represent exact posterior probabilities",
+      "Yes, provided the data was normalized with MinMax scaling",
+      "No, it indicates an 8% probability"
+    ],
+    correct: 0,
+    explanation: "The score f(x) = w^T x + b is an unbounded real scalar measuring margin distance; it is not a probability."
+  },
+  {
+    moduleId: 'm6',
+    question: "In linear decision boundaries f(x) = 3x_1 + 4x_2 - 10 = 0 with ||w|| = 5, what is the geometric perpendicular distance from point A = (2, 2) to the boundary?",
+    options: [
+      "0.8 units (|4| / 5)",
+      "4.0 units (raw score)",
+      "1.25 units (5 / 4)",
+      "0.2 units (|1| / 5)"
+    ],
+    correct: 0,
+    explanation: "Raw score is 3(2) + 4(2) - 10 = 4. The perpendicular distance is |f(x)| / ||w|| = |4| / 5 = 0.8 units."
   },
 
   // Module 7: Regularization and bias–variance
   {
     moduleId: 'm7',
-    question: "Why does L1 regularization (Lasso) yield sparse weight vectors (many weights set exactly to zero) while L2 (Ridge) does not?",
+    question: "A model achieves very low training error but high validation error. What is the most likely diagnosis?",
     options: [
-      "Because L1 regularization uses an exponential prior",
-      "Because the L1 constraint region is a diamond with sharp vertices positioned along the coordinate axes where contours typically intersect",
-      "Because L1 regularization cannot be solved with quadratic programming",
-      "Because L2 regularization only applies to continuous features"
+      "Overfitting: the model is memorizing training details and noise but generalizing poorly",
+      "Underfitting: the model is too simple to capture underlying patterns",
+      "High bias: the model has insufficient capacity for the task",
+      "The regularization strength lambda is set excessively high"
     ],
-    correct: 1,
-    explanation: "The geometry of the L1 ball ||w||_1 <= t has sharp corners on the coordinate axes. The elliptical loss contours touch these corners first, driving irrelevant coefficients to exact zeros."
+    correct: 0,
+    explanation: "When training error is low but validation error is high, the model has high variance and is overfitting the training sample."
   },
   {
     moduleId: 'm7',
-    question: "According to Vapnik’s Structural Risk Minimization (SRM) principle, how should a model be chosen?",
+    question: "Which regularization method can drive feature weights to become exactly zero, thereby performing automatic feature selection?",
     options: [
-      "Choose the model with zero training error regardless of complexity",
-      "Choose the model that minimizes the sum of empirical training risk and a capacity (VC dimension) complexity penalty",
-      "Always pick the simplest linear model",
-      "Choose the model with the largest number of parameters"
+      "L1 regularization (Lasso), because the absolute-value function has a sharp corner at zero",
+      "L2 regularization (Ridge), because quadratic decay forces small weights to zero",
+      "Both L1 and L2 equally set weights to zero",
+      "Neither method can produce weights of exactly zero"
     ],
-    correct: 1,
-    explanation: "SRM balances empirical fit against model capacity (VC dimension), providing generalization error guarantees that prevent overfitting."
+    correct: 0,
+    explanation: "L1 penalty |theta| has a sharp corner at zero where optimization gradients can stop, driving irrelevant feature weights to exactly 0."
+  },
+  {
+    moduleId: 'm7',
+    question: "If validation error is lowest at Epoch 6 (0.36) while training error keeps decreasing through Epoch 8 (0.08), which checkpoint should early stopping select?",
+    options: [
+      "Epoch 6, because model selection is strictly guided by validation performance",
+      "Epoch 8, because lower training error always indicates a superior final model",
+      "Epoch 7, as an average compromise between training and validation",
+      "Epoch 1, to preserve maximum model simplicity"
+    ],
+    correct: 0,
+    explanation: "Early stopping selects the epoch with the lowest validation error (Epoch 6); training beyond that point simply memorizes noise and degrades generalization."
+  },
+  {
+    moduleId: 'm7',
+    question: "In the regularized objective J(theta) = data loss + lambda * penalty, what does the hyperparameter lambda control?",
+    options: [
+      "The overall strength of regularization, balancing prediction accuracy with model complexity",
+      "The optimizer learning rate for gradient updates",
+      "The keep probability of dropout neurons",
+      "The ratio of training samples to validation samples"
+    ],
+    correct: 0,
+    explanation: "Lambda directly scales the magnitude of the complexity penalty relative to the data loss."
+  },
+  {
+    moduleId: 'm7',
+    question: "For a linear model with weights theta = (4, 1) and data loss = 10, what is the total L2 regularized objective J(theta) when lambda = 0.1?",
+    options: [
+      "11.7 (loss 10 + 0.1 * (4^2 + 1^2) = 10 + 1.7)",
+      "10.5 (loss 10 + 0.1 * (4 + 1))",
+      "11.3 (loss 10.5 + 0.1 * 8)",
+      "27.0 (loss 10 + 17)"
+    ],
+    correct: 0,
+    explanation: "L2 penalty = 4^2 + 1^2 = 16 + 1 = 17. The regularization contribution is 0.1 * 17 = 1.7. Total objective = 10 + 1.7 = 11.7."
   },
 
   // Module 8: Optimization methods
   {
     moduleId: 'm8',
-    question: "In the Karush-Kuhn-Tucker (KKT) conditions for soft-margin SVM, what does the complementary slackness condition alpha_i [y_i(w^T x_i + b) - 1 + xi_i] = 0 imply?",
+    question: "What does the learning rate (eta) control in gradient descent optimization?",
     options: [
-      "If a point lies strictly inside the margin (y_i f(x_i) > 1 and xi_i = 0), its dual multiplier alpha_i must be exactly 0",
-      "All Lagrange multipliers alpha_i must equal C",
-      "The bias b must equal 0",
-      "The training loss must equal 1"
+      "The size of each parameter update step along the negative gradient",
+      "The ratio of training samples to test samples in each epoch",
+      "The total number of parameters in the model",
+      "The probability of neuron dropout during forward passes"
     ],
     correct: 0,
-    explanation: "If the bracketed term is strictly positive (point is strictly outside the margin), alpha_i must be 0 for the product to equal 0. Only margin-boundary or margin-violating points can have alpha_i > 0."
+    explanation: "The learning rate eta scales the gradient, directly dictating how far parameters step in parameter space."
   },
   {
     moduleId: 'm8',
-    question: "Why does Platt’s Sequential Minimal Optimization (SMO) algorithm update two Lagrange multipliers (alpha_1, alpha_2) at a time rather than one?",
+    question: "In momentum-based gradient descent, what does the velocity vector v_t remember?",
     options: [
-      "Because single-variable quadratic programs have no solution",
-      "Because the dual problem has a linear equality constraint sum alpha_i y_i = 0; changing one alpha would violate the constraint",
-      "Because modern GPUs can only process numbers in pairs",
-      "Because it halves the number of iterations required"
+      "The direction and velocity of previous gradients or parameter updates",
+      "The exact second-order Hessian curvature matrix",
+      "The global minimum loss value encountered so far",
+      "The total number of epochs elapsed without validation improvement"
     ],
-    correct: 1,
-    explanation: "Due to the linear constraint sum alpha_i y_i = 0, updating a single multiplier alpha_1 while keeping others fixed is impossible without violating the constraint. Two multipliers must be updated simultaneously."
+    correct: 0,
+    explanation: "Momentum maintains an exponentially weighted accumulation of past gradients, preserving directional inertia through plateaus and ravines."
+  },
+  {
+    moduleId: 'm8',
+    question: "What statistical property does the adaptive optimizer RMSProp track to scale parameter step sizes?",
+    options: [
+      "An exponentially decaying running average of squared gradients (g_t^2)",
+      "The raw algebraic sum of gradients without squaring",
+      "The determinant of the parameter covariance matrix",
+      "The ratio of validation loss to training loss"
+    ],
+    correct: 0,
+    explanation: "RMSProp tracks s_t = beta * s_{t-1} + (1 - beta) * g_t^2 so that updates are scaled inversely by the root mean square of recent gradient magnitudes."
+  },
+  {
+    moduleId: 'm8',
+    question: "What core components does the Adam optimizer combine into a unified parameter update rule?",
+    options: [
+      "Momentum-like direction tracking (first moment), RMSProp-like magnitude scaling (second moment), and initialization bias correction",
+      "Simulated annealing, genetic mutations, and random restarts",
+      "L1 regularization, L2 regularization, and early stopping",
+      "Line search, conjugate directions, and Newton-Raphson curvature"
+    ],
+    correct: 0,
+    explanation: "Adam tracks m_t (first moment for direction), v_t (second moment for adaptive scaling), and applies analytical bias corrections (1 - beta^t) for initial steps."
+  },
+  {
+    moduleId: 'm8',
+    question: "What is the key mathematical difference between standard Adam and AdamW?",
+    options: [
+      "AdamW applies weight decay as a decoupled shrinkage step rather than folding it into the gradient update",
+      "AdamW uses second-order Hessian matrices instead of gradients",
+      "AdamW eliminates momentum and uses pure RMSProp",
+      "AdamW computes gradients only on odd-numbered epochs"
+    ],
+    correct: 0,
+    explanation: "AdamW decouples weight decay so theta_{t+1} shrinks directly by -eta * lambda * theta_t, avoiding distorted scaling by historical second moments (v_t)."
+  },
+  {
+    moduleId: 'm8',
+    question: "In AdamW, if parameter theta = 10, learning rate eta = 0.1, weight decay lambda = 0.01, and the Adam gradient update is 0.3, what is the new parameter value?",
+    options: [
+      "9.69 (10 - [0.3 + (0.1 * 0.01 * 10)] = 10 - 0.31)",
+      "9.70 (10 - 0.3)",
+      "9.00 (10 - 1.0)",
+      "8.69 (10 - 1.31)"
+    ],
+    correct: 0,
+    explanation: "The decoupled weight decay amount is eta * lambda * theta = 0.1 * 0.01 * 10 = 0.01. Adding the Adam update of 0.3 gives a total subtraction of 0.31, resulting in 10 - 0.31 = 9.69."
   }
 ];
+

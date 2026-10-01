@@ -33,7 +33,7 @@ import {
   Week5QuizView
 } from './modules';
 
-const STORAGE_KEY_COMPLETED = 'cmpe257_week05_completed_modules';
+const STORAGE_KEY_COMPLETED = 'cmpe257_week05_completed_modules_v2';
 const WEEK_KEY = 'cmpe-257_week-05';
 
 export interface Week05MLProps {
@@ -124,6 +124,20 @@ export const Week05ML: React.FC<Week05MLProps> = ({ course, module }) => {
   const nextMod = currentModIdx < ML_WEEK5_MODULES.length - 1 ? ML_WEEK5_MODULES[currentModIdx + 1] : null;
   const progressPct = Math.round((completedModules.length / ML_WEEK5_MODULES.length) * 100);
 
+  const handleNextModule = useCallback(() => {
+    if (!nextMod) return;
+    setCompletedModules(prev => (prev.includes(currentMod.id) ? prev : [...prev, currentMod.id]));
+    showToast(`Completed "${currentMod.shortTitle || currentMod.title}"! 🎉`);
+    setActiveModuleId(nextMod.id);
+  }, [nextMod, currentMod, setActiveModuleId, showToast]);
+
+  const handlePrevModule = useCallback(() => {
+    if (!prevMod) return;
+    setCompletedModules(prev => prev.filter(id => id !== prevMod.id && id !== currentMod.id));
+    showToast(`Marked "${prevMod.shortTitle || prevMod.title}" as incomplete`);
+    setActiveModuleId(prevMod.id);
+  }, [prevMod, currentMod, setActiveModuleId, showToast]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       <WeeklyHeaderBanner
@@ -148,90 +162,69 @@ export const Week05ML: React.FC<Week05MLProps> = ({ course, module }) => {
         ]}
       />
 
-      {/* Main Tab Navigation */}
-      <div className="flex border-b border-slate-700/60 pb-1 gap-2">
-        <button
-          onClick={() => {
+      {/* Main Layout: Sidebar Navigation + Content Workspace */}
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+        {/* Module Sidebar */}
+        <ModuleAndToolSidebar
+          modules={ML_WEEK5_MODULES.map(m => ({
+            id: m.id,
+            title: m.shortTitle,
+            subtitle: m.category,
+            badge: `M${m.stepNumber}`,
+            icon: m.icon,
+            isDone: completedModules.includes(m.id)
+          }))}
+          activeModuleId={activeMainTab === 'study' ? activeModuleId : ''}
+          onSelectModule={(id) => {
             setActiveMainTab('study');
-            setShowQuizSolutions(false);
+            setActiveModuleId(id as string);
           }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-t-lg text-sm font-semibold transition-colors ${
-            activeMainTab === 'study' && !showQuizSolutions
-              ? 'bg-slate-800 text-cyan-400 border-b-2 border-cyan-400'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <Split className="w-4 h-4" /> Study Modules
-        </button>
+          completedCount={completedModules.length}
+          totalCount={ML_WEEK5_MODULES.length}
+          tools={[
+            {
+              id: 'flashcards',
+              title: 'Study Flashcards',
+              icon: Sparkles,
+              onClick: () => setShowFlashcards(true),
+              badge: `${ML_WEEK5_FLASHCARDS.length} Cards`
+            },
+            {
+              id: 'quiz',
+              title: 'Practice Quizzes',
+              icon: HelpCircle,
+              onClick: () => {
+                setActiveMainTab('quiz');
+                setShowQuizSolutions(false);
+              },
+              isActive: activeMainTab === 'quiz' && !showQuizSolutions,
+              badge: `${ML_WEEK5_QUIZ_QUESTIONS.length} Questions`
+            },
+            {
+              id: 'documents',
+              title: 'Lecture Documents',
+              icon: FileText,
+              onClick: () => setActiveMainTab('documents'),
+              isActive: activeMainTab === 'documents',
+              badge: `${ML_WEEK5_DOCUMENTS.length} File${ML_WEEK5_DOCUMENTS.length === 1 ? '' : 's'}`
+            },
+            {
+              id: 'solutions',
+              title: 'Full Solution Guide',
+              icon: Award,
+              onClick: () => {
+                setActiveMainTab('quiz');
+                setShowQuizSolutions(true);
+              },
+              isActive: activeMainTab === 'quiz' && showQuizSolutions,
+              badge: 'All Steps'
+            }
+          ]}
+        />
 
-        <button
-          onClick={() => {
-            setActiveMainTab('quiz');
-            setShowQuizSolutions(false);
-          }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-t-lg text-sm font-semibold transition-colors ${
-            activeMainTab === 'quiz' && !showQuizSolutions
-              ? 'bg-slate-800 text-cyan-400 border-b-2 border-cyan-400'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <HelpCircle className="w-4 h-4" /> Practice Quizzes
-        </button>
-
-        <button
-          onClick={() => {
-            setActiveMainTab('documents');
-            setShowQuizSolutions(false);
-          }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-t-lg text-sm font-semibold transition-colors ${
-            activeMainTab === 'documents' && !showQuizSolutions
-              ? 'bg-slate-800 text-cyan-400 border-b-2 border-cyan-400'
-              : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          <FileText className="w-4 h-4" /> Documents
-        </button>
-
-        <button
-          onClick={() => setShowFlashcards(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-t-lg text-sm font-semibold text-slate-400 hover:text-amber-300 transition-colors ml-auto"
-        >
-          <Sparkles className="w-4 h-4 text-amber-400" /> Flashcards
-        </button>
-
-        <button
-          onClick={() => {
-            setActiveMainTab('quiz');
-            setShowQuizSolutions(true);
-          }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-t-lg text-sm font-semibold transition-colors ${
-            showQuizSolutions
-              ? 'bg-slate-800 text-emerald-400 border-b-2 border-emerald-400 font-bold'
-              : 'text-slate-400 hover:text-emerald-300'
-          }`}
-        >
-          <Award className="w-4 h-4 text-emerald-400" /> Full Solution Guide
-        </button>
-      </div>
-
-      {/* Main Tab Content */}
-      {activeMainTab === 'study' && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1">
-            <ModuleAndToolSidebar
-              modules={ML_WEEK5_MODULES.map(m => ({
-                id: m.id,
-                title: m.title,
-                shortTitle: m.shortTitle,
-                stepNumber: m.stepNumber,
-                isCompleted: completedModules.includes(m.id)
-              }))}
-              activeModuleId={activeModuleId}
-              onSelectModule={setActiveModuleId}
-            />
-          </div>
-
-          <div className="lg:col-span-3">
+        {/* Content Workspace */}
+        <main className="flex-1 min-w-0 space-y-6 w-full">
+          {activeMainTab === 'study' && (
             <ModuleTemplate
               moduleId={currentMod.stepNumber}
               moduleIndex={currentMod.stepNumber}
@@ -243,8 +236,8 @@ export const Week05ML: React.FC<Week05MLProps> = ({ course, module }) => {
               onToggleComplete={() => toggleModuleComplete(currentMod.id)}
               hasPrev={Boolean(prevMod)}
               hasNext={Boolean(nextMod)}
-              onPrevModule={() => prevMod && setActiveModuleId(prevMod.id)}
-              onNextModule={() => nextMod && setActiveModuleId(nextMod.id)}
+              onPrevModule={handlePrevModule}
+              onNextModule={handleNextModule}
               prevLabel={prevMod ? `Module ${prevMod.stepNumber}` : undefined}
               nextLabel={nextMod ? `Module ${nextMod.stepNumber}` : undefined}
             >
@@ -257,30 +250,30 @@ export const Week05ML: React.FC<Week05MLProps> = ({ course, module }) => {
               {activeModuleId === 'm7' && <Module7RegularizationBiasVariance />}
               {activeModuleId === 'm8' && <Module8OptimizationMethods />}
             </ModuleTemplate>
-          </div>
-        </div>
-      )}
+          )}
 
-      {activeMainTab === 'quiz' && (
-        <Week5QuizView
-          initialModuleId={activeQuizModuleId}
-          onSelectModule={setActiveQuizModuleId}
-          onBackToStudy={(modId) => {
-            setActiveMainTab('study');
-            setActiveModuleId(modId);
-          }}
-          showSolutions={showQuizSolutions}
-          onToggleSolutions={setShowQuizSolutions}
-        />
-      )}
+          {activeMainTab === 'quiz' && (
+            <Week5QuizView
+              initialModuleId={activeQuizModuleId}
+              onSelectModule={(modId) => setActiveQuizModuleId(modId)}
+              onBackToStudy={(modId) => {
+                setActiveMainTab('study');
+                setActiveModuleId(modId);
+              }}
+              showSolutions={showQuizSolutions}
+              onToggleSolutions={setShowQuizSolutions}
+            />
+          )}
 
-      {activeMainTab === 'documents' && (
-        <DocumentsTemplate
-          documents={ML_WEEK5_DOCUMENTS}
-          title="CMPE-257 Week 05 Course Materials"
-          subtitle="Lecture slides, recitations, and supplementary readings for Support Vector Machines."
-        />
-      )}
+          {activeMainTab === 'documents' && (
+            <DocumentsTemplate
+              documents={ML_WEEK5_DOCUMENTS}
+              title="CMPE-257 Week 05 Course Materials"
+              subtitle="Lecture slides, recitations, and supplementary readings for Support Vector Machines."
+            />
+          )}
+        </main>
+      </div>
 
       {/* Universal Flashcards Modal */}
       {showFlashcards && (

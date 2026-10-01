@@ -43,7 +43,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Why logistic regression is needed',
     category: 'Classification Foundations',
     icon: HelpCircle,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Limitations of standard Ordinary Least Squares (OLS) linear regression for discrete classification, bounded outputs, and the transition to probabilistic odds.',
     keyQuestions: [
       'Why does linear regression fail when predicting discrete binary targets y in {0, 1}?',
@@ -93,7 +93,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Sigmoid function',
     category: 'Activation & Mapping',
     icon: Activity,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Mathematical formulation, geometric characteristics, saturation properties, and derivative elegance of the standard logistic sigmoid.',
     keyQuestions: [
       'What are the mathematical symmetries of the logistic sigmoid function?',
@@ -142,7 +142,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Logistic Regression & Maximum Likelihood',
     category: 'Likelihood Modeling',
     icon: Binary,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Learn what likelihood means, why logistic regression uses the Bernoulli distribution, how p^y(1-p)^(1-y) works, dataset likelihood, and why we maximize the log-likelihood.',
     keyQuestions: [
       'How does binary classification map to a conditional Bernoulli distribution?',
@@ -198,7 +198,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Gradient derivation and gradient ascent',
     category: 'Optimization & Calculus',
     icon: TrendingUp,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Rigorous step-by-step calculus derivation of the gradient of log-likelihood, comparison with linear regression update rules, and iterative gradient ascent.',
     keyQuestions: [
       'How does the chain rule expand the partial derivative of log-likelihood with respect to weight theta_j?',
@@ -239,7 +239,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Generalized Linear Models',
     category: 'Unified Statistical Framework',
     icon: Layers,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'The broader theoretical framework uniting Linear Regression (Gaussian), Logistic Regression (Bernoulli), and count regression (Poisson) under one umbrella.',
     keyQuestions: [
       'What limitation of traditional regression led to the development of Generalized Linear Models (Nelder & Wedderburn, 1972)?',
@@ -274,7 +274,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Exponential family',
     category: 'Distribution Theory',
     icon: Sigma,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Canonical representation of distributions, natural parameters, sufficient statistics, log-partition functions, and proofs for Bernoulli and Gaussian.',
     keyQuestions: [
       'What is the standard canonical mathematical formula for an exponential family distribution?',
@@ -327,7 +327,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Constructing GLMs',
     category: 'Design & Link Functions',
     icon: Wrench,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Systematic recipe for deriving machine learning hypotheses from exponential family distributions, canonical response functions, and softmax regression.',
     keyQuestions: [
       'What are the 3 foundational assumptions needed to construct a GLM for a new problem?',
@@ -378,7 +378,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'Naive Bayes',
     category: 'Generative Classifiers',
     icon: GitBranch,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Generative vs. discriminative learning paradigms, Bayes rule application, the conditional independence assumption, text classification, and Laplace smoothing.',
     keyQuestions: [
       'What is the fundamental difference between discriminative models P(y|x) and generative models P(x|y)P(y)?',
@@ -431,7 +431,7 @@ export const ML_WEEK2_MODULES: MLWeek2Module[] = [
     title: 'MLE versus MAP',
     category: 'Statistical Estimation',
     icon: Scale,
-    readingStatus: 'completed',
+    readingStatus: 'yet_to_complete',
     description: 'Frequentist Maximum Likelihood Estimation vs Bayesian Maximum A Posteriori, prior distributions, conjugate priors, and their exact equivalence to L1/L2 regularization.',
     keyQuestions: [
       'What is the conceptual difference between treating theta as an unknown fixed constant vs a random variable?',
