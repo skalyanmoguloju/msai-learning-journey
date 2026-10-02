@@ -35,8 +35,8 @@ export function App() {
         onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
       />
 
-      {/* Mobile Context & Quick Switcher (strictly lg:hidden) */}
-      <div className="lg:hidden flex items-center justify-between px-3.5 py-1.5 bg-slate-900/90 border-b border-slate-800/80 text-xs shrink-0">
+      {/* Mobile Context & Quick Switcher (strictly xl:hidden) */}
+      <div className="xl:hidden flex items-center justify-between px-3.5 py-1.5 bg-slate-900/90 border-b border-slate-800/80 text-xs shrink-0">
         <div className="flex items-center gap-2 truncate min-w-0">
           <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold text-[10px] shrink-0 border border-indigo-500/30">
             {activeView === 'fundamentals' ? 'FOUNDATION' : currentCourse?.code || 'COURSE'}
@@ -55,7 +55,7 @@ export function App() {
       </div>
 
       {/* Main Workspace Layout with Sidebar + View */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+      <div className="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
         
         {/* Navigation Sidebar for Semesters & Courses (Drawer on mobile, pinned on desktop) */}
         <Sidebar

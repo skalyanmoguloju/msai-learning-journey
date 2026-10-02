@@ -20,13 +20,7 @@ export { Week04ML } from './week-04';
 
 export { Week05ML } from './week-05';
 
-export const Week06ML: React.FC<WeekProps> = ({ course, module }) => (
-  <UnderConstructionWeek
-    course={course} module={module}
-    weekLabel="Week 06" topicHint="Decision Trees & Ensemble Methods"
-    upcomingTopics={['CART & ID3 Algorithms', 'Entropy & Information Gain', 'Random Forests', 'Gradient Boosting (XGBoost)']}
-  />
-);
+export { Week06ML } from './week-06';
 
 export const Week07ML: React.FC<WeekProps> = ({ course, module }) => (
   <UnderConstructionWeek

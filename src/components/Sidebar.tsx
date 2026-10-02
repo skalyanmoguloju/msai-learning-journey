@@ -38,29 +38,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* Mobile Backdrop Overlay (strictly lg:hidden) */}
+      {/* Mobile Backdrop Overlay (strictly xl:hidden) */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 lg:hidden transition-opacity animate-fade-in"
+          className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 xl:hidden transition-opacity animate-fade-in"
           onClick={onMobileClose}
           aria-hidden="true"
         />
       )}
 
-      {/* Main Sidebar: Slide-over Drawer on Mobile (<lg), Static Column on Desktop (lg:) */}
+      {/* Main Sidebar: Slide-over Drawer on Mobile (<xl), Static Column on Desktop (xl:) */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-50
-          w-80 max-w-[85vw] lg:w-72
-          bg-slate-900 lg:bg-slate-900/70
+          fixed xl:static inset-y-0 left-0 z-50
+          w-80 max-w-[85vw] xl:w-72
+          bg-slate-900 xl:bg-slate-900/70
           border-r border-slate-800 p-4
           flex flex-col gap-5 shrink-0 overflow-y-auto
           transition-transform duration-300 ease-in-out
-          ${isMobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'}
+          ${isMobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full xl:translate-x-0'}
         `}
       >
-        {/* Mobile Drawer Header (strictly lg:hidden) */}
-        <div className="flex lg:hidden items-center justify-between pb-3 border-b border-slate-800 shrink-0">
+        {/* Mobile Drawer Header (strictly xl:hidden) */}
+        <div className="flex xl:hidden items-center justify-between pb-3 border-b border-slate-800 shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">
               <BookOpen className="w-4 h-4" />

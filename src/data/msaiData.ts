@@ -658,11 +658,11 @@ export const INITIAL_SEMESTERS: Semester[] = [
           {
             id: 'm257-6',
             week: 'Week 06',
-            title: 'Regularization Techniques, Midterm Exam Review',
-            description: 'Controlling model complexity, L1/L2 penalties, sparsity, and preparation for the midterm examination.',
-            topics: ['L1 (Lasso) vs L2 (Ridge) Regularization', 'ElasticNet Formulation', 'Overfitting Mitigation', 'Midterm Examination Review'],
-            status: 'upcoming',
-            reading: 'Hastie et al. Ch. 3 & Course Lecture Notes'
+            title: 'MidTerm Exam Prep',
+            description: 'Midterm preparation and practice problem review covering supervised learning, classification, regression, SVMs, and generative models.',
+            topics: ['Exam Logistics & Rules', '10 Worked Sample Questions', 'Supervised Learning Review', 'CS229 Cheatsheet & Interview Prep'],
+            status: 'completed',
+            reading: 'Midterm Exam Prep Slides & CS229 Cheatsheet'
           },
           {
             id: 'm257-7',

@@ -103,8 +103,8 @@ export const ModuleAndToolSidebar: React.FC<ModuleAndToolSidebarProps> = ({
 
   return (
     <>
-      {/* Mobile / Foldable Navigation (lg:hidden) */}
-      <div className={`lg:hidden w-full space-y-3 ${className}`}>
+      {/* Mobile / Foldable Navigation (xl:hidden) */}
+      <div className={`xl:hidden w-full space-y-3 ${className}`}>
         {/* Mobile Header: Curriculum count & view toggle */}
         <div className="flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
@@ -146,7 +146,7 @@ export const ModuleAndToolSidebar: React.FC<ModuleAndToolSidebarProps> = ({
 
         {/* 1. Tiles Layout (Default for Pixel Fold and Mobile Touch) */}
         {mobileLayoutMode === 'tiles' ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
             {modules.map((m, idx) => {
               const Icon = m.icon || Brain;
               const isActive = activeModuleId === m.id;
@@ -224,7 +224,7 @@ export const ModuleAndToolSidebar: React.FC<ModuleAndToolSidebarProps> = ({
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">
               Interactive Tools &amp; Labs
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
               {tools.map((rawTool) => {
                 const extra = resolveToolItem(rawTool);
                 const Icon = extra.icon;
@@ -255,8 +255,8 @@ export const ModuleAndToolSidebar: React.FC<ModuleAndToolSidebarProps> = ({
         )}
       </div>
 
-      {/* Desktop Sticky Sidebar (hidden on mobile, lg:block) */}
-      <aside className={`hidden lg:block w-72 flex-shrink-0 space-y-3 sticky top-4 ${className}`}>
+      {/* Desktop Sticky Sidebar (hidden on mobile, xl:block) */}
+      <aside className={`hidden xl:block w-72 flex-shrink-0 space-y-3 sticky top-4 ${className}`}>
         {/* 1. Modules Card */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-sm space-y-3">
           <div className="flex items-center justify-between px-1">

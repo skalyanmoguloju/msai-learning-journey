@@ -444,7 +444,7 @@ export const LinearAlgebraMasteryHub: React.FC = () => {
       />
 
       {/* Main Layout: Vertical Module Menu (Desktop) + Mobile Horizontal Pills */}
-      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 items-start">
+      <div className="flex flex-col xl:flex-row gap-4 sm:gap-6 items-start">
 
         {/* Reusable Module & Tool Sidebar */}
         <ModuleAndToolSidebar

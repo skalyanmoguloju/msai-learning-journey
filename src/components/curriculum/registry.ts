@@ -115,7 +115,7 @@ export function getWeekComponent(
  * Stubs (UnderConstructionWeek wrappers) must NOT appear here.
  */
 const CMPE252_AVAILABLE_WEEKS = new Set([1, 2, 3, 4]);
-const CMPE257_AVAILABLE_WEEKS = new Set([1, 2, 3, 4, 5]);
+const CMPE257_AVAILABLE_WEEKS = new Set([1, 2, 3, 4, 5, 6]);
 
 /**
  * Returns true if the given week for this course has a real implementation

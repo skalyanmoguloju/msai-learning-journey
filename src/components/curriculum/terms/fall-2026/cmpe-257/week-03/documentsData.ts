@@ -6,7 +6,7 @@ export const ML_WEEK3_DOCUMENTS: CourseDocumentItem[] = [
     title: 'Session 3: Advanced Supervised Learning Techniques — Decision Trees & Ensembles',
     fileUrl: 'documents/cmpe-257/week-03/session3.pdf',
     fileName: 'CMPE257_Session_3.pdf',
-    fileSize: '6.4 MB',
+    fileSize: '7.2 MB',
     pageCount: 90,
     category: 'Lecture Slides',
     topics: [
@@ -28,7 +28,7 @@ export const ML_WEEK3_DOCUMENTS: CourseDocumentItem[] = [
     title: 'Recitation 1: Decision Trees, Information Theory & High-Dimensional kNNs',
     fileUrl: 'documents/cmpe-257/week-03/recitation1.pdf',
     fileName: '10701_Recitation_1.pdf',
-    fileSize: '1.2 MB',
+    fileSize: '225 KB',
     pageCount: 7,
     category: 'Recitation & Exercises',
     topics: [

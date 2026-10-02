@@ -164,7 +164,7 @@ export const Week04ML: React.FC<Week04MLProps> = ({ course, module }) => {
       />
 
       {/* Main Layout: Sidebar Navigation + Content Workspace */}
-      <div className="flex flex-col lg:flex-row gap-6 items-start">
+      <div className="flex flex-col xl:flex-row gap-6 items-start">
         {/* Module Sidebar */}
         <ModuleAndToolSidebar
           modules={ML_WEEK4_MODULES.map(m => ({
@@ -203,7 +203,7 @@ export const Week04ML: React.FC<Week04MLProps> = ({ course, module }) => {
             },
             {
               id: 'documents',
-              title: 'Lecture Documents',
+              title: 'Documents',
               icon: FileText,
               onClick: () => setActiveMainTab('documents'),
               isActive: activeMainTab === 'documents',

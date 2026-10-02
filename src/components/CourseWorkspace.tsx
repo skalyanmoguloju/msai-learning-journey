@@ -64,7 +64,7 @@ export const CourseWorkspace: React.FC<CourseWorkspaceProps> = ({
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 lg:p-8 flex flex-col gap-4 sm:gap-6 max-w-6xl mx-auto w-full">
+    <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 md:p-5 xl:p-8 flex flex-col gap-4 sm:gap-6 max-w-6xl mx-auto w-full">
       
       {/* Course Header Banner */}
       <div className="rounded-2xl p-4 sm:p-6 lg:p-7 bg-slate-900 border border-slate-800 shadow-xl space-y-3 sm:space-y-4">

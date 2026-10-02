@@ -154,7 +154,7 @@ export const Week01AI: React.FC<Week01AIProps> = ({ course, module }) => {
       />
 
       {/* Main Layout: Sidebar + Dynamic Body */}
-      <div className="flex flex-col lg:flex-row gap-5 items-start">
+      <div className="flex flex-col xl:flex-row gap-5 items-start">
         {/* Reusable Left Sidebar Navigation */}
         <ModuleAndToolSidebar
           modules={STEPS.map(s => ({

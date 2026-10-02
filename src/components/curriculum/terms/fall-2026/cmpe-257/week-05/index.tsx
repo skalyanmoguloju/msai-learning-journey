@@ -33,7 +33,7 @@ import {
   Week5QuizView
 } from './modules';
 
-const STORAGE_KEY_COMPLETED = 'cmpe257_week05_completed_modules_v2';
+const STORAGE_KEY_COMPLETED = 'cmpe257_week05_completed_modules_v3';
 const WEEK_KEY = 'cmpe-257_week-05';
 
 export interface Week05MLProps {
@@ -163,7 +163,7 @@ export const Week05ML: React.FC<Week05MLProps> = ({ course, module }) => {
       />
 
       {/* Main Layout: Sidebar Navigation + Content Workspace */}
-      <div className="flex flex-col lg:flex-row gap-6 items-start">
+      <div className="flex flex-col xl:flex-row gap-6 items-start">
         {/* Module Sidebar */}
         <ModuleAndToolSidebar
           modules={ML_WEEK5_MODULES.map(m => ({
@@ -202,7 +202,7 @@ export const Week05ML: React.FC<Week05MLProps> = ({ course, module }) => {
             },
             {
               id: 'documents',
-              title: 'Lecture Documents',
+              title: 'Documents',
               icon: FileText,
               onClick: () => setActiveMainTab('documents'),
               isActive: activeMainTab === 'documents',

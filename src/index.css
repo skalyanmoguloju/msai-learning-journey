@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
+@theme {
+  --breakpoint-xl: 86rem;
+}
+
 @layer base {
   * {
     box-sizing: border-box;

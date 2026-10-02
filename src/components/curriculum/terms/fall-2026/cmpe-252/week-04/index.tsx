@@ -173,7 +173,7 @@ export const Week04AI: React.FC<Week04AIProps> = ({ course, module }) => {
       />
 
       {/* Main Grid: Sidebar + Body */}
-      <div className="flex flex-col lg:flex-row gap-5 items-start">
+      <div className="flex flex-col xl:flex-row gap-5 items-start">
         {/* Left Sidebar with 10 Modules & Tools */}
         <ModuleAndToolSidebar
           modules={STEPS.map(s => ({

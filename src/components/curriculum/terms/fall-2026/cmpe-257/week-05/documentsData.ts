@@ -6,8 +6,8 @@ export const ML_WEEK5_DOCUMENTS: CourseDocumentItem[] = [
     title: 'Session 5: Support Vector Machines, Margins, Kernels & Optimization',
     fileUrl: 'documents/cmpe-257/week-05/session5.pdf',
     fileName: 'CMPE257_Session_5.pdf',
-    fileSize: '6.2 MB',
-    pageCount: 94,
+    fileSize: '9.1 MB',
+    pageCount: 116,
     category: 'Lecture Slides',
     topics: [
       'Geometry of Hyperplanes in p Dimensions',

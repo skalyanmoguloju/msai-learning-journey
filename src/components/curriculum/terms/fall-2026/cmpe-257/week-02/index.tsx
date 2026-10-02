@@ -165,7 +165,7 @@ export const Week02ML: React.FC<Week02MLProps> = ({ course, module }) => {
       />
 
       {/* Main Grid: Sidebar + Body */}
-      <div className="flex flex-col lg:flex-row gap-5 items-start">
+      <div className="flex flex-col xl:flex-row gap-5 items-start">
         {/* Reusable Left Sidebar with 10 Modules */}
         <ModuleAndToolSidebar
           modules={ML_WEEK2_MODULES.map(mod => ({

@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
           {onToggleMobileSidebar && (
             <button
               onClick={onToggleMobileSidebar}
-              className="lg:hidden p-2 rounded-xl bg-slate-800/90 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700/60 active:scale-95 transition-all flex items-center justify-center shrink-0"
+              className="xl:hidden p-2 rounded-xl bg-slate-800/90 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700/60 active:scale-95 transition-all flex items-center justify-center shrink-0"
               aria-label="Open course navigation"
               title="Courses & Semesters Navigation"
             >
