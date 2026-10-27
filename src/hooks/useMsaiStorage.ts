@@ -18,53 +18,82 @@ const STORAGE_KEYS = {
 function normalizeSemesters(sems: Semester[]): Semester[] {
   // Build lookup map of official module definitions from INITIAL_SEMESTERS
   const officialModMap = new Map<string, SyllabusModule>();
+  const officialCourseMap = new Map<string, Course>();
   INITIAL_SEMESTERS.forEach(sem =>
-    sem.courses.forEach(course =>
+    sem.courses.forEach(course => {
+      officialCourseMap.set(course.id, course);
       course.modules.forEach(mod => {
         officialModMap.set(mod.id, mod);
-      })
-    )
+      });
+    })
   );
 
   return sems.map(sem => ({
     ...sem,
-    courses: sem.courses.map(course => ({
-      ...course,
-      modules: course.modules.map(mod => {
-        const official = officialModMap.get(mod.id);
-        return {
-          ...mod,
-          status: official?.status ?? (mod.id === 'm252-3' ? 'completed' : mod.status),
-          title: official?.title ?? mod.title,
-          description: official?.description ?? (mod.description ? mod.description.replace(/Session\s*/gi, 'Week ') : mod.description),
-          topics: official?.topics ?? mod.topics,
-          reading: official?.reading ?? (mod.reading ? mod.reading.replace(/Session\s*/gi, 'Week ') : mod.reading),
-          week: mod.week ? mod.week.replace(/^Session\s*/i, 'Week ') : mod.week,
-        };
-      }),
-      notes: course.notes ? course.notes.map(note => ({
-        ...note,
-        week: note.week ? note.week.replace(/^Session\s*/i, 'Week ') : note.week
-      })) : course.notes,
-      project: course.project ? {
-        ...course.project,
-        pipelineSteps: course.project.pipelineSteps.map(step => ({
-          ...step,
-          description: step.description ? step.description.replace(/Session\s*/gi, 'Week ') : step.description,
-          tool: step.tool ? step.tool.replace(/Session\s*/gi, 'Week ') : step.tool
-        })),
-        metrics: course.project.metrics.map(metric => ({
-          ...metric,
-          baseline: metric.baseline ? metric.baseline.replace(/Session\s*/gi, 'Week ') : metric.baseline
-        })),
-        deliverables: course.project.deliverables.map(del => ({
-          ...del,
-          title: del.title ? del.title.replace(/Session\s*/gi, 'Week ') : del.title
-        }))
-      } : course.project
-    }))
+    courses: sem.courses.map(course => {
+      const officialCourse = officialCourseMap.get(course.id);
+      return {
+        ...course,
+        modules: course.modules.map(mod => {
+          const official = officialModMap.get(mod.id);
+          return {
+            ...mod,
+            status: official?.status ?? (mod.id === 'm252-3' ? 'completed' : mod.status),
+            title: official?.title ?? mod.title,
+            description: official?.description ?? (mod.description ? mod.description.replace(/Session\s*/gi, 'Week ') : mod.description),
+            topics: official?.topics ?? mod.topics,
+            reading: official?.reading ?? (mod.reading ? mod.reading.replace(/Session\s*/gi, 'Week ') : mod.reading),
+            week: mod.week ? mod.week.replace(/^Session\s*/i, 'Week ') : mod.week,
+          };
+        }),
+        notes: course.notes ? course.notes.map(note => ({
+          ...note,
+          week: note.week ? note.week.replace(/^Session\s*/i, 'Week ') : note.week
+        })) : course.notes,
+        project: course.project ? {
+          ...course.project,
+          // Always pull top-level project fields from official data so new fields
+          // (e.g. proposalUrl) are not silently dropped by a stale localStorage cache.
+          ...(officialCourse?.project ? {
+            title: officialCourse.project.title,
+            subtitle: officialCourse.project.subtitle,
+            abstract: officialCourse.project.abstract,
+            problemStatement: officialCourse.project.problemStatement,
+            techStack: officialCourse.project.techStack,
+            githubUrl: officialCourse.project.githubUrl,
+            demoUrl: officialCourse.project.demoUrl,
+            datasetInfo: officialCourse.project.datasetInfo,
+            proposalUrl: officialCourse.project.proposalUrl,
+          } : {}),
+          pipelineSteps: (officialCourse?.project?.pipelineSteps ?? course.project.pipelineSteps).map(step => ({
+            ...step,
+            description: step.description ? step.description.replace(/Session\s*/gi, 'Week ') : step.description,
+            tool: step.tool ? step.tool.replace(/Session\s*/gi, 'Week ') : step.tool
+          })),
+          metrics: (officialCourse?.project?.metrics ?? course.project.metrics).map(metric => ({
+            ...metric,
+            baseline: metric.baseline ? metric.baseline.replace(/Session\s*/gi, 'Week ') : metric.baseline
+          })),
+          deliverables: (() => {
+            const officialDelivs = officialCourse?.project?.deliverables ?? course.project.deliverables;
+            const existingDelivMap = new Map(
+              course.project.deliverables.map(d => [d.id, d])
+            );
+            return officialDelivs.map(del => {
+              const existing = existingDelivMap.get(del.id);
+              return {
+                ...del,
+                completed: existing?.completed ?? del.completed,
+                title: del.title ? del.title.replace(/Session\s*/gi, 'Week ') : del.title,
+              };
+            });
+          })()
+        } : course.project
+      };
+    })
   }));
 }
+
 
 export function useMsaiStorage() {
   const [semesters, setSemesters] = useState<Semester[]>(() => {

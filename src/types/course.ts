@@ -63,6 +63,8 @@ export interface DeliverableItem {
   title: string;
   completed: boolean;
   dueDate: string;
+  weekNumber?: number;
+  category?: 'Homework' | 'Exam' | 'Proposal' | 'Presentation' | 'Report' | 'Milestone';
 }
 
 export interface CourseProject {
@@ -77,6 +79,7 @@ export interface CourseProject {
   demoUrl: string;
   datasetInfo: string;
   deliverables: DeliverableItem[];
+  proposalUrl?: string;
 }
 
 export interface PresentationSlide {

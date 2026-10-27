@@ -258,56 +258,61 @@ export const INITIAL_SEMESTERS: Semester[] = [
           }
         ],
         project: {
-          title: 'Multi-Modal Signal Processing & Generative AI Representation Engine',
-          subtitle: 'In-Class Presentation & Final Project Capstone (Group of 3)',
-          abstract: 'An end-to-end multi-modal data processing and AI architecture project exploring cross-modal representation learning across speech, image, and tabular/biosignal datasets.',
-          problemStatement: 'Designing scalable representations for heterogeneous raw signals while maintaining low processing latency and robust multi-modal feature fusion.',
+          title: 'Multi-Treatment Uplift Modeling',
+          subtitle: 'A practical execution tracker for building, experimenting with, and evaluating the customer-incentive uplift project.',
+          abstract: 'A practical causal AI execution framework for multi-treatment uplift modeling. Predicts individualized treatment effects (ITE) of marketing incentives and optimizes customer targeting using T-Learners, LightGBM response baselines, and shared-representation multi-tower PyTorch neural networks evaluated on AUUC, Qini curves, and policy utility.',
+          problemStatement: 'Standard predictive models predict customer response probability P(Y=1|X, T), spending incentives on "Sure Things" who convert anyway. Uplift modeling predicts causal uplift τ(X) = E[Y|X, T=t] - E[Y|X, T=0], ensuring treatment is assigned before conversion without post-treatment feature leakage.',
           pipelineSteps: [
             {
               step: 1,
-              title: 'Project Proposal & Literature Review',
-              description: 'Formulation of research goals, dataset acquisition, and initial presentation planning.',
-              tool: 'In-Class Proposal Review'
+              title: 'Timeline Reconstruction & Treatment Setup',
+              description: 'Reconstruct chronological customer timelines from portfolio, profile, and transcript files. Define treatment groups and conversion windows prior to outcome events.',
+              tool: 'Python, Pandas, SQL'
             },
             {
               step: 2,
-              title: 'Data Preprocessing & Feature Extraction',
-              description: 'Extracting clean spatial, spectral, or temporal features from raw datasets.',
-              tool: 'Python, Librosa, PyTorch, OpenCV'
+              title: 'Leakage-Free Feature Engineering & Splits',
+              description: 'Remove duplicates and post-treatment leakage. Generate demographic, transaction history, and prior offer features with strict temporal cutoffs.',
+              tool: 'Scikit-Learn, Feature-Engine'
             },
             {
               step: 3,
-              title: 'Model Architecture Implementation',
-              description: 'Building deep neural architectures (CNN, Transformer, or Generative Autoencoders) for signal decoding.',
-              tool: 'PyTorch / TensorFlow'
+              title: 'Exploration & Standard Baselines',
+              description: 'Examine feature balance between treatment groups, implement random-targeting baseline, and train logistic regression and LightGBM response models.',
+              tool: 'LightGBM, Scikit-Learn, Seaborn'
             },
             {
               step: 4,
-              title: 'In-Class Paper Presentation',
-              description: 'Delivering group paper review and architectural critique during scheduled course weeks.',
-              tool: 'Group Slide Presentation'
+              title: 'Causal Evaluation & Multi-Arm T-Learner',
+              description: 'Implement AUUC and Qini curve evaluation metrics. Train arm-specific models to predict treatment-specific uplift and evaluate top-decile lift.',
+              tool: 'CausalML, Scikit-Learn, SciPy'
             },
             {
               step: 5,
-              title: 'Oral Examination & System Demonstration',
-              description: 'Comprehensive 30% oral defense on course material and final project technical execution.',
-              tool: 'Final Report & Oral Exam'
+              title: 'Multi-Tower Shared Representation PyTorch Model',
+              description: 'Deep neural network with shared representation backbone, control and treatment-specific output towers, observed-arm BCE loss, and propensity IPS ablation.',
+              tool: 'PyTorch 2.x, CUDA'
             }
           ],
-          techStack: ['Python', 'PyTorch', 'TorchAudio', 'TorchVision', 'NumPy', 'Scikit-Learn', 'SciPy'],
+          techStack: ['Python 3.11', 'PyTorch', 'LightGBM', 'Scikit-Learn', 'Pandas', 'NumPy', 'Matplotlib / Seaborn', 'CausalML'],
           metrics: [
-            { label: 'Paper Presentation', value: '50% Weight', baseline: 'Group of 3', change: 'Mandatory' },
-            { label: 'Oral Examination', value: '30% Weight', baseline: 'Individual/Group', change: 'Mandatory' },
-            { label: 'Final Report', value: '20% Weight', baseline: 'Group Deliverable', change: 'Mandatory' }
+            { label: 'Evaluation Metrics', value: 'AUUC & Qini', baseline: 'Random Targeting', change: 'Causal Uplift' },
+            { label: 'Execution Scope', value: '36 Sessions', baseline: '1 hr / session', change: 'Oct 26 - Nov 30' },
+            { label: 'Modeling Target', value: 'Multi-Arm ITE', baseline: 'Response Prob', change: 'Incremental Lift' },
+            { label: 'Documentation', value: 'December', baseline: '6-Hour Schedule', change: 'Final Package' }
           ],
           githubUrl: 'https://github.com/sjsu-msai/cmpe252-ai-data-engineering',
           demoUrl: 'https://cmpe252-demo.sjsu-ai.internal',
-          datasetInfo: 'Multi-Modal Benchmarks (Speech Spectrograms, Computer Vision Corpora, EEG Brain Signals)',
+          datasetInfo: 'Customer Incentive Transcript Corpora (portfolio, profile, and transcript transaction/offer chronological event logs).',
+          proposalUrl: 'documents/cmpe-252/project/AI_Project_proposal.pdf',
           deliverables: [
-            { id: 'd1', title: 'Final Project Proposal Submission', completed: false, dueDate: '2026-10-14' },
-            { id: 'd2', title: 'In-Class Paper Presentation & Review', completed: false, dueDate: '2026-11-18' },
-            { id: 'd3', title: 'Final Project Presentation & Oral Exam', completed: false, dueDate: '2026-12-09' },
-            { id: 'd4', title: 'Final Project Written Report Submission', completed: false, dueDate: '2026-12-16' }
+            { id: 'w1-deliv', title: 'Initial Modeling Table (Setup & Causal Definitions)', completed: false, dueDate: '2026-11-01', weekNumber: 1, category: 'Milestone' },
+            { id: 'w2-deliv', title: 'Clean Modeling Dataset (Leakage-Free Features & Splits)', completed: false, dueDate: '2026-11-08', weekNumber: 2, category: 'Milestone' },
+            { id: 'w3-deliv', title: 'Baseline Benchmarks (Random, Logistic & LightGBM)', completed: false, dueDate: '2026-11-15', weekNumber: 3, category: 'Milestone' },
+            { id: 'w4-deliv', title: 'Causal Baseline (AUUC, Qini & T-Learner Models)', completed: false, dueDate: '2026-11-22', weekNumber: 4, category: 'Milestone' },
+            { id: 'w5-deliv', title: 'Trained Main Multi-Tower PyTorch Model & IPS Ablation', completed: false, dueDate: '2026-11-29', weekNumber: 5, category: 'Milestone' },
+            { id: 'freeze-deliv', title: 'Complete Experimental Results Package (Freeze)', completed: false, dueDate: '2026-11-30', weekNumber: 6, category: 'Milestone' },
+            { id: 'docs-deliv', title: 'December Documentation Plan & Written Report Submission', completed: false, dueDate: '2026-12-16', weekNumber: 16, category: 'Report' }
           ]
         },
         presentation: {
@@ -812,61 +817,62 @@ export const INITIAL_SEMESTERS: Semester[] = [
           }
         ],
         project: {
-          title: 'Applied Machine Learning System & Empirical Model Benchmark',
-          subtitle: 'Hands-On Applied ML Project & Final Report Defense',
-          abstract: 'A end-to-end machine learning system exploring algorithm implementation, hyperparameter tuning, empirical risk evaluation, and ethical fairness considerations across real-world datasets.',
-          problemStatement: 'Formulating a novel domain problem, curating datasets, selecting optimal model architectures (classical vs deep learning), and rigorously benchmarking performance.',
+          title: 'Evaluation of AuroRA: Nonlinear Low-Rank Adaptation for PEFT',
+          subtitle: 'A Comparative Study of Non-Linear Low-Rank Bottlenecks in Parameter-Efficient Fine-Tuning',
+          abstract: 'A detailed empirical evaluation of AuroRA (Nonlinear Low-Rank Adaptation) compared with the baseline method LoRA on the roberta-base architecture. The project investigates parameter efficiency, memory footprint, and classification performance on the GLUE SST-2 benchmark, analyzing the factors that enable AuroRA to outperform LoRA and reporting potential architectural enhancements on standard consumer hardware.',
+          problemStatement: 'PEFT methods like LoRA have revolutionized transformer fine-tuning by parametrizing weight updates via low-rank linear matrices (ΔW = B · A) without adding inference latency. However, because these matrices are strictly linear, the adapted weights remain linear transformations constrained to low rank. This creates an expressiveness bottleneck that fails to capture complex non-linear features without linearly inflating rank r and memory. AuroRA breaks this low-rank bottleneck by integrating non-linear mapping functions, enabling high-performance fine-tuning on everyday consumer hardware without prohibitive memory spikes.',
           pipelineSteps: [
             {
               step: 1,
-              title: 'Problem Formulation & Dataset Acquisition',
-              description: 'Defining target outcome metrics, exploratory data analysis, and checking data balance.',
-              tool: 'Python, Pandas, NumPy'
+              title: 'Setup & Ingestion Pipeline',
+              description: 'Install libraries, inspect SST-2 dataset, implement tokenization, build data loaders, load roberta-base, and verify forward pass.',
+              tool: 'Hugging Face Datasets, PyTorch'
             },
             {
               step: 2,
-              title: 'Feature Engineering & Baseline Modeling',
-              description: 'Scaling features, handling missing values, applying PCA, and fitting baseline linear/tree models.',
-              tool: 'Scikit-Learn, SciPy'
+              title: 'Full Fine-Tuning Baseline',
+              description: 'Construct classification model, author training/evaluation loops, configure Accuracy & F1 metrics, debug, and run full fine-tuning benchmark.',
+              tool: 'PyTorch, AdamW, Scikit-Learn'
             },
             {
               step: 3,
-              title: 'Advanced Model Training & Hyperparameter Tuning',
-              description: 'Training Support Vector Machines, Neural Networks, or Ensemble models with cross-validation.',
-              tool: 'PyTorch, Keras, Scikit-Learn'
+              title: 'LoRA Baseline Adaptation',
+              description: 'Study ΔW = BA, attach LoRA to RoBERTa, verify trainable parameter count, test subset, train LoRA, and benchmark time/memory.',
+              tool: 'PyTorch, Hugging Face PEFT'
             },
             {
               step: 4,
-              title: 'In-Class Project Presentation',
-              description: 'Presenting technical methodologies, complexity trade-offs, and experimental findings in Week 14.',
-              tool: 'Week 14 Presentation'
+              title: 'AuroRA Non-Linear Adapter Module',
+              description: 'Design AuroRA adapter: implement matrix A, GELU/SiLU nonlinear activations, and matrix B; verify dimensions, check gradients, and integrate into RoBERTa.',
+              tool: 'PyTorch Custom Modules'
             },
             {
               step: 5,
-              title: 'Final Written Project Report Submission',
-              description: 'Submitting original comprehensive report detailing theoretical underpinnings, evaluation, and code.',
-              tool: 'Final Written Report'
+              title: 'Final Experiments & Benchmarking',
+              description: 'Run small AuroRA test, resolve instability, train main model, repeat suspicious runs, measure all metrics, and generate comparison tables and plots.',
+              tool: 'Matplotlib, WandB, PyTorch Checkpoints'
             }
           ],
-          techStack: ['Python', 'Scikit-Learn', 'PyTorch', 'TensorFlow / Keras', 'Pandas', 'NumPy', 'Matplotlib'],
+          techStack: ['Python 3.11', 'PyTorch', 'Hugging Face Transformers', 'PEFT / LoRA', 'RoBERTa-base', 'GLUE Benchmark (SST-2)', 'Scikit-Learn', 'WandB / Matplotlib'],
           metrics: [
-            { label: 'Midterm Exam', value: '25% Weight', baseline: 'Week 07 (10/02)', change: 'In-Class' },
-            { label: 'Homeworks (4 HWs)', value: '25% Weight', baseline: 'Weeks 04, 07, 10, 13', change: 'Mandatory' },
-            { label: 'Final Exam', value: '25% Weight', baseline: '12/09 (8:30-10:30 AM)', change: 'In-Class' },
-            { label: 'Final Project', value: '25% Weight', baseline: 'Report Due 12/14', change: 'Mandatory' }
+            { label: 'Validation Accuracy', value: '> 93.0% Target', baseline: 'LoRA ~92.4%', change: 'Target +1.2%' },
+            { label: 'Trainable Parameters', value: '< 1.0% Params', baseline: 'Full FT 100%', change: 'PEFT Efficiency' },
+            { label: 'Peak GPU VRAM', value: '< 4.0 GB Peak', baseline: 'Consumer Hardware', change: 'Standard GPU' },
+            { label: 'Training Dynamics', value: 'Loss & Convergence', baseline: 'LoRA Linear', change: 'Nonlinear Mapping' }
           ],
           githubUrl: 'https://github.com/sjsu-msai/cmpe257-machine-learning',
           demoUrl: 'https://cmpe257-ml-demo.sjsu-ai.internal',
-          datasetInfo: 'Real-world benchmark datasets (UCI Machine Learning Repository / Kaggle / Domain Corpora)',
+          datasetInfo: 'GLUE Benchmark - SST-2 Dataset (Hugging Face): Stanford Sentiment Treebank binary movie review classification (~68,000 train, ~900 validation). Tokenized via Byte-Pair Encoding (BPE) up to 128 max tokens with balanced binary labels (0/1). Reference Paper: AuroRA: Breaking Low-Rank Bottleneck of LoRA with Nonlinear Mapping (NeurIPS 2025).',
+          proposalUrl: 'documents/cmpe-257/project/ML_Project_proposal.pdf',
           deliverables: [
-            { id: 'd1', title: 'Homework 1: Supervised Learning Due', completed: false, dueDate: '2026-09-11' },
-            { id: 'd2', title: 'Homework 2: Unsupervised Learning Due', completed: false, dueDate: '2026-10-02' },
-            { id: 'd3', title: 'In-Class Midterm Examination', completed: false, dueDate: '2026-10-02' },
-            { id: 'd4', title: 'Homework 3: Back-propagation Algorithm Due', completed: false, dueDate: '2026-10-23' },
-            { id: 'd5', title: 'Homework 4: Neural Networks Due', completed: false, dueDate: '2026-11-13' },
-            { id: 'd6', title: 'In-Class Project Presentation (Week 14)', completed: false, dueDate: '2026-11-20' },
-            { id: 'd7', title: 'In-Class Final Examination (8:30 AM - 10:30 AM)', completed: false, dueDate: '2026-12-09' },
-            { id: 'd8', title: 'Final Project Written Report Due', completed: false, dueDate: '2026-12-14' }
+            { id: 'aurora-w1-deliv', title: 'Setup, Tokenization Pipeline & Verified Forward Pass', completed: false, dueDate: '2026-11-01', weekNumber: 1, category: 'Milestone' },
+            { id: 'aurora-w2-deliv', title: 'Trained Full Fine-Tuning Baseline Results', completed: false, dueDate: '2026-11-08', weekNumber: 2, category: 'Milestone' },
+            { id: 'aurora-w3-deliv', title: 'Trained LoRA Adapter Benchmark & Parameter Profiles', completed: false, dueDate: '2026-11-15', weekNumber: 3, category: 'Milestone' },
+            { id: 'aurora-w4-deliv', title: 'Integrated AuroRA Nonlinear Adapter Module', completed: false, dueDate: '2026-11-22', weekNumber: 4, category: 'Milestone' },
+            { id: 'aurora-w5-deliv', title: 'Trained AuroRA Model, Comparison Tables & Checkpoints', completed: false, dueDate: '2026-11-29', weekNumber: 5, category: 'Milestone' },
+            { id: 'aurora-freeze-deliv', title: 'Complete Experimental Evaluation Package (Freeze)', completed: false, dueDate: '2026-11-30', weekNumber: 6, category: 'Milestone' },
+            { id: 'aurora-pres-deliv', title: 'In-Class Project Presentation & Technical Critique (Week 14)', completed: false, dueDate: '2026-12-02', weekNumber: 14, category: 'Presentation' },
+            { id: 'aurora-docs-deliv', title: 'Final Project Written Report Due', completed: false, dueDate: '2026-12-14', weekNumber: 16, category: 'Report' }
           ]
         },
         presentation: {
